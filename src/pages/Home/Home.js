@@ -1,7 +1,7 @@
 // Signup.js
 import React from 'react';
 // import Navbar from '../Navbar/Navbar';
-import About from '../About/About';
+import About from './About';
 
 const Home = () => {
   return (
