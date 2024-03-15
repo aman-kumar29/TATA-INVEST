@@ -1,16 +1,18 @@
-import './App.css'; 
-import { containerStyles } from './components/Carousel/carousel.module.js';
-import { slides } from './data.js';
-import ImageSlider from './components/ImageSlider/ImageSlider.js';
+import './App.css';
+import Home from './pages/Home/Home.js';
+import Signup from './pages/Auth/Signup.js';
+import Login from './pages/Auth/Login.js';
 import Navbar from './components/Navbar/Navbar.js';
-
+import {Routes, Route } from 'react-router-dom';
 function App() {
   return (
     <>
-    <Navbar/>
-    <div style ={containerStyles}>
-      <ImageSlider slides={slides}/>
-    </div>
+    <Navbar />
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
     </>
   );
 }
