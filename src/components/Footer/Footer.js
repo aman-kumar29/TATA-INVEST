@@ -1,18 +1,20 @@
 import React from 'react';
-import { Container, Grid, Typography, Link, IconButton } from '@mui/material';
-import { Facebook, Twitter, LinkedIn, Instagram, YouTube } from '@mui/icons-material';
+import { Container, Grid, Typography, Link, IconButton, Divider } from '@mui/material';
+import { Facebook, Twitter, LinkedIn, Instagram, YouTube, Phone, Mail } from '@mui/icons-material';
 
 const Footer = () => {
   return (
     <footer style={{ backgroundColor: '#f8f9fa', padding: '50px 0' }}>
-      <Container>
+      <Container maxWidth="lg">
         <Grid container spacing={3} justifyContent="space-between">
+          {/* About Us Section */}
           <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" gutterBottom>About Us</Typography>
             <Typography variant="body2" color="textSecondary">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              At Tata Invest, we are dedicated to helping you achieve your financial goals. With our expert team and innovative investment strategies, we strive to provide you with the best investment experience possible.
             </Typography>
           </Grid>
+          {/* Quick Links Section */}
           <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" gutterBottom>Quick Links</Typography>
             <ul style={{ listStyleType: 'none', padding: 0 }}>
@@ -23,17 +25,16 @@ const Footer = () => {
               <li><Link href="#">Contact Us</Link></li>
             </ul>
           </Grid>
-          {/* Footer Section 3: Contact Info */}
+          {/* Contact Info Section */}
           <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" gutterBottom>Contact Info</Typography>
             <Typography variant="body2" color="textSecondary">
-              123 Investment Street<br />
-              New York, NY 10001<br />
-              Phone: +1 (123) 456-7890<br />
-              Email: info@example.com
+              <Phone /> +1 (123) 456-7890<br />
+              <Mail /> info@tatainvest.com<br />
+              123 Financial Street, New York, NY 10001
             </Typography>
           </Grid>
-          {/* Footer Section 4: Social Media Links */}
+          {/* Follow Us Section */}
           <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" gutterBottom>Follow Us</Typography>
             <div>
@@ -45,8 +46,9 @@ const Footer = () => {
             </div>
           </Grid>
         </Grid>
-        <Typography variant="body2" color="textSecondary" align="center" style={{ marginTop: '20px' }}>
-          &copy; {new Date().getFullYear()} Investment Website. All rights reserved.
+        <Divider style={{ margin: '30px 0' }} />
+        <Typography variant="body2" color="textSecondary" align="center">
+          &copy; {new Date().getFullYear()} Tata Invest. All rights reserved.
         </Typography>
       </Container>
     </footer>
