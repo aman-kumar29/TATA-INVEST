@@ -1,22 +1,48 @@
-import { signOut } from "firebase/auth";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { database } from "../../Firebase/config";
+import { auth, getSingleUser } from "../../Firebase/config";
+import { signOut } from "firebase/auth";
 
-function DashboardScreen(){
-    const history = useNavigate()
+function DashboardScreen() {
+    const [userData, setUserData] = useState({});
+    const history = useNavigate();
 
-    const handleClick = () =>{
-        signOut(database).then(val=>{
-            console.log(val,"val")
-            history('/')
-        })
+    useEffect(() => {
+        const fetchUserData = async () => {
+            while (!auth.currentUser) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            console.log(auth.currentUser.uid);
+            try {
+                const data = await getSingleUser(auth.currentUser.uid);
+                setUserData(data);
+            } catch (error) {
+                console.error('Error getting user data:', error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
+    const handleClick = () => {
+        signOut(auth)
+            .then(() => {
+                history('/');
+            })
+            .catch((error) => {
+                console.error('Error signing out:', error);
+            });
     }
-    return(
+
+    return (
         <div>
             <h1>DashboardScreen</h1>
-            <button onClick={handleClick}>SignOut</button>
+            {auth.currentUser && (
+                <p>Welcome {userData?.name}</p>
+            )}
+            <button onClick={handleClick}>Sign Out</button>
         </div>
-    )
+    );
 }
+
 export default DashboardScreen;

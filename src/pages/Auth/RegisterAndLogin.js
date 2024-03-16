@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { database } from "../../Firebase/config";
+import { auth } from "../../Firebase/config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import './login.css';
+import { createUserDocument } from "../../Firebase/config";
 
 function RegisterAndLogin() {
   const [login, setLogin] = useState(false);
@@ -16,9 +17,16 @@ function RegisterAndLogin() {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    var user_name;
+    if(!login){
+      user_name = e.target.user_name.value;
+    }
+
+
     if (type === "signup") {
-      createUserWithEmailAndPassword(database, email, password)
+      const user = createUserWithEmailAndPassword(auth, email, password)
         .then((data) => {
+          createUserDocument(data.user,user_name);
           console.log(data, "authData");
           history("/dashboard");
         })
@@ -27,7 +35,7 @@ function RegisterAndLogin() {
           setLogin(true);
         });
     } else {
-      signInWithEmailAndPassword(database, email, password)
+      signInWithEmailAndPassword(auth, email, password)
         .then((data) => {
           console.log(data, "authData");
           history("/dashboard");
@@ -64,6 +72,7 @@ function RegisterAndLogin() {
         <br />
         <input name="password" type="text" placeholder="Password" />
         <br />
+        {!login && <input name="user_name" type="text" placeholder="Name" />}
         <p onClick={handleReset}>Forgot Password?</p>
         <br />
         <button>{login ? "SignIn" : "SignUp"}</button>
