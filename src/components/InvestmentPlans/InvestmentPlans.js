@@ -69,7 +69,7 @@ export default function InvestmentPlans() {
 
   return (
     <div>
-      <Typography variant="h4" style={{ textAlign: 'center', marginBottom: 20, padding:20,}}>
+      <Typography variant="h4" color ='#fff'style={{ textAlign: 'center', marginBottom: 20, padding:20, fontWeight:600,}}>
         Explore our Investment Plans
       </Typography>
       <div style={{ margin: '0 auto', maxWidth: '800px' }}>

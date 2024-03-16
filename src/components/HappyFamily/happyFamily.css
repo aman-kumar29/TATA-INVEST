@@ -1,0 +1,68 @@
+.happy-family-container {
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .happy-family-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .happy-family-image img {
+    width: 500px;
+    height: auto;
+    border-radius: 8px; /* Add border radius for a nicer look */
+  }
+  
+  .happy-family-text {
+    padding: 20px; /* Increase padding for better spacing */
+    margin: 20px; /* Increase margin for better separation */
+  }
+  
+  .happy-family-text h5 {
+    font-weight: 600;
+    animation: fadeInUp 1s ease; /* Add fadeInUp animation for h5 */
+  }
+  
+  .happy-family-text button {
+    width: 180px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 8px;
+    padding: 15px 20px; /* Adjust padding for better button size */
+    font-size: 16px;
+    animation: slideInUp 1s ease; /* Add slideInUp animation for button */
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .happy-family-content {
+      flex-direction: column;
+    }
+  }
+  

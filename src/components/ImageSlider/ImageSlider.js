@@ -6,6 +6,7 @@ const slideStyles = {
   borderRadius: "10px",
   backgroundSize: "cover",
   backgroundPosition: "center",
+  margin: "20px",
 };
 
 const rightArrowStyles = {
@@ -39,12 +40,13 @@ const sliderStyles = {
 const dotsContainerStyles = {
   display: "flex",
   justifyContent: "center",
+  marginBottom: "20px",
 };
 
 const dotStyle = {
   margin: "0 3px",
   cursor: "pointer",
-  fontSize: "20px",
+  fontSize: "30px",
 };
 
 const ImageSlider = ({ slides }) => {
