@@ -1,15 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import './navbar.css';
 
 function Navbar() {
   return (
     <>
-        <nav className="navbar navbar-expand-lg bg-body-tertiary " data-bs-theme="transperant" >
+        <div className="container mt-3 custom-bg-color">
+        <nav className="navbar navbar-expand-lg " data-bs-theme="dark" >
   <div className="container-fluid ">
   <img src="https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/logo.png?alt=media&token=47531390-01cb-40a6-9ab0-bca7f18cfec0" alt="TataInvest" height="50" width="70" />
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
-    </button>
+    </button> 
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
@@ -21,12 +23,19 @@ function Navbar() {
         <li className="nav-item">
           <a className="nav-link" href="#contact">Contact</a>
         </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#">Investment</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#"><i className="fas fa-download"></i> Download App</a>
+        </li>
       </ul>
-      <Link to="/registerandlogin"><button className="btn btn-outline-success mx-2">SignUp</button></Link>
-          <Link to="/registerandlogin"><button className="btn btn-outline-warning">Login</button></Link>
+      <Link to="/registerandlogin"><button className="btn btn-success mx-2">SignUp</button></Link>
+          <Link to="/registerandlogin"><button className="btn btn-warning">Login</button></Link>
         </div>
   </div>
 </nav>
+        </div>
   </>
   )
 }
