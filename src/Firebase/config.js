@@ -1,14 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp} from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import {getAuth, setPersistence, browserSessionPersistence} from "firebase/auth";
 import { getFirestore,setDoc,doc,getDoc} from "firebase/firestore";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyC_Tcx4yIyJCfJK6VhpHRM8Vq9TRKK6dgU",
   authDomain: "tatainvest-71bd6.firebaseapp.com",
@@ -21,8 +15,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
- const auth = getAuth(app);
+const auth = getAuth(app);
 export const db = getFirestore(app); 
 
 // Enable persistence 
@@ -37,14 +30,22 @@ setPersistence(auth, browserSessionPersistence)
 export { auth };
 
 
-export const createUserDocument = async (user, name) => {
-  if (!user) return;
-console.log(user.uid);
+export const createUserDocument = async (userModel) => {
+  if (!userModel) return;
+    console.log(userModel);
     try {
-      await setDoc(doc(db, "users", user.uid),
-       { name: name, 
-        email: user.email,
-         createdAt: new Date()
+      await setDoc(doc(db, "users", userModel.id),
+       {
+        email : userModel.email,
+        name : userModel.name,
+        investedAmount : userModel.investedAmount,
+        referralCode : userModel.id,
+        parentReferralCode : userModel.parentReferralCode,
+        referralIncome : userModel.referralIncome,
+        interestAmount : userModel.interestAmount,
+        transactionIds : userModel.transactionIds,
+        referralUsers : userModel.referralUsers,
+        createdAt : userModel.createdAt,
          });
 
       console.log("User document created successfully!");
@@ -53,24 +54,16 @@ console.log(user.uid);
     }
 }
 export const getSingleUser = async (uid) => {
-    // Wait until auth.currentUser is available
     while (!auth.currentUser) {
-        // Wait for a short interval before checking again
         await new Promise(resolve => setTimeout(resolve, 100));
     }
-
-    // Once auth.currentUser is available, fetch the user data
     const docRef = doc(db, "users", uid);
     const docSnap = await getDoc(docRef);
-
     if (docSnap.exists()) {
         console.log("Document data returned successfully");
         return docSnap.data();
     } else {
-        // docSnap.data() will be undefined in this case
         console.log("No such document!");
         return null;
     }
 };
-
-export default getSingleUser;

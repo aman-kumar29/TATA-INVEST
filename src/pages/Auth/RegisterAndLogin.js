@@ -7,6 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import './login.css';
 import { createUserDocument } from "../../Firebase/config";
+import User from "../../model/UserModel";
 
 function RegisterAndLogin() {
   const [login, setLogin] = useState(false);
@@ -15,18 +16,28 @@ function RegisterAndLogin() {
 
   const handleSubmit = (e, type) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    var user_name;
-    if(!login){
-      user_name = e.target.user_name.value;
-    }
-
-
+    console.log(e.target);
+      const email = e.target.email.value;
+      const password = e.target.password.value;
     if (type === "signup") {
-      const user = createUserWithEmailAndPassword(auth, email, password)
+      const parentReferralCode = e.target.parentReferralCode.value ? e.target.parentReferralCode.value : null;
+      const user_name = e.target.user_name.value ? e.target.user_name.value : null;
+      createUserWithEmailAndPassword(auth, email, password)
         .then((data) => {
-          createUserDocument(data.user,user_name);
+          const userModel = User(
+            data.user.uid,
+            email,
+            user_name,
+            0,
+            data.user.uid,
+            parentReferralCode,
+            0,
+            0,
+            [],
+            [],
+            "yy",
+            )
+          createUserDocument(userModel);
           console.log(data, "authData");
           history("/dashboard");
         })
@@ -41,6 +52,7 @@ function RegisterAndLogin() {
           history("/dashboard");
         })
         .catch((err) => {
+          console.log("aditya");
           alert(err.code);
         });
     }
@@ -73,8 +85,9 @@ function RegisterAndLogin() {
         <input name="password" type="text" placeholder="Password" />
         <br />
         {!login && <input name="user_name" type="text" placeholder="Name" />}
+        {!login && <input name="parentReferralCode" type="text" placeholder="Referral Code" />}
         <p onClick={handleReset}>Forgot Password?</p>
-        <br />
+        <br/>
         <button>{login ? "SignIn" : "SignUp"}</button>
       </form>
     </div>

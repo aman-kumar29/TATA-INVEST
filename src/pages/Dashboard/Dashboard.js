@@ -12,7 +12,6 @@ function DashboardScreen() {
             while (!auth.currentUser) {
                 await new Promise(resolve => setTimeout(resolve, 100));
             }
-            console.log(auth.currentUser.uid);
             try {
                 const data = await getSingleUser(auth.currentUser.uid);
                 setUserData(data);
@@ -22,7 +21,8 @@ function DashboardScreen() {
         };
 
         fetchUserData();
-    }, []);
+    }, [userData]);
+    
 
     const handleClick = () => {
         signOut(auth)

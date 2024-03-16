@@ -5,3 +5,5 @@ export const slides = [
     { url: "/assets/image-4.jpg", title: "city" },
     { url: "/assets/image-5.jpg", title: "italy" },
   ];
+
+  

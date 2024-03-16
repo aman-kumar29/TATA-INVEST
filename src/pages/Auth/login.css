@@ -1,15 +1,67 @@
-.row{
-    align-items: center;
+/* login.css */
+
+.App {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 400px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .row {
     display: flex;
-    justify-content: center;
-}
-.activeColor{
-    padding-top:5px;
-    height: 30px;
-    width: 10%;
-    border: 2px solid grey;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .pointer {
     cursor: pointer;
-}
-.pointer{
+  }
+  
+  .activeColor {
+    color: #007bff;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 0;
     cursor: pointer;
-}
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  p {
+    font-size: 14px;
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  p:hover {
+    text-decoration: underline;
+  }
+  
