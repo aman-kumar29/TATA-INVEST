@@ -22,8 +22,8 @@ function Navbar() {
           <a className="nav-link" href="#contact">Contact</a>
         </li>
       </ul>
-      <Link to="/signup"><button className="btn btn-outline-success mx-2">SignUp</button></Link>
-          <Link to="/login"><button className="btn btn-outline-warning">Login</button></Link>
+      <Link to="/registerandlogin"><button className="btn btn-outline-success mx-2">SignUp</button></Link>
+          <Link to="/registerandlogin"><button className="btn btn-outline-warning">Login</button></Link>
         </div>
   </div>
 </nav>
