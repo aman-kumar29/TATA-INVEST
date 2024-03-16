@@ -1,7 +1,5 @@
 import './App.css';
 import Home from './pages/Home/Home.js';
-import Signup from './pages/Auth/Signup.js';
-import Login from './pages/Auth/Login.js';
 import Navbar from './components/Navbar/Navbar.js';
 import {Routes, Route } from 'react-router-dom';
 import RegisterAndLogin from './pages/Auth/RegisterAndLogin.js';
@@ -14,8 +12,9 @@ function App() {
     <Navbar />
     <Routes>
     <Route path="/" element={<Home />} />
-    <Route path="/signup" element={<Signup />} />
-    <Route path="/login" element={<Login />} />
+    <Route path="/registerandlogin" element={<RegisterAndLogin />} />
+    <Route path="/resetpassword" element={<ForgotPassword />} />
+    <Route path="/dashboard" element={<DashboardScreen />} />
   </Routes>
     </>
   );
