@@ -19,9 +19,9 @@ function DashboardScreen() {
                 console.error('Error getting user data:', error);
             }
         };
-
+// console.log("userData", userData);
         fetchUserData();
-    }, [userData]);
+    }, []);
     
 
     const handleClick = () => {

@@ -7,7 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import './login.css';
 import { createUserDocument } from "../../Firebase/config";
-import User from "../../model/UserModel";
+// import User from "../../model/UserModel";
 
 function RegisterAndLogin() {
   const [login, setLogin] = useState(false);
@@ -20,25 +20,25 @@ function RegisterAndLogin() {
       const email = e.target.email.value;
       const password = e.target.password.value;
     if (type === "signup") {
-      const parentReferralCode = e.target.parentReferralCode.value ? e.target.parentReferralCode.value : null;
-      const user_name = e.target.user_name.value ? e.target.user_name.value : null;
+      const parentReferralCode = e.target.parentReferralCode.value ? e.target.parentReferralCode.value : "null";
+      const user_name = e.target.user_name.value ? e.target.user_name.value : "null";
       createUserWithEmailAndPassword(auth, email, password)
         .then((data) => {
-          const userModel = User(
-            data.user.uid,
-            email,
-            user_name,
-            0,
-            data.user.uid,
-            parentReferralCode,
-            0,
-            0,
-            [],
-            [],
-            "yy",
-            )
-          createUserDocument(userModel);
-          console.log(data, "authData");
+          // const userModel = User(
+          //   data.user.uid,
+          //   email,
+          //   user_name,
+          //   0,
+          //   data.user.uid,
+          //   parentReferralCode,
+          //   0,
+          //   0,
+          //   [],
+          //   [],
+          //   "yy",
+          //   )
+          createUserDocument(data.user, user_name, parentReferralCode);
+          console.log(data.user, "authData");
           history("/dashboard");
         })
         .catch((err) => {
