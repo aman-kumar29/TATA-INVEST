@@ -11,6 +11,8 @@ html {
 body {
   margin: 0;
   font-family: Quicksand, sans-serif;
+  background: rgb(79,96,193);
+  background: linear-gradient(90deg, rgba(79,96,193,1) 0%, rgba(105,122,220,1) 35%, rgba(178,160,254,1) 100%);
 }
 
 a {
