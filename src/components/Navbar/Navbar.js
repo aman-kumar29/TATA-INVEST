@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
 import { auth } from '../../Firebase/config';
 import './navbar.css';
-
+import { removeCookie } from '../../utils/cookies';
 function Navbar() {
   const [authenticated, setAuthenticated] = useState(false);
   const history = useNavigate();
@@ -23,6 +23,7 @@ function Navbar() {
     auth.signOut()
       .then(() => {
         setAuthenticated(false);
+        removeCookie("loggedIn");
         history('/');
       })
       .catch(error => {

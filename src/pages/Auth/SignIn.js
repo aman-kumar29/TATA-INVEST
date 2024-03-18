@@ -4,6 +4,7 @@ import { auth } from "../../Firebase/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "./signIn.css"; // Assume SignIn.css is the CSS file for styling
+import Cookies from "js-cookie";
 
 function Login() {
   const history = useNavigate();
@@ -15,7 +16,7 @@ function Login() {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((data) => {
-        console.log(data, "authData");
+        Cookies.set("LoggedIn", JSON.stringify(data),{expires : 7});
         history("/dashboard");
       })
       .catch((err) => {
