@@ -10,6 +10,7 @@ import Profile from './pages/Dashboard/Profile.js';
 import UpdateInfo from './pages/Dashboard/UpdateInfo.js';
 import Statement from './pages/Dashboard/Statement.js';
 import AboutUs from './pages/Dashboard/AboutUs.js';
+import Kyc from './pages/KYC/Kyc.js';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route path="/updateinfo" element={<UpdateInfo />} />
       <Route path="/statement" element={<Statement />} />
       <Route path="/aboutus" element={<AboutUs />} />
+      <Route path="/kyc" element={<Kyc />} />
     </Routes>
     </>
   );
