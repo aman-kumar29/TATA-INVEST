@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth, getSingleUser } from "../../Firebase/config"; 
 import Cookies from "js-cookie";
 import ProgressBar from "../../components/ProgressBar/ProgressBar.js";
@@ -50,7 +50,7 @@ function DashboardScreen() {
                 <div className="info-card">
                     <h3>Complete Your KYC</h3>
                     <p>Some content about completing KYC</p>
-                    <button className="action-button">Complete KYC</button> 
+                    <Link to="/kyc"> Complete KYC </Link> 
                 </div>
                 <div className="info-card"> {/* Corrected closing tag */}
                     <h3>Know More</h3>
