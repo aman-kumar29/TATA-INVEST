@@ -41,15 +41,32 @@ function Navbar() {
               <span className="navbar-toggler-icon"></span>
             </button> 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+             
+              {authenticated ? (
+                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                <li className="nav-item">
+                  <Link to="/dashboard"><p className="nav-link active mx-2" aria-current="page" >Dashboard</p></Link>
+                </li>
+                <li className="nav-item">
+                <Link to="/profile"><p className="nav-link active" aria-current="page" >Profile</p></Link>
+                 </li>
+                <li className="nav-item">
+                <Link to="/statement"><p className="nav-link active" aria-current="page" >Statement</p></Link>
+                </li>
+                <li className="nav-item">
+                <Link to="/aboutus"><p className="nav-link active" aria-current="page" >About Us</p></Link>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link active" href="#"><i className="fas fa-download"></i> Download App</a>
+                </li>
+              </ul>
+              ) : (
+                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
                   <Link to="/"><p className="nav-link active mx-2" aria-current="page" >Home</p></Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#about">About</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#contact">Contact</a>
+                  <a className="nav-link" href="#about">About Us</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#">Investment</a>
@@ -58,13 +75,14 @@ function Navbar() {
                   <a className="nav-link" href="#"><i className="fas fa-download"></i> Download App</a>
                 </li>
               </ul>
+              )}
               {authenticated ? (
                 <>
-                  <button className="btn btn-success mx-2" onClick={handleSignOut}>Sign Out</button>
-                  <Link to="/dashboard"><button className="btn btn-primary">Profile</button></Link>
+                  <button className="btn btn-danger mx-2" onClick={handleSignOut}>Sign Out</button>
                 </>
               ) : (
                 <>
+
                   <Link to="/signup"><button className="btn btn-success mx-2">SignUp</button></Link>
                   <Link to="/login"><button className="btn btn-warning">Login</button></Link>
                 </>
