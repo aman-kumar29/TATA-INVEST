@@ -8,11 +8,12 @@ const UpdateInfoPage = () => {
   const [newName, setNewName] = useState('');
   const [previousName, setPreviousName] = useState('');
   const history = useNavigate();
+  const userId = localStorage.getItem('userId');
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const userDoc = await getDoc(doc(db, 'users', auth.currentUser.uid));
+        const userDoc = await getDoc(doc(db, 'users', userId));
         if (userDoc.exists()) {
           const userData = userDoc.data();
           setPreviousName(userData.name || '');
@@ -27,7 +28,7 @@ const UpdateInfoPage = () => {
 
   const handleUpdateName = async () => {
     try {
-      const userRef = doc(db, 'users', auth.currentUser.uid);
+      const userRef = doc(db, 'users', userId);
       await updateDoc(userRef, { name: newName });
       console.log('User name updated successfully!');
       history('/profile');

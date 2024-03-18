@@ -5,9 +5,12 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "./signUp.css"; // Assume SignUp.css is the CSS file for styling
 import { createUserDocument } from "../../Firebase/config";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux/store.js";
 
 function SignUp() {
   const history = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +23,9 @@ function SignUp() {
       .then((data) => {
         createUserDocument(data.user, user_name, parentReferralCode);
         console.log(data.user, "authData");
+        // console.log(data?.user.uid, "UID");
+        localStorage.setItem("userId", data?.user.uid);
+        dispatch(authActions.login());
         history("/dashboard");
       })
       .catch((err) => {

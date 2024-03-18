@@ -15,30 +15,51 @@ const ProfilePage = () => {
     //   const [kycVerified, setKycVerified] = useState(false);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const userRef = doc(db, 'users', user.uid);
-                getDoc(userRef)
-                    .then((doc) => {
-                        if (doc.exists) {
-                            setUser(doc.data());
-                            setEmail(doc.data().email);
-                            //   setPhoneNumber(doc.data().phoneNumber || '');
-                            //   setAddress(doc.data().address || '');
-                            //   setKycVerified(doc.data().kycVerified || false);
-                        } else {
-                            console.log('No such document!');
-                        }
-                    })
-                    .catch((error) => {
-                        console.log('Error getting document:', error);
-                    });
-            } else {
-                setUser(null);
-            }
-        });
+        // const unsubscribe = onAuthStateChanged(auth, (user) => {
+        //     if (user) {
+        //         const userRef = doc(db, 'users', user.uid);
+        //         getDoc(userRef)
+        //             .then((doc) => {
+        //                 if (doc.exists) {
+        //                     setUser(doc.data());
+        //                     setEmail(doc.data().email);
+        //                     //   setPhoneNumber(doc.data().phoneNumber || '');
+        //                     //   setAddress(doc.data().address || '');
+        //                     //   setKycVerified(doc.data().kycVerified || false);
+        //                 } else {
+        //                     console.log('No such document!');
+        //                 }
+        //             })
+        //             .catch((error) => {
+        //                 console.log('Error getting document:', error);
+        //             });
+        //     } else {
+        //         setUser(null);
+        //     }
+        // });
 
-        return () => unsubscribe();
+        // return () => unsubscribe();
+        const user = localStorage.getItem('userId');
+        if (user) {
+            const userRef = doc(db, 'users', user);
+            getDoc(userRef)
+                .then((doc) => {
+                    if (doc.exists) {
+                        setUser(doc.data());
+                        setEmail(doc.data().email);
+                        //   setPhoneNumber(doc.data().phoneNumber || '');
+                        //   setAddress(doc.data().address || '');
+                        //   setKycVerified(doc.data().kycVerified || false);
+                    } else {
+                        console.log('No such document!');
+                    }
+                })
+                .catch((error) => {
+                    console.log('Error getting document:', error);
+                });
+        } else {
+            setUser(null);
+        }
     }, []);
 
 

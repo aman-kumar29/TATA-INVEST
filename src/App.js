@@ -13,11 +13,13 @@ import AboutUs from './pages/Dashboard/AboutUs.js';
 import Kyc from './pages/KYC/Kyc.js';
 
 function App() {
+  const isLoggedIn = localStorage.getItem('userId') !== null;
+
   return (
     <>
     <Navbar />
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={isLoggedIn?<DashboardScreen/>:<Home />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<SignIn />} />
       <Route path="/resetpassword" element={<ForgotPassword />} />
