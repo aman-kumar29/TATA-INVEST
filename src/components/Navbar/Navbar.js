@@ -6,24 +6,33 @@ import { removeCookie } from '../../utils/cookies';
 function Navbar() {
   const [authenticated, setAuthenticated] = useState(false);
   const history = useNavigate();
-
+  const userId = localStorage.getItem('userId');
+   
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) {
-        setAuthenticated(true);
-      } else {
-        setAuthenticated(false);
-      }
-    });
+     setAuthenticated(userId !== null && userId !== undefined);
+  }, [userId]);
 
-    return () => unsubscribe();
-  }, []);
+  // useEffect(() => {
+  //   // const unsubscribe = auth.onAuthStateChanged(user => {
+  //   //   if (user) {
+  //   //     setAuthenticated(true);
+  //   //   } else {
+  //   //     setAuthenticated(false);
+  //   //   }
+  //   // });
+    
+  //   // return () => unsubscribe();
+  // }, [userId]);
+
+  
+ 
 
   const handleSignOut = () => {
     auth.signOut()
       .then(() => {
         setAuthenticated(false);
         removeCookie("loggedIn");
+        localStorage.removeItem('userId');
         history('/');
       })
       .catch(error => {

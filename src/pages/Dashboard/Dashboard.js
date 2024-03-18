@@ -27,7 +27,8 @@ function DashboardScreen() {
                 await new Promise(resolve => setTimeout(resolve, 100));
             }
             try {
-                const data = await getSingleUser(auth.currentUser.uid);
+                const data = await getSingleUser(localStorage.getItem('userId'));
+                // const data = await getSingleUser(auth.currentUser.uid);
                 setUserData(data);
             } catch (error) {
                 console.error('Error getting user data:', error);

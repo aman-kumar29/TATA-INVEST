@@ -12,28 +12,47 @@ const Statement = () => {
     const [selectedOption, setSelectedOption] = useState('investments');
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const userRef = doc(db, 'users', user.uid);
-                getDoc(userRef)
-                    .then((doc) => {
-                        if (doc.exists) {
-                            setUser(doc.data());
-                            setInvestedAmount(doc.data().investedAmount);
-                            setReferralAmount(doc.data().referralIncome);
-                        } else {
-                            console.log('No such document!');
-                        }
-                    })
-                    .catch((error) => {
-                        console.log('Error getting document:', error);
-                    });
-            } else {
-                setUser(null);
-            }
-        });
+        // const unsubscribe = onAuthStateChanged(auth, (user) => {
+        //     if (user) {
+        //         const userRef = doc(db, 'users', user.uid);
+        //         getDoc(userRef)
+        //             .then((doc) => {
+        //                 if (doc.exists) {
+        //                     setUser(doc.data());
+        //                     setInvestedAmount(doc.data().investedAmount);
+        //                     setReferralAmount(doc.data().referralIncome);
+        //                 } else {
+        //                     console.log('No such document!');
+        //                 }
+        //             })
+        //             .catch((error) => {
+        //                 console.log('Error getting document:', error);
+        //             });
+        //     } else {
+        //         setUser(null);
+        //     }
+        // });
 
-        return () => unsubscribe();
+        // return () => unsubscribe();
+        const user = localStorage.getItem('userId');
+        if (user) {
+            const userRef = doc(db, 'users', user);
+            getDoc(userRef)
+                .then((doc) => {
+                    if (doc.exists) {
+                        setUser(doc.data());
+                        setInvestedAmount(doc.data().investedAmount);
+                        setReferralAmount(doc.data().referralIncome);
+                    } else {
+                        console.log('No such document!');
+                    }
+                })
+                .catch((error) => {
+                    console.log('Error getting document:', error);
+                });
+        } else {
+            setUser(null);
+        }
     }, []);
 
     const handleToggle = (option) => {

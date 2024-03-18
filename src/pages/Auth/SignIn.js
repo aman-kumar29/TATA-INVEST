@@ -5,10 +5,12 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "./signIn.css"; // Assume SignIn.css is the CSS file for styling
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux/store.js";
 
 function Login() {
   const history = useNavigate();
-
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -17,6 +19,8 @@ function Login() {
     signInWithEmailAndPassword(auth, email, password)
       .then((data) => {
         Cookies.set("LoggedIn", JSON.stringify(data),{expires : 7});
+        localStorage.setItem("userId", data?.user.uid);
+        dispatch(authActions.login());
         history("/dashboard");
       })
       .catch((err) => {
