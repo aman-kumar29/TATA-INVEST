@@ -37,7 +37,7 @@ setPersistence(auth, browserSessionPersistence)
 export { auth };
 
 
-export const createUserDocument = async (user, name, parentReferralCode) => {
+export const createUserDocument = async (user, name, parentReferralCode,phone,address) => {
   if (!user) return;
   console.log(user.uid);
   try {
@@ -45,12 +45,17 @@ export const createUserDocument = async (user, name, parentReferralCode) => {
       {
         name: name,
         email: user.email,
+        phone: phone,
+        address: address,
         investedAmount: 0,
         referralCode: user.uid,
         parentReferralCode: parentReferralCode,
-        referralIncome: 0,
+        referralAmount: 0,
         interestAmount: 0,
-        transactionIds: [],
+        withdrawableAmount: 0,
+        investmentTransactions: [],
+        withdrawlTransactions: [],
+        kycDone: false,
         referralUsers: [],
         createdAt: new Date()
       });

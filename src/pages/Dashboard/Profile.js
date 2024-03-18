@@ -3,12 +3,13 @@ import { auth, db, handleDeleteAccount } from "../../Firebase/config.js";
 import { getDoc, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate, Link } from 'react-router-dom';
-
-
+import './css/profile.css';
 
 const ProfilePage = () => {
     const [user, setUser] = useState(null);
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(true);
+
     const history = useNavigate();
     //   const [phoneNumber, setPhoneNumber] = useState('');
     //   const [address, setAddress] = useState('');
@@ -47,6 +48,7 @@ const ProfilePage = () => {
                     if (doc.exists) {
                         setUser(doc.data());
                         setEmail(doc.data().email);
+                        setLoading(false);
                         //   setPhoneNumber(doc.data().phoneNumber || '');
                         //   setAddress(doc.data().address || '');
                         //   setKycVerified(doc.data().kycVerified || false);
@@ -87,24 +89,52 @@ const ProfilePage = () => {
 
 
     return (
-        <div>
-            <h1>Profile Page</h1>
-            {user ? (
+        <div className="container mt-5 my-5">
+        <div className="card shadow p-4 profile-card">
+            <h1 className="text-center mb-4">Profile Page</h1>
+            {loading ? (
+                <p className="text-center">Loading user data...</p>
+            ) : user ? (
                 <div>
-                    <p>Email: {email}</p>
-                    <p>Name: {user.name}</p>
-                    {/* <p>Phone Number: {phoneNumber}</p>
-          <p>Address: {address}</p>
-          <p>KYC Verification: {kycVerified ? 'Verified' : 'Not Verified'}</p> */}
-                    <button>
-                        <Link to="/updateinfo">Update Info</Link>
-                    </button>
-                    <button onClick={handleDeleteUserAccount}>Delete Account</button>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <p>Email: {user.email}</p>
+                        <i className="fas fa-envelope"></i>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <p>Name: {user.name}</p>
+                        <i className="fas fa-user"></i>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <p>Phone: {user.phone}</p>
+                        <i className="fas fa-phone"></i>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <p>Address: {user.address}</p>
+                        <i className="fas fa-location"></i>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <p>KYC: {user.kycDone?"Done":"Not Done"}</p>
+                        <i className= {user.kycDone?"fas fa-check":"fas fa-hourglass"}></i>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <p> Referral Code - {user.referralCode}</p>
+                        <i className= "fas fa-handshake"></i>
+                    </div>
+                    {/* Add similar sections for other user data */}
+                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                         <button className="btn btn-danger me-md-2" onClick={handleDeleteUserAccount}>
+                            Delete Account
+                        </button>
+                        <button className="btn btn-primary" >
+                            <Link to="/updateinfo" className="text-white">Update Info</Link>
+                        </button>
+                    </div>
                 </div>
             ) : (
-                <p>Loading user data...</p>
+                <p className="text-center">No user data found.</p>
             )}
         </div>
+    </div>
     );
 };
 

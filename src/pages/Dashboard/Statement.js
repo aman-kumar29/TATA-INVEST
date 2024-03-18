@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth, db } from "../../Firebase/config.js";
 import { getDoc, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-
+import './css/statement.css';
 
 
 const Statement = () => {
@@ -42,7 +42,7 @@ const Statement = () => {
                     if (doc.exists) {
                         setUser(doc.data());
                         setInvestedAmount(doc.data().investedAmount);
-                        setReferralAmount(doc.data().referralIncome);
+                        setReferralAmount(doc.data().referralAmount);
                     } else {
                         console.log('No such document!');
                     }
@@ -60,47 +60,48 @@ const Statement = () => {
       };
 
     return (
-        <>
-            <h1 className='mx-5'>Statement</h1>
-            {user ? (
-                <div>
-                    <p className='mx-2'>  InvestedAmount: {investedAmount}</p>
-                    <p className='mx-2'>  Life Time Earning: {referralAmount}</p>
-                    <p className='mx-2'>  Referral Income: {referralAmount}</p>
-                    <p className='mx-2'>  Total Balance Withdrawable: {investedAmount}</p>
-                </div>
-            ) : (
-                <p>Loading user data...</p>
-            )}
-
-            <h1>Transaction Page</h1>
-      <div>
-        <button className= {selectedOption==='investments'?'btn btn-success mx-3':'btn btn-primary mx-3'} onClick={() => handleToggle('investments')}>Investments</button>
-        <button className= {selectedOption==='withdrawals'?'btn btn-success':'btn btn-primary'} onClick={() => handleToggle('withdrawals')}>Withdrawals</button>
+      <div className="container mt-5 my-5 statement">
+      <h1 className="mx-5">Statement</h1>
+      <div className="card shadow profile-card mx-5">
+          {user ? (
+              <div>
+                  <p className='mx-2'>Invested Amount: {investedAmount}</p>
+                  <p className='mx-2'>Life Time Earning: {referralAmount}</p>
+                  <p className='mx-2'>Referral Income: {referralAmount}</p>
+                  <p className='mx-2'>Total Balance Withdrawable: {investedAmount}</p>
+              </div>
+          ) : (
+              <p>Loading user data...</p>
+          )}
       </div>
-      <div>
-        <h2>{selectedOption === 'investments' ? 'Investments' : 'Withdrawals'}</h2>
-        {selectedOption === 'investments' ? (
-          <ul>
-            {/* Render list of investment transactions */}
-            <li>Transaction 1</li>
-            <li>Transaction 2</li>
-            <li>Transaction 3</li>
-          </ul>
-        ) : (
-          <ul>
-            {/* Render list of withdrawal transactions */}
-            <li>Transaction A</li>
-            <li>Transaction B</li>
-            <li>Transaction C</li>
-          </ul>
-        )}
 
-        </div>
+      <h1 className="mx-5 mt-5">Transaction Page</h1>
+      <div className="d-flex justify-content-center">
+          <button className={selectedOption === 'investments' ? 'btn btn-success mx-3' : 'btn btn-primary mx-3'} onClick={() => handleToggle('investments')}>
+              Investments
+          </button>
+          <button className={selectedOption === 'withdrawals' ? 'btn btn-success mx-3' : 'btn btn-primary mx-3'} onClick={() => handleToggle('withdrawals')}>
+              Withdrawals
+          </button>
+      </div>
 
-
-
-        </>
+      <div className="card shadow profile-card mx-5 my-3">
+          <h2 className="mx-3">{selectedOption === 'investments' ? 'Investments' : 'Withdrawals'}</h2>
+          {selectedOption === 'investments' ? (
+              <ul className="mx-3">
+                  <li>Transaction 1</li>
+                  <li>Transaction 2</li>
+                  <li>Transaction 3</li>
+              </ul>
+          ) : (
+              <ul className="mx-3">
+                  <li>Transaction A</li>
+                  <li>Transaction B</li>
+                  <li>Transaction C</li>
+              </ul>
+          )}
+      </div>
+  </div>
     );
 };
 
