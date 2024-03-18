@@ -9,10 +9,11 @@ const ProgressBar = ({ investedAmount }) => {
   return (
     <GradientCircleProgressbar
       percentage={progress}
+      investedAmount = {investedAmount}
       width={300} // Adjust width as needed
       strokeWidth={10} // Adjust stroke width as needed
       strokeLinecap="round"
-      fontSize="16px" // Adjust font size as needed
+      fontSize="24px" // Adjust font size as needed
       fontColor="#333" // Adjust font color as needed
       fontFamily="Arial, sans-serif" // Adjust font family as needed
       primaryColor={["#ff9891", "#92d7f1"]} // Adjust primary color gradient as needed

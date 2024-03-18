@@ -28,6 +28,7 @@ const StyledCircle = styled.circle`
 
 const GradientCircleProgressbar = ({
   percentage,
+  investedAmount,
   width,
   strokeWidth,
   fontSize,
@@ -51,7 +52,7 @@ const GradientCircleProgressbar = ({
       {!hidePercentageText && (
         <PercentageContainer className="react-super-progressbar__percentage-container">
           <span className="react-super-progressbars__percentage" style={{ fontSize, fontFamily, color: fontColor }}>
-            {percentage}%
+          ₹ {investedAmount}
           </span>
         </PercentageContainer>
       )}
