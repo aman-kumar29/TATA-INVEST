@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp} from "firebase/app";
+import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-import {getAuth, setPersistence, browserSessionPersistence} from "firebase/auth";
-import { getFirestore,setDoc,doc,getDoc} from "firebase/firestore";
+import { getAuth, setPersistence, browserSessionPersistence, deleteUser } from "firebase/auth";
+import { getFirestore, setDoc, doc, getDoc, deleteDoc} from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -22,8 +22,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
- const auth = getAuth(app);
-export const db = getFirestore(app); 
+const auth = getAuth(app);
+export const db = getFirestore(app);
 
 // Enable persistence 
 setPersistence(auth, browserSessionPersistence)
@@ -37,12 +37,13 @@ setPersistence(auth, browserSessionPersistence)
 export { auth };
 
 
-export const createUserDocument = async (user, name,parentReferralCode) => {
+export const createUserDocument = async (user, name, parentReferralCode) => {
   if (!user) return;
-console.log(user.uid);
-    try {
-      await setDoc(doc(db, "users", user.uid),
-       { name: name, 
+  console.log(user.uid);
+  try {
+    await setDoc(doc(db, "users", user.uid),
+      {
+        name: name,
         email: user.email,
         investedAmount: 0,
         referralCode: user.uid,
@@ -51,33 +52,53 @@ console.log(user.uid);
         interestAmount: 0,
         transactionIds: [],
         referralUsers: [],
-         createdAt: new Date()
-         });
+        createdAt: new Date()
+      });
 
-      console.log("User document created successfully!");
-    } catch (error) {
-      console.log('Error in creating user', error);
-    }
+    console.log("User document created successfully!");
+  } catch (error) {
+    console.log('Error in creating user', error);
+  }
 }
 export const getSingleUser = async (uid) => {
-    // Wait until auth.currentUser is available
-    while (!auth.currentUser) {
-        // Wait for a short interval before checking again
-        await new Promise(resolve => setTimeout(resolve, 100));
-    }
+  // Wait until auth.currentUser is available
+  while (!auth.currentUser) {
+    // Wait for a short interval before checking again
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
 
-    // Once auth.currentUser is available, fetch the user data
-    const docRef = doc(db, "users", uid);
-    const docSnap = await getDoc(docRef);
+  // Once auth.currentUser is available, fetch the user data
+  const docRef = doc(db, "users", uid);
+  const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-        console.log("Document data returned successfully");
-        return docSnap.data();
-    } else {
-        // docSnap.data() will be undefined in this case
-        console.log("No such document!");
-        return null;
-    }
+  if (docSnap.exists()) {
+    console.log("Document data returned successfully");
+    return docSnap.data();
+  } else {
+    // docSnap.data() will be undefined in this case
+    console.log("No such document!");
+    return null;
+  }
 };
 
 export default getSingleUser;
+
+
+
+export const handleDeleteAccount = async () => {
+  const currentUser = auth.currentUser;
+
+  if (currentUser) {
+    try {
+      await deleteUser(currentUser);
+      const userRef = doc(db, "users", currentUser.uid);
+      await deleteDoc(userRef);
+
+      console.log('User account deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting user account:', error);
+    }
+  } else {
+    console.warn('No user is signed in');
+  }
+};

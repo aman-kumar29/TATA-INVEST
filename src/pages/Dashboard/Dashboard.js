@@ -40,7 +40,6 @@ function DashboardScreen() {
             {auth.currentUser && (
                 <p>Welcome {userData?.name}</p>
             )}
-            <button onClick={handleClick}>Sign Out</button>
         </div>
     );
 }

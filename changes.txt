@@ -1,0 +1,1 @@
+1. Cookies session -> (On closing browser and starting again should keep user logged in)  
