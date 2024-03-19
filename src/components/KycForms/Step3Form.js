@@ -10,15 +10,13 @@ function Step3Form({ formData, handleChange, nextStep, prevStep, setLoading }) {
     setOtpGenerated(true);
   };
   const submitKycData = async (formData, otp) => {
-    // Implement KYC submission logic here
-    return { success: true }; // Simulated success response
+    return { success: true }; 
   };
 
   const handleSubmit = async () => {
     if (!validateForm(formData) || !otp) {
       return;
     }
-
     setLoading(true);
     try {
       // Simulate API call to submit KYC data and verify OTP
