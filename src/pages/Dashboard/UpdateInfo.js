@@ -48,7 +48,7 @@ const UpdateInfoPage = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 my-5">
     <h1 className="text-center">Update Information</h1>
     <div className="row justify-content-center">
         <div className="col-md-6">
