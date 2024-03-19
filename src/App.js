@@ -11,6 +11,7 @@ import UpdateInfo from './pages/Dashboard/UpdateInfo.js';
 import Statement from './pages/Dashboard/Statement.js';
 import AboutUs from './pages/Dashboard/AboutUs.js';
 import Kyc from './pages/KYC/Kyc.js';
+import AddMoneyPage from './pages/Dashboard/AddMoney.js';
 
 function App() {
   const isLoggedIn = localStorage.getItem('userId') !== null;
@@ -29,6 +30,7 @@ function App() {
       <Route path="/statement" element={<Statement />} />
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/kyc" element={<Kyc />} />
+      <Route path="/addmoney" element={<AddMoneyPage />} />
     </Routes>
     </>
   );
