@@ -31,7 +31,7 @@ function DashboardScreen() {
     }, []);
 
     const addMoneyOnClick = () => {
-        // Add your logic here
+        history("/addmoney");
     }
 
     return (

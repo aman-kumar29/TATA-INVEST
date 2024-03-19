@@ -15,6 +15,7 @@ import Step2Form from './components/KycForms/Step2Form.js';
 import Step3Form from './components/KycForms/Step3Form.js';
 import ConfirmationStep from './components/KycForms/ConfirmationStep.js';
 import Kyc from './pages/KYC/Kyc.js';
+import AddMoneyPage from './pages/Dashboard/AddMoney.js';
 
 function App() {
   const isLoggedIn = localStorage.getItem('userId') !== null;
@@ -37,6 +38,7 @@ function App() {
       <Route path="/kyc-step2" component={Step2Form} />
       <Route path="/kyc-step3" component={Step3Form} />
       <Route path="/kyc-confirmation" component={ConfirmationStep} />
+      <Route path="/addmoney" element={<AddMoneyPage />} />
     </Routes>
     </>
   );
