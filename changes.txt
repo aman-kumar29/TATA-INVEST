@@ -1,1 +1,5 @@
-1. Cookies session -> (On closing browser and starting again should keep user logged in)  
+1. Cookies session -> (On closing browser and starting again should keep user logged in)  --> DONE 
+
+2. Razorpay 
+3. KYC 
+4. Referral 
