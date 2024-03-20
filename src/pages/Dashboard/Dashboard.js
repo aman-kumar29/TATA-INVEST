@@ -45,7 +45,7 @@ function DashboardScreen() {
                 <div className="info-card">
                     <h3>Complete Your KYC</h3>
                     <p>Some content about completing KYC</p>
-                    <Link to="/kyc"> Complete KYC </Link> 
+                    <Link to="/kyc-step1"> Complete KYC </Link> 
                 </div>
                 <div className="info-card">
                     <h3>Know More</h3>
