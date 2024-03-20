@@ -54,7 +54,7 @@ export const createUserDocument = async (user, name, parentReferralCode,phone,ad
         interestAmount: 0,
         withdrawableAmount: 0,
         investmentTransactions: [],
-        withdrawlTransactions: [],
+        withdrawalTransactions: [],
         kycDone: false,
         referralUsers: [],
         createdAt: new Date()

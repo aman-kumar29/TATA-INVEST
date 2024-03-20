@@ -1,17 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { getUser } from "../../utils/getUser.js";
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../Firebase/config';
 
 const AddMoneyPage = () => {
   const [amount, setAmount] = useState('');
   const history = useNavigate();
-  
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const handleAmountChange = (event) => {
     setAmount(event.target.value);
   };
 
   const handleSuggestionClick = (value) => {
     setAmount(value);
+  };
+
+  const fetchedUser = localStorage.getItem('userId');
+
+  useEffect(() => {
+    if (fetchedUser) {
+        getUser(fetchedUser)
+            .then((userData) => {
+                if (userData) {
+                    setUser(userData);
+                } else {
+                    console.log('User not found');
+                }
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log('Error fetching user data:', error);
+                setLoading(false);
+            });
+    } else {
+        history('/login');
+    }
+}, []);
+
+const handleUpdateInfo = async (investedAmount,transactionId) => {
+    try {
+      const userRef = doc(db, 'users', fetchedUser);
+      await updateDoc(userRef, { 
+        investedAmount: user.investedAmount + Number(investedAmount),
+        investmentTransactions: [...user.investmentTransactions,
+          {
+            transactionId: transactionId,
+            amount: Number(investedAmount),
+            date: new Date(),
+          }
+        ]
+       });
+      console.log('User info updated successfully!');
+      history('/profile');
+    } catch (error) {
+      console.error('Error updating user name:', error);
+    }
   };
 
   function initiateRazorpayPayment(amount) {
@@ -24,6 +71,7 @@ const AddMoneyPage = () => {
       description: 'Payment for adding money', // Description of the payment
       image: 'https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/logo.png?alt=media&token=47531390-01cb-40a6-9ab0-bca7f18cfec0', // URL of your company logo
       handler: function (response) {
+        handleUpdateInfo(amount,response.razorpay_payment_id);
         console.log(response);
         history('/dashboard');
         // Handle successful payment
@@ -71,8 +119,9 @@ const AddMoneyPage = () => {
                 </Form.Group>
                 <div className="mb-3">
                   <p className="mb-1">Suggestions:</p>
-                  <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('1000')}>1000</Button>
-                  <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('5000')}>5000</Button>
+                  <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('1000')}>₹ 1000</Button>
+                  <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('5000')}>₹ 5000</Button>
+                  <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('10000')}>₹ 10000</Button>
                   {/* Add more suggestion buttons as needed */}
                 </div>
                 <Button variant="primary" onClick={handleProceedToPay}>Proceed to Pay</Button>
