@@ -11,6 +11,7 @@ import UpdateInfo from './pages/Dashboard/UpdateInfo.js';
 import Statement from './pages/Dashboard/Statement.js';
 import AboutUs from './pages/Dashboard/AboutUs.js';
 import Step2Form from './components/KycForms/Step2Form.js';
+import Step2Form from './components/KycForms/Step2Form.js';
 import Step1Form from './components/KycForms/Step1Form.js';
 import Step3Form from './components/KycForms/Step3Form.js';
 import ConfirmationStep from './components/KycForms/ConfirmationStep.js';
@@ -35,6 +36,11 @@ function App() {
       <Route path="/statement" element={<Statement />} />
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path='/kyc' element={<Kyc/>}/>
+      <Route path="/kyc-step1" element={<Step1Form/>} />
+      <Route path="/kyc-step2" element={<Step2Form/>} />
+      <Route path="/kyc-step3" element={<Step3Form/>} />
+      <Route path="/kyc-confirmation" element={<ConfirmationStep/>} />
+      <Route path="/addmoney" element={<AddMoneyPage />} />
       <Route path="/kyc-step1" element={<Step1Form/>} />
       <Route path="/kyc-step2" element={<Step2Form/>} />
       <Route path="/kyc-step3" element={<Step3Form/>} />

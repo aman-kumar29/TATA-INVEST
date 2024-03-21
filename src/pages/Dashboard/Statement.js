@@ -5,7 +5,7 @@ import './css/statement.css';
 import Footer from "../../components/Footer/Footer.js";
 
 const Statement = () => {
-    const [userData, setUser] = useState(null);
+    const [userDataData, setUser] = useState(null);
     const [investedAmount, setInvestedAmount] = useState(0);
     const [referralAmount, setReferralAmount] = useState(0);
     const [selectedOption, setSelectedOption] = useState('investments');
@@ -14,10 +14,14 @@ const Statement = () => {
         const userId = localStorage.getItem('userId');
         if (userId) {
             const userRef = doc(db, 'users', userId);
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            const userRef = doc(db, 'users', userId);
             getDoc(userRef)
                 .then((doc) => {
                     if (doc.exists) {
                         setUser(doc.data());
+                        // console.log("DATA", doc.data());
                         // console.log("DATA", doc.data());
                         setInvestedAmount(doc.data().investedAmount);
                         setReferralAmount(doc.data().referralAmount);
@@ -36,6 +40,8 @@ const Statement = () => {
     const handleToggle = (option) => {
         setSelectedOption(option);
     };
+    };
+
 
 
     return (
@@ -55,15 +61,15 @@ const Statement = () => {
                 )}
             </div>
 
-            <h1 className="mx-5 mt-5">Transaction Page</h1>
-            <div className="d-flex justify-content-center">
-                <button className={selectedOption === 'investments' ? 'btn btn-success mx-3' : 'btn btn-primary mx-3'} onClick={() => handleToggle('investments')}>
-                    Investments
-                </button>
-                <button className={selectedOption === 'withdrawals' ? 'btn btn-success mx-3' : 'btn btn-primary mx-3'} onClick={() => handleToggle('withdrawals')}>
-                    Withdrawals
-                </button>
-            </div>
+                  <h1 className="mx-5 mt-5">Transaction Page</h1>
+                  <div className="d-flex justify-content-center">
+                      <button className={selectedOption === 'investments' ? 'btn btn-success mx-3' : 'btn btn-primary mx-3'} onClick={() => handleToggle('investments')}>
+                          Investments
+                      </button>
+                      <button className={selectedOption === 'withdrawals' ? 'btn btn-success mx-3' : 'btn btn-primary mx-3'} onClick={() => handleToggle('withdrawals')}>
+                          Withdrawals
+                      </button>
+                  </div>
 
             <div className="card shadow profile-card mx-5 my-3">
                 <h2 className="mx-3">{selectedOption === 'investments' ? 'Investments' : 'Withdrawals'}</h2>
