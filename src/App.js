@@ -11,7 +11,6 @@ import UpdateInfo from './pages/Dashboard/UpdateInfo.js';
 import Statement from './pages/Dashboard/Statement.js';
 import AboutUs from './pages/Dashboard/AboutUs.js';
 import Step2Form from './components/KycForms/Step2Form.js';
-import Step2Form from './components/KycForms/Step2Form.js';
 import Step1Form from './components/KycForms/Step1Form.js';
 import Step3Form from './components/KycForms/Step3Form.js';
 import ConfirmationStep from './components/KycForms/ConfirmationStep.js';

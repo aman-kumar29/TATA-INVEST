@@ -2,46 +2,46 @@ import React, { useState, useEffect } from 'react';
 import { db } from "../../Firebase/config.js";
 import { getDoc, doc } from "firebase/firestore";
 import './css/statement.css';
-import Footer from "../../components/Footer/Footer.js";
 
 const Statement = () => {
-    const [userDataData, setUser] = useState(null);
+    const [userData, setUser] = useState(null);
     const [investedAmount, setInvestedAmount] = useState(0);
     const [referralAmount, setReferralAmount] = useState(0);
     const [selectedOption, setSelectedOption] = useState('investments');
 
+    
     useEffect(() => {
-        const userId = localStorage.getItem('userId');
-        if (userId) {
-            const userRef = doc(db, 'users', userId);
-        const userId = localStorage.getItem('userId');
-        if (userId) {
-            const userRef = doc(db, 'users', userId);
-            getDoc(userRef)
-                .then((doc) => {
-                    if (doc.exists) {
-                        setUser(doc.data());
-                        // console.log("DATA", doc.data());
-                        // console.log("DATA", doc.data());
-                        setInvestedAmount(doc.data().investedAmount);
-                        setReferralAmount(doc.data().referralAmount);
-                    } else {
-                        console.log('No such document!');
-                    }
-                })
-                .catch((error) => {
-                    console.log('Error getting document:', error);
-                });
-        } else {
-            setUser(null);
-        }
+        const fetchUserData = async () => {
+            try {
+                const userId = localStorage.getItem('userId');
+                if (!userId) {
+                    throw new Error('User ID not found');
+                }
+
+                const userRef = doc(db, 'users', userId);
+                const userDoc = await getDoc(userRef);
+
+                if (!userDoc.exists()) {
+                    throw new Error('User document not found');
+                }
+
+                const userData = userDoc.data();
+                setUser(userData);
+                setInvestedAmount(userData.investedAmount);
+                setReferralAmount(userData.referralAmount);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                setUser(null);
+            }
+        };
+
+        fetchUserData();
     }, []);
+
 
     const handleToggle = (option) => {
         setSelectedOption(option);
     };
-    };
-
 
 
     return (
