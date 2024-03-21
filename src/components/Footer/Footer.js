@@ -4,7 +4,7 @@ import { Facebook, Twitter, LinkedIn, Instagram, YouTube, Phone, Mail } from '@m
 
 const Footer = () => {
   return (
-    <footer style={{ backgroundColor: '#f8f9fa', padding: '50px 0' }}>
+    <footer style={{ padding: '70px 0' }}>
       <Container maxWidth="lg">
         <Grid container spacing={3} justifyContent="space-between">
           {/* About Us Section */}
@@ -17,12 +17,12 @@ const Footer = () => {
           {/* Quick Links Section */}
           <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" gutterBottom>Quick Links</Typography>
-            <ul style={{ listStyleType: 'none', padding: 0 }}>
-              <li><Link href="#">Home</Link></li>
-              <li><Link href="#">About</Link></li>
-              <li><Link href="#">Services</Link></li>
-              <li><Link href="#">Investment Plans</Link></li>
-              <li><Link href="#">Contact Us</Link></li>
+            <ul style={{ listStyleType: 'none', padding: 0, color:"black"}}>
+              <li><Link href="/" style={{color:"black"}}>Home</Link></li>
+              <li><Link href="/aboutus"  style={{color:"black"}}>About</Link></li>
+              <li><Link href="#"  style={{color:"black"}}>Services</Link></li>
+              <li><Link href="#"  style={{color:"black"}}>Investment Plans</Link></li>
+              <li><Link href="/aboutus"  style={{color:"black"}}>Contact Us</Link></li>
             </ul>
           </Grid>
           {/* Contact Info Section */}

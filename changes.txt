@@ -1,5 +1,11 @@
 1. Cookies session -> (On closing browser and starting again should keep user logged in)  --> DONE 
 
-2. Razorpay 
-3. KYC 
+2. Razorpay --> DONE 
+3. KYC --> Nearly Done 
 4. Referral 
+
+
+5. When updating interest amount every midnight update withdrawableAmount 
+6. Also update referral income every midnight along with this also update withdrawableAmount 
+7. When amount withdrawed then subtract that from withdrawableAmount 
+

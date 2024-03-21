@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Step1Form from '../../components/KycForms/Step1Form';
 import Step2Form from '../../components/KycForms/Step2Form';
+import Step1Form from '../../components/KycForms/Step1Form';
 import Step3Form from '../../components/KycForms/Step3Form';
 import ConfirmationStep from '../../components/KycForms/ConfirmationStep';
 

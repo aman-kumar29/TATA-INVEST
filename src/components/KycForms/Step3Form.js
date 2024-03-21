@@ -1,91 +1,106 @@
 import React, { useState } from 'react';
+import { Card, CardContent, Typography, Button, TextField, FormControl } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-function Step3Form({ formData, handleChange, nextStep, prevStep, setLoading }) {
-  const [otpGenerated, setOtpGenerated] = useState(false);
-  const [otp, setOtp] = useState('');
-
-  const generateOTP = () => {
-    const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
-    setOtp(generatedOtp);
-    setOtpGenerated(true);
+function Step3Form() {
+  const [documentFile, setDocumentFile] = useState(null);
+  const [inputValues, setInputValues] = useState({
+    input1: '',
+    input2: '',
+    input3: '',
+    input4: '',
+    input5: '',
+    input6: ''
+  });
+  const history = useNavigate();
+  const nextStep = () => {
+    history("/kyc-step4");
   };
-  const submitKycData = async (formData, otp) => {
-    return { success: true }; 
-  };
 
-  const handleSubmit = async () => {
-    if (!validateForm(formData) || !otp) {
-      return;
-    }
-    setLoading(true);
-    try {
-      // Simulate API call to submit KYC data and verify OTP
-      const response = await submitKycData(formData, otp);
-      if (response.success) {
-        console.log('KYC submitted successfully!');
-        nextStep();
-      } else {
-        console.error('KYC submission failed:', response.error);
-      }
-    } catch (error) {
-      console.error('Error submitting KYC data:', error);
-    } finally {
-      setLoading(false);
+  const prevStep = () => {
+    history("/kyc-step2");
+  };
+  const handleDocumentUpload = (event) => {
+    const file = event.target.files[0];
+    if (file && (file.type === 'application/pdf' || file.type === 'image/jpeg' || file.type === 'image/jpg')) {
+      setDocumentFile(file);
+    } else {
+      alert('Please upload a valid PDF or JPEG/JPG file.');
     }
   };
 
-  const validateForm = (data) => {
-    return true;
+  const handleInputChange = (event, inputKey) => {
+    setInputValues({ ...inputValues, [inputKey]: event.target.value });
   };
 
   return (
-    <div>
-      <h2>Step 3: Aadhar Verification</h2>
-      <form>
-        <label htmlFor="authType">Aadhar Authentication Type:</label>
-        <select
-          id="authType"
-          name="authType"
-          value={formData.authType}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Authentication Type</option>
-          <option value="OTP">OTP</option>
-          <option value="Biometric">Biometric</option>
-          {/* Add more authentication types as needed */}
-        </select>
-
-        <label htmlFor="aadharNumber">Aadhaar Number:</label>
-        <input
-          type="text"
-          id="aadharNumber"
-          name="aadharNumber"
-          value={formData.aadharNumber}
-          onChange={handleChange}
-          required
-        />
-
-        {formData.authType === 'OTP' && otpGenerated && (
-          <>
-            <label htmlFor="otp">Enter OTP:</label>
-            <input
-              type="text"
-              id="otp"
-              name="otp"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              required
+    <div className="step3-form-container">
+      <h2>Step 3: Upload Document and Input Data</h2>
+      <Card>
+        <CardContent>
+          <Typography variant="h6" gutterBottom>
+            Upload Document:
+          </Typography>
+          <input
+            type="file"
+            accept=".pdf,.jpg,.jpeg"
+            onChange={handleDocumentUpload}
+          />
+          <Typography variant="h6" gutterBottom>
+            Input Data:
+          </Typography>
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Input 1"
+              value={inputValues.input1}
+              onChange={(event) => handleInputChange(event, 'input1')}
             />
-          </>
-        )}
-
-        <button type="button" onClick={prevStep}>Previous</button>
-        {formData.authType === 'OTP' && !otpGenerated && (
-          <button type="button" onClick={generateOTP}>Generate OTP</button>
-        )}
-        <button type="button" onClick={handleSubmit}>Submit KYC</button>
-      </form>
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Input 2"
+              value={inputValues.input2}
+              onChange={(event) => handleInputChange(event, 'input2')}
+            />
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Input 3"
+              value={inputValues.input3}
+              onChange={(event) => handleInputChange(event, 'input3')}
+            />
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Input 4"
+              value={inputValues.input4}
+              onChange={(event) => handleInputChange(event, 'input4')}
+            />
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Input 5"
+              value={inputValues.input5}
+              onChange={(event) => handleInputChange(event, 'input5')}
+            />
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Input 6"
+              value={inputValues.input6}
+              onChange={(event) => handleInputChange(event, 'input6')}
+            />
+          </FormControl>
+        </CardContent>
+      </Card>
+      <div className="buttons-container">
+        <Button variant="contained" onClick={prevStep}>
+          Go back
+        </Button>
+        <Button variant="contained" color="primary" onClick={nextStep}>
+          Continue
+        </Button>
+      </div>
     </div>
   );
 }
