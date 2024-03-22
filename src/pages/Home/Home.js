@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../Firebase/config";
+import { auth } from "../../Firebase/config.js";
 import { containerStyles } from '../../components/Carousel/carousel.module.js';
 import { slides } from '../../data.js';
 import ImageSlider from '../../components/ImageSlider/ImageSlider.js';

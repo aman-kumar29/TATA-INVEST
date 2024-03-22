@@ -1,6 +1,6 @@
 import { sendPasswordResetEmail } from "firebase/auth";
 import React from "react";
-import { auth } from "../../Firebase/config";
+import { auth } from "../../Firebase/config.js";
 import { useNavigate } from "react-router-dom";
 
 function ForgotPassword(){

@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { getUser } from "../../utils/getUser.js";
 import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../Firebase/config';
+import { db } from '../../Firebase/config.js';
 
 const AddMoneyPage = () => {
   const [amount, setAmount] = useState('');
