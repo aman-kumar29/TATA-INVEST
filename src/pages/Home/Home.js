@@ -4,9 +4,8 @@ import { auth } from "../../Firebase/config";
 import { containerStyles } from '../../components/Carousel/carousel.module.js';
 import { slides } from '../../data.js';
 import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
-import InvestmentPlans from '../../components/InvestmentPlans/InvestmentPlans.js';
+import InvestmentPlans from '../../components/InvestmentPlans/InvestmentPlans.jsx';
 import HappyFamily from '../../components/HappyFamily/HappyFamily.js';
-import Footer from '../../components/Footer/Footer.js';
 
 export default function Home() {
   const history = useNavigate();
@@ -32,7 +31,6 @@ export default function Home() {
     </div>
     <HappyFamily/>
     <InvestmentPlans/>
-    <Footer/>
     </>
   );
 }

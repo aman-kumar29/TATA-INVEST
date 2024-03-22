@@ -1,4 +1,11 @@
 .custom-bg-color {
-    background: rgb(79,96,193);
-    background-color: linear-gradient(90deg, rgba(178,160,254,1) 0%, rgba(105,122,220,1) 35%, rgba(79,96,193,1) 100%);
-  }
+  background: linear-gradient(90deg, rgba(99, 96, 193, 1) 0%, rgba(135, 132, 220, 1) 35%, rgba(178, 160, 254, 1) 100%);
+}
+
+.navbar-toggler-icon {
+  transition: transform 0.3s ease;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+  transform: rotate(90deg);
+}

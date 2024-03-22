@@ -32,7 +32,7 @@ async function updateInterestAmounts() {
 
         const newInterestAmount = currentInterestAmount + interestUpdate;
         const newWithdrawableAmount = currentWithdrawableAmount + interestUpdate;
-        console.log(`Updating interest amount for ${doc.data().name}: ${currentInterestAmount} -> ${newInterestAmount}`);
+        // console.log(`Updating interest amount for ${doc.data().name}: ${currentInterestAmount} -> ${newInterestAmount}`);
         batch.set(doc.ref, {
            interestAmount: newInterestAmount,
             withdrawableAmount: newWithdrawableAmount, 
@@ -113,8 +113,6 @@ const task_2 = cron.schedule('0 0 */7 * *', updateInvestedAmount);
 task_2.start();
 
 
-// For Checking 
-
 app.get('/updateInvestedAmount', async  (req, res)  => {
   try {
     await updateInvestedAmount();
@@ -125,7 +123,7 @@ app.get('/updateInvestedAmount', async  (req, res)  => {
   }
 });
 
-app.get('/update', async  (req, res)  => {
+app.get('/updateInterestAmount', async  (req, res)  => {
   try {
     await updateInterestAmounts();
     res.send('Update triggered (simulated)');

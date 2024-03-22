@@ -52,7 +52,7 @@ function Login() {
             <p onClick={handleReset}>Forgot Password?</p>
           </div>
           <div className="signup-link">
-            <Link to="/signup" className="signup-link-text">
+            <Link to="/signup" className="signup-link-text" style={{color:'#fff'}}>
               Don't have an account? Sign Up
             </Link>
           </div>
