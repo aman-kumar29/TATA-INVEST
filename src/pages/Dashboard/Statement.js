@@ -12,8 +12,12 @@ const Statement = () => {
     
     useEffect(() => {
         const fetchUserData = async () => {
-            try {
+            try { 
                 const userId = localStorage.getItem('userId');
+                // console.log("AXIOS Working");
+                // const usergetName = await axios.get(`http://localhost:8000/api/parentReferralUpdate/${userId}`);
+                // console.log("AXIOS Done", usergetName);
+
                 if (!userId) {
                     throw new Error('User ID not found');
                 }

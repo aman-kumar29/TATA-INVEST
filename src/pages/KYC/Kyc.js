@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Step2Form from '../../components/KycForms/Step2Form';
-import Step1Form from '../../components/KycForms/Step1Form';
-import Step3Form from '../../components/KycForms/Step3Form';
-import ConfirmationStep from '../../components/KycForms/ConfirmationStep';
+import Step2Form from '../../components/KycForms/Step2Form.js';
+import Step1Form from '../../components/KycForms/Step1Form.js';
+import Step3Form from '../../components/KycForms/Step3Form.js';
+import ConfirmationStep from '../../components/KycForms/ConfirmationStep.js';
 
 function Kyc() {
   const [step, setStep] = useState(1);

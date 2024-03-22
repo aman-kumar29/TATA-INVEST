@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
-import { auth } from '../../Firebase/config';
+import { auth } from '../../Firebase/config.js';
 import './navbar.css';
-import { removeCookie } from '../../utils/cookies';
+import { removeCookie } from '../../utils/cookies.js';
 function Navbar() {
   const [authenticated, setAuthenticated] = useState(false);
   const history = useNavigate();

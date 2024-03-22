@@ -1,16 +1,33 @@
-const express = require('express');
-const admin = require('firebase-admin'); // Using firebase@9
-const cron = require('node-cron');
-const moment = require('moment');
+import express from 'express';
+import admin from 'firebase-admin'; // Using firebase@9
+import cron from 'node-cron';
+import moment from 'moment';
+import cors from 'cors';
+import morgan from 'morgan';
+import parentReferralRoutes from './routes/parentReferralRoutes.js';
+import dotenv from 'dotenv';
+// import serviceAccount from './serviceAccount.js';
 
-require('dotenv').config();
-
+dotenv.config();
+ 
 const app = express();
 const port = process.env.PORT || 8000;
 
 // Initialize Firebase Admin SDK with service account credentials (replace with your actual values)
 admin.initializeApp({
-  credential: admin.credential.cert(require('./serviceAccount.json')),
+  credential: admin.credential.cert({
+    "type": process.env.TYPE,
+    "project_id": process.env.PROJECT_ID,
+    "private_key_id": process.env.PRIVATE_KEY_ID,
+    "private_key": process.env.PRIVATE_KEY,
+    "client_email": process.env.CLIENT_EMAIL,
+    "client_id": process.env.CLIENT_ID,
+    "auth_uri": process.env.AUTH_URI,
+    "token_uri":  process.env.TOKEN_URI,
+    "auth_provider_x509_cert_url":  process.env.AUTH_PROVIDER_X509_CERT_URL,
+    "client_x509_cert_url": process.env.CLIENT_X509_CERT_URL,
+    "universe_domain": process.env.UNIVERSE_DOMAIN
+  }),
   databaseURL: `https://${process.env.FIREBASE_PROJECT_ID}.firebaseio.com`
 });
 
@@ -98,42 +115,45 @@ async function updateInvestedAmount() {
 
 
 
-// Schedule update using cron library (replace with your chosen scheduler)
-// Use a suitable scheduler library for production
-const task = cron.schedule('*/15 * * * *', updateInterestAmounts); // Runs at midnight daily (for testing)
-
-// Optional: Start the scheduled task immediately for testing purposes (comment out for production)
-task.start();
 
 // Schedule update using cron library (replace with your chosen scheduler)
 // Use a suitable scheduler library for production
+const task = cron.schedule('*/30 * * * *', updateInterestAmounts); // Runs at midnight daily (for testing)
 const task_2 = cron.schedule('0 0 */7 * *', updateInvestedAmount);
 
 // Optional: Start the scheduled task immediately for testing purposes (comment out for production)
+task.start();
 task_2.start();
 
 
 // For Checking 
 
-app.get('/updateInvestedAmount', async  (req, res)  => {
-  try {
-    await updateInvestedAmount();
-    res.send('Update investedAmount triggered (simulated)');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error triggering update investedAmount');
-  }
-});
+// app.get('/updateInvestedAmount', async  (req, res)  => {
+//   try {
+//     await updateInvestedAmount();
+//     res.send('Update investedAmount triggered (simulated)');
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Error triggering update investedAmount');
+//   }
+// });
 
-app.get('/update', async  (req, res)  => {
-  try {
-    await updateInterestAmounts();
-    res.send('Update triggered (simulated)');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error triggering update');
-  }
-});
+app.use(cors());
+app.use(express.json());
+app.use(morgan("dev"));
+
+app.use("/api", parentReferralRoutes);
+ 
+// app.get('/update', async  (req, res)  => {
+//   try {
+//     await updateInterestAmounts();
+//     res.send('Update triggered (simulated)');
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Error triggering update');
+//   }
+// });
+
 app.get('/', (req, res)  => {
     res.send('Server service running');
 });

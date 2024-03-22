@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { auth } from "../../Firebase/config";
+import { auth } from "../../Firebase/config.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import "./signIn.css"; // Assume SignIn.css is the CSS file for styling
-import Cookies from "js-cookie";
+import "./signIn.css"; // CSS file 
 import { useDispatch } from "react-redux";
 import { authActions } from "../../redux/store.js";
 
@@ -18,7 +17,6 @@ function Login() {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((data) => {
-        Cookies.set("LoggedIn", JSON.stringify(data),{expires : 7});
         localStorage.setItem("userId", data?.user.uid);
         dispatch(authActions.login());
         history("/dashboard");

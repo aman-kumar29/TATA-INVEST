@@ -1,12 +1,12 @@
 import React,{ useState } from "react";
 import { Link } from "react-router-dom";
-import { auth } from "../../Firebase/config";
+import { auth,createUserDocument } from "../../Firebase/config.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "./signUp.css"; // Assume SignUp.css is the CSS file for styling
-import { createUserDocument } from "../../Firebase/config";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../redux/store.js";
+import axios from "axios";
 
 function SignUp() {
   const history = useNavigate();
@@ -29,6 +29,15 @@ function SignUp() {
     });
   };
 
+ const handleParentReferralCode = async (childrenId) => {
+    const dummyData = await axios.get(`http://localhost:8000/api/parentReferralUpdate/${childrenId}`);
+    console.log(dummyData, "dummyData");
+
+  }
+
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
      if (!formData.email || !formData.password || !formData.user_name || !formData.phone || !formData.address) {
@@ -40,8 +49,17 @@ function SignUp() {
 
     createUserWithEmailAndPassword(auth, formData.email, formData.password)
       .then((data) => {
-        createUserDocument(data.user, formData.user_name, formData.parentReferralCode, formData.phone, formData.address);
+        createUserDocument(data.user, formData.user_name, formData.parentReferralCode, formData.phone, formData.address)
+        .then(() => {
+          if(formData.parentReferralCode!==''){
+            console.log("Entering handleParentReferralCode");
+            handleParentReferralCode(data.user.uid);
+          }
+        });
+        
+          // handleParentReferralCode(docRef.id);
         console.log(data.user, "authData");
+        
         // console.log(data?.user.uid, "UID");
         localStorage.setItem("userId", data?.user.uid);
         dispatch(authActions.login());
