@@ -1,56 +1,29 @@
 {
-  "name": "tata_invest",
-  "version": "0.1.0",
-  "private": true,
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "type": "module",
-  "dependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.13.7",
-    "@mui/material": "^5.13.7",
-    "@reduxjs/toolkit": "^2.2.1",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.6.8",
-    "firebase": "^10.9.0",
-    "js-cookie": "^3.0.5",
-    "razorpay": "^2.9.2",
-    "react": "^18.2.0",
-    "react-bootstrap": "^2.10.2",
-    "react-dom": "^18.2.0",
-    "react-razorpay": "^2.0.1",
-    "react-redux": "^9.1.0",
-    "react-router-dom": "^6.22.3",
-    "react-scripts": "5.0.1",
-    "react-slick": "^0.30.2",
-    "redux": "^5.0.1",
-    "slick-carousel": "^1.8.1",
-    "web-vitals": "^2.1.4"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm start --prefix ./client"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.1",
+    "firebase": "^10.9.0",
+    "firebase-admin": "^12.0.0",
+    "moment": "^2.30.1",
+    "morgan": "^1.10.0",
+    "node-cron": "^3.0.3"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
