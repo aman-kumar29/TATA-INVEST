@@ -52,8 +52,18 @@ async function updateInterestAmounts() {
           const referralUsersArray = userData.referralUsers || [];
           for (const referralUser of referralUsersArray) {
               const referralUserDoc = await firestore.collection('users').doc(referralUser).get();
-              const referralUserInvestedAmount = referralUserDoc.data().investedAmount || 0;
+              const referralUserDocData = referralUserDoc.data();
+              const referralUserInvestedAmount = referralUserDocData.investedAmount || 0;
               totalReferralAddition += referralUserInvestedAmount * 0.003;
+
+              const childOfChildReferralUsersArray = referralUserDocData.referralUsers || [];
+              for (const childOfChildReferralUser of childOfChildReferralUsersArray) {
+                const childOfChildreferralUserDoc = await firestore.collection('users').doc(childOfChildReferralUser).get();
+              const childOfChildreferralUserDocData = childOfChildreferralUserDoc.data();
+              const childOfChildreferralUserInvestedAmount = childOfChildreferralUserDocData.investedAmount || 0;
+              totalReferralAddition += childOfChildreferralUserInvestedAmount * 0.001;
+              }
+
           }
 
           const interestUpdate = investedAmount * 0.012;
