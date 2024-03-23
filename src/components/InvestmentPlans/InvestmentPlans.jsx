@@ -11,30 +11,37 @@ const investmentPlans = [
     {
         amount: 1000,
         interest: '1.2%',
+        interestAmount:12,
     },
     {
         amount: 2000,
         interest: '1.2%',
+        interestAmount:24,
     },
     {
         amount: 5000,
         interest: '1.2%',
+        interestAmount:60,
     },
     {
         amount: 10000,
         interest: '1.2%',
+        interestAmount:120,
     },
     {
         amount: 20000,
         interest: '1.2%',
+        interestAmount:240,
     },
     {
         amount: 50000,
         interest: '1.2%',
+        interestAmount:600,
     },
     {
         amount: 100000,
         interest: '1.2%',
+        interestAmount:1200,
     },
 ];
 const cardStyles = {
@@ -94,31 +101,36 @@ export default function InvestmentPlans() {
         <Slider {...settings}>
           {investmentPlans.map((plan, index) => (
             <div key={index}>
-              <Card style={cardStyles} key={index}>
-                <CardContent>
-                  <Typography variant="h6" style={{ fontSize: 18, fontWeight: 600 }}>
-                    Plan {index + 1}
+            <Card style={cardStyles} key={index}>
+              <CardContent>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <i className="material-icons" style={{ color: 'purple', fontSize: 24, marginRight: 10 }}></i> {/* Replace with your desired icon name */}
+                  <Typography variant="h6" style={{ fontSize: 22, fontWeight: 600 }}>
+                    Invest Rs {plan.amount}
                   </Typography>
-                  <Typography style={{ fontSize: 16 }}>
-                    Amount: ${plan.amount}
-                  </Typography>
-                  <Typography style={{ fontSize: 16 }}>
-                    Interest: {plan.interest}
-                  </Typography>
-                </CardContent>
-                <CardActions style={{ justifyContent: 'center' }}>
-                  <Button
-                    onClick={handleInvestClick}
-                    to="/#"
-                    style={{ color: '#fff', fontSize: 10 }}
-                  >
-                    Invest Now
-                  </Button>
-                  <Button component={Link} to="/#" style={{ color: '#fff', fontSize: 10 }}>
-                    Learn More
-                  </Button>
-                </CardActions>
-              </Card>
+                </div>
+                <Typography variant="body2" color="textSecondary" style={{ fontSize: 16, marginTop: 5 }}>
+                  Get Rs {plan.interestAmount} per day!!!{/* Add a short description related to the investment */}
+                </Typography>
+              </CardContent>
+              <CardActions style={{ justifyContent: 'center', display: 'flex', flexDirection: 'column' }}>
+                <Button
+                  onClick={handleInvestClick}
+                  to="/login"
+                  style={{ backgroundColor: 'white', color: 'blue', fontSize: 12, padding: '10px 20px', marginBottom: 5 }}
+                >
+                  Invest Now
+                </Button>
+                <Button
+                  component={Link}
+                  to="/aboutus"
+                  style={{ backgroundColor: 'white', color: 'green', fontSize: 12, padding: '10px 20px' }}
+                >
+                  Learn More
+                </Button>
+              </CardActions>
+            </Card>
+
             </div>
           ))}
         </Slider>

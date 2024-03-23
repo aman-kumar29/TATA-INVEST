@@ -11,19 +11,6 @@ function Navbar() {
   useEffect(() => {
      setAuthenticated(userId !== null && userId !== undefined);
   }, [userId]);
-
-  // useEffect(() => {
-  //   // const unsubscribe = auth.onAuthStateChanged(user => {
-  //   //   if (user) {
-  //   //     setAuthenticated(true);
-  //   //   } else {
-  //   //     setAuthenticated(false);
-  //   //   }
-  //   // });
-    
-  //   // return () => unsubscribe();
-  // }, [userId]);
-
   
  
 
