@@ -1,6 +1,68 @@
 .profile-card {
+    max-width: 60%;
     margin: 0 auto;
-    background: linear-gradient(to right, #132083, #b2a1ff);
-    color: white;
-    width: 80%;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: #f1f1f1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.profile-item p {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.profile-item span {
+    font-weight:normal ;
+    padding: 8px;
+    box-shadow:1px 1px rgb(177, 177, 177);
+}
+
+.copy-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    color: #007bff;
+}
+
+.copy-icon i {
+    font-size: 18px;
+}
+
+.copy-icon i:hover {
+    color: #0056b3;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.social-media-icon {
+    cursor: pointer;
+}
+
+.social-media-icon i {
+    font-size: 24px;
+    color: #007bff;
+}
+
+.social-media-icon i:hover {
+    color: #0056b3;
+}
+
+.action-button {
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .profile-card {
+        width: 90%;
+    }
 }

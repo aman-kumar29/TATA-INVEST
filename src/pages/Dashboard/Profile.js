@@ -7,6 +7,7 @@ import './css/profile.css';
 const ProfilePage = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [copied, setCopied] = useState(false);
     const history = useNavigate();
 
     useEffect(() => {
@@ -35,46 +36,42 @@ const ProfilePage = () => {
         history('/signup');
     }
 
+    const copyReferralCode = () => {
+        navigator.clipboard.writeText(user.referralCode);
+        setCopied(true);
+        setTimeout(() => {
+            setCopied(false);
+        }, 3000);
+    };
+
+    const handleShareToSocialMedia = (platform) => {
+        let shareUrl = `https://your-app.com/referral/${user.referralCode}`;
+        window.open(shareUrl, '_blank');
+    };
+
     return (
-        <div className="container mt-5 my-5">
-            <div className="card shadow p-4 profile-card">
+        <div className="container mt-5">
+            <div className="profile-card">
                 <h1 className="text-center mb-4">Profile Page</h1>
                 {loading ? (
                     <p className="text-center">Loading user data...</p>
                 ) : user ? (
                     <div>
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                            <p>Email: {user.email}</p>
-                            <i className="fas fa-envelope"></i>
+                        <ProfileItem label="Email" value={user.email} iconClass="fas fa-envelope" />
+                        <ProfileItem label="Name" value={user.name} iconClass="fas fa-user" />
+                        <ProfileItem label="Phone" value={user.phone} iconClass="fas fa-phone" />
+                        <ProfileItem label="Address" value={user.address} iconClass="fas fa-map-marker-alt" />
+                        <ProfileItem label="KYC" value={user.kycDone ? "Done" : "Not Done"} iconClass="fas fa-check-circle" />
+                        <div className="profile-item">
+                            <p>Referral Code:  <span>{user.referralCode}</span>
+                            <span className="icon" onClick={copyReferralCode}>
+                                {copied ? <i className="fas fa-check-circle"></i> : <i className="far fa-copy"></i>}
+                            </span></p>
+                            
                         </div>
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                            <p>Name: {user.name}</p>
-                            <i className="fas fa-user"></i>
-                        </div>
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                            <p>Phone: {user.phone}</p>
-                            <i className="fas fa-phone"></i>
-                        </div>
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                            <p>Address: {user.address}</p>
-                            <i className="fas fa-location"></i>
-                        </div>
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                            <p>KYC: {user.kycDone ? "Done" : "Not Done"}</p>
-                            <i className={user.kycDone ? "fas fa-check" : "fas fa-hourglass"}></i>
-                        </div>
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                            <p> Referral Code - {user.referralCode}</p>
-                            <i className="fas fa-handshake"></i>
-                        </div>
-                        {/* Add similar sections for other user data */}
-                        <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button className="btn btn-danger me-md-2" onClick={handleDeleteUserAccount}>
-                                Delete Account
-                            </button>
-                            <button className="btn btn-primary">
-                                <Link to="/updateinfo" className="text-white">Update Info</Link>
-                            </button>
+                        <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <ActionButton onClick={handleDeleteUserAccount} text="Delete Account" iconClass="fas fa-trash" color="danger" />
+                            <ActionButton to="/updateinfo" text="Update Info" iconClass="fas fa-edit" color="blue" />
                         </div>
                     </div>
                 ) : (
@@ -84,5 +81,20 @@ const ProfilePage = () => {
         </div>
     );
 };
+
+const ProfileItem = ({ label, value, iconClass }) => (
+    <div className="profile-item">
+        <p><i className={iconClass}></i>   {label}: <span>  {value}  </span></p>
+    </div>
+);
+
+
+const ActionButton = ({ onClick, to, iconClass, text, color }) => (
+    <button className={`btn btn-${color} me-2`} onClick={onClick}>
+        <i className={iconClass}></i>
+        {to ? <Link to={to} className="ms-2">{text}</Link> : <span className="ms-2">{text}</span>}
+    </button>
+);
+
 
 export default ProfilePage;

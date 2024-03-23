@@ -3,50 +3,60 @@ import React, { useState, useEffect } from "react";
 const slideStyles = {
   width: "100%",
   height: "100%",
-  borderRadius: "10px",
+  borderRadius: "inherit", // Inherit border radius from container
   backgroundSize: "cover",
   backgroundPosition: "center",
-  margin: "20px",
 };
 
 const rightArrowStyles = {
   position: "absolute",
   top: "50%",
-  transform: "translate(0, -50%)",
-  right: "32px",
-  fontSize: "45px",
+  transform: "translateY(-50%)",
+  right: "16px", // Adjust right spacing responsively
+  fontSize: "40px", // Adjust font size responsively
   color: "#fff",
   zIndex: 1,
   cursor: "pointer",
+  transition: "opacity 0.3s ease", // Add smooth opacity transition
 };
 
 const leftArrowStyles = {
   position: "absolute",
   top: "50%",
-  transform: "translate(0, -50%)",
-  left: "32px",
-  fontSize: "45px",
+  transform: "translateY(-50%)",
+  left: "16px", // Adjust left spacing responsively
+  fontSize: "40px", // Adjust font size responsively
   color: "#fff",
   zIndex: 1,
   cursor: "pointer",
+  transition: "opacity 0.3s ease", // Add smooth opacity transition
 };
 
 const sliderStyles = {
   position: "relative",
   height: "100%",
-  overflow: "hidden",
+  overflow: "hidden", // Hide overflow for rounded corners
 };
 
 const dotsContainerStyles = {
   display: "flex",
   justifyContent: "center",
-  marginBottom: "20px",
+  marginTop: "10px", // Adjust top margin responsively
+  marginBottom: "0", // Remove bottom margin
 };
 
 const dotStyle = {
-  margin: "0 3px",
+  margin: "0 5px", // Adjust dot spacing responsively
   cursor: "pointer",
-  fontSize: "30px",
+  fontSize: "20px", // Adjust dot size responsively,
+  color: "#ccc", // Set inactive dot color
+  transition: "transform 0.3s ease", // Add smooth transform transition
+};
+
+const activeDotStyle = {
+  ...dotStyle,
+  transform: "scale(1.2)", // Scale up active dot
+  color: "#000", // Set active dot color
 };
 
 const ImageSlider = ({ slides }) => {
@@ -95,15 +105,16 @@ const ImageSlider = ({ slides }) => {
       </div>
       <div style={slideStylesWidthBackground}></div>
       <div style={dotsContainerStyles}>
-        {slides.map((slide, slideIndex) => (
-          <div
-            style={dotStyle}
-            key={slideIndex}
-            onClick={() => goToSlide(slideIndex)}
-          >
-            ●
-          </div>
-        ))}
+      {slides.map((slide, slideIndex) => (
+        <div
+          style={slideIndex === currentIndex ? activeDotStyle : dotStyle}
+          key={slideIndex}
+          onClick={() => goToSlide(slideIndex)}
+        >
+          ●
+        </div>
+      ))}
+
       </div>
     </div>
   );

@@ -6,13 +6,11 @@ import { slides } from '../../data.js';
 import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
 import InvestmentPlans from '../../components/InvestmentPlans/InvestmentPlans.jsx';
 import HappyFamily from '../../components/HappyFamily/HappyFamily.js';
-import Footer from '../../components/Footer/Footer.js';
 
 export default function Home() {
   const history = useNavigate();
 
   useEffect(() => {
-    // Check if user is logged in
     const checkLoggedIn = () => {
       auth.onAuthStateChanged((user) => {
         if (user) {
@@ -32,7 +30,6 @@ export default function Home() {
     </div>
     <HappyFamily/>
     <InvestmentPlans/>
-    <Footer/>
     </>
   );
 }

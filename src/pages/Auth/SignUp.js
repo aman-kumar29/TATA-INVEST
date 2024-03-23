@@ -141,7 +141,7 @@ function SignUp() {
             />
           </div>
           <div className="form-group">
-            <Link to="/signin" className="signin-link">
+            <Link to="/signin" className="signin-link" style={{color:'white'}}>
               Already have an account? Sign In
             </Link>
           </div>

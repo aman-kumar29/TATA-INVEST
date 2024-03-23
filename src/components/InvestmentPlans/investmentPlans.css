@@ -1,0 +1,13 @@
+.slider-container {
+    max-width: 80%;
+    overflow: hidden;
+    justify-content: center;
+    margin: 0 auto;
+}
+@media (max-width:768){
+    .slider-container {
+        max-width: 100%;
+        overflow-x: hidden;
+        justify-content: center;
+    }
+}

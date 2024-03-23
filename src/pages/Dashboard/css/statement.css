@@ -1,4 +1,4 @@
-.statement{
+.statement {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,6 +12,87 @@
     max-width: 900px;
     margin: 0 auto;
 }
-/* .list-design{
-    background: linear-gradient(to right, #3a47aa, #efeef1);
-} */
+
+.card {
+    margin-bottom: 20px;
+}
+
+.profile-card {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.list-group-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa; /* Lighter background color on hover */
+}
+
+.list-group-item .badge {
+    font-size: 14px;
+    background-color: #007bff; /* Badge background color */
+}
+
+.loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #007bff; /* Loading spinner color */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #28a745;
+    border: 1px solid #28a745;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    border: 1px solid #6c757d;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+/* Icons */
+.me-2 {
+    margin-right: 0.5rem; /* Add space between icons and text */
+}
