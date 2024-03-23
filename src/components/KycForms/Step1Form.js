@@ -5,10 +5,10 @@ import './css/Step1Form.css'; // Import the CSS file
 
 function Step1Form({ formData, handleChange, nextStep, prevStep }) {
   const documentsRequired = [
-    { name: "Aadhaar Card", description: "This is your Aadhaar card" },
-    { name: "PAN Card", description: "This is your PAN card" },
-    { name: "Address Proof", description: "This is your address proof" },
-    { name: "Identity Proof", description: "This is your identity proof" },
+    { name: "Aadhaar Card", description: "This is your Aadhaar card", img:"https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/assets%2Faadhar.jpg?alt=media&token=5733d13a-a4d9-4454-90d1-80f5bb7488c5" },
+    { name: "PAN Card", description: "This is your PAN card",  img:"https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/assets%2Fpan.webp?alt=media&token=518d3fd1-a5cb-41b6-b1ad-92a55055cc83" },
+    // { name: "Address Proof", description: "This is your address proof" },
+    // { name: "Identity Proof", description: "This is your identity proof" },
   ];
   const history = useNavigate();
 
@@ -21,6 +21,9 @@ function Step1Form({ formData, handleChange, nextStep, prevStep }) {
     }
     history("/kyc-step2");
   };
+  const handleBack = () => {
+    history("/dashboard");
+  };
 
   return (
     <div className="step1-form-container"> {/* Main container */}
@@ -31,7 +34,7 @@ function Step1Form({ formData, handleChange, nextStep, prevStep }) {
             <Card className="document-card"> {/* Document card */}
               {/* Image */}
               <CardContent>
-                <img src={`/${document.name}.png`} alt={document.name} />
+                <img src={document.img} alt={document.name} />
               </CardContent>
               {/* Document Name */}
               <CardContent className="document-card-content">
@@ -53,13 +56,13 @@ function Step1Form({ formData, handleChange, nextStep, prevStep }) {
           label={
             <span>
               I understand and agree to the required{" "}
-              <a href="/terms-and-conditions">Terms & Conditions</a> to complete this KYC process.
+              <a href="/aboutus">Terms & Conditions</a> to complete this KYC process.
             </span>
           }
         />
       </div>
       <div className="buttons-container"> {/* Buttons container */}
-        <Button variant="contained" onClick={prevStep}>
+        <Button variant="contained" onClick={handleBack}>
           I don't have these documents
         </Button>
         <Button variant="contained" color="primary" disabled={!isTermsAccepted} onClick={handleNext}>

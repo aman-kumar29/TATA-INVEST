@@ -40,11 +40,6 @@ function App() {
       <Route path="/kyc-step3" element={<Step3Form/>} />
       <Route path="/kyc-confirmation" element={<ConfirmationStep/>} />
       <Route path="/addmoney" element={<AddMoneyPage />} />
-      <Route path="/kyc-step1" element={<Step1Form/>} />
-      <Route path="/kyc-step2" element={<Step2Form/>} />
-      <Route path="/kyc-step3" element={<Step3Form/>} />
-      <Route path="/kyc-confirmation" element={<ConfirmationStep/>} />
-      <Route path="/addmoney" element={<AddMoneyPage />} />
     </Routes>
     <Footer/>
     </>

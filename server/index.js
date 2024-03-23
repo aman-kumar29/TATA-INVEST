@@ -35,32 +35,44 @@ const firestore = admin.firestore();
 
 // Daily update task (using async/await)
 async function updateInterestAmounts() {
-    const batch = firestore.batch();
-  
-    try {
+  const batch = firestore.batch();
+
+  try {
       const usersRef = firestore.collection('users');
       const usersSnapshot = await usersRef.get();
-  
-      usersSnapshot.forEach((doc) => {
-        const investedAmount = doc.data().investedAmount;
-        const currentInterestAmount = doc.data().interestAmount || 0; // Handle initial value
-        const interestUpdate = investedAmount * 0.012; // Calculate interest increase for a day
-        const currentWithdrawableAmount = doc.data().withdrawableAmount || 0; // Handle initial value
 
-        const newInterestAmount = currentInterestAmount + interestUpdate;
-        const newWithdrawableAmount = currentWithdrawableAmount + interestUpdate;
-        // console.log(`Updating interest amount for ${doc.data().name}: ${currentInterestAmount} -> ${newInterestAmount}`);
-        batch.set(doc.ref, {
-           interestAmount: newInterestAmount,
-            withdrawableAmount: newWithdrawableAmount, 
+      for (const doc of usersSnapshot.docs) {
+          const userData = doc.data();
+          const investedAmount = userData.investedAmount || 0;
+          const currentInterestAmount = userData.interestAmount || 0;
+          const currentWithdrawableAmount = userData.withdrawableAmount || 0;
+          const referralAmount = userData.referralAmount || 0;
+          let totalReferralAddition = 0;
+
+          const referralUsersArray = userData.referralUsers || [];
+          for (const referralUser of referralUsersArray) {
+              const referralUserDoc = await firestore.collection('users').doc(referralUser).get();
+              const referralUserInvestedAmount = referralUserDoc.data().investedAmount || 0;
+              totalReferralAddition += referralUserInvestedAmount * 0.003;
+          }
+
+          const interestUpdate = investedAmount * 0.012;
+          const newInterestAmount = currentInterestAmount + interestUpdate;
+          const newReferralAmount = referralAmount + totalReferralAddition;
+          const newWithdrawableAmount = currentWithdrawableAmount + interestUpdate + totalReferralAddition;
+
+          batch.set(doc.ref, {
+              interestAmount: newInterestAmount,
+              withdrawableAmount: newWithdrawableAmount,
+              referralAmount: newReferralAmount,
           }, { merge: true });
-      });
-  
+      }
+
       await batch.commit();
       console.log('Interest amounts updated successfully!');
-    } catch (error) {
+  } catch (error) {
       console.error('Error updating interest amounts:', error);
-    }
+  }
 }
 
 async function updateInvestedAmount() {
@@ -118,7 +130,7 @@ async function updateInvestedAmount() {
 
 // Schedule update using cron library (replace with your chosen scheduler)
 // Use a suitable scheduler library for production
-const task = cron.schedule('*/30 * * * *', updateInterestAmounts); // Runs at midnight daily (for testing)
+const task = cron.schedule('*/1 * * * *', updateInterestAmounts); // Runs at midnight daily (for testing)
 const task_2 = cron.schedule('0 0 */7 * *', updateInvestedAmount);
 
 // Optional: Start the scheduled task immediately for testing purposes (comment out for production)

@@ -89,7 +89,7 @@ function Step2Form() {
 
   return (
     <div className="step2-form-container"> {/* Main container */}
-      <h2>Step 3: Contact Details</h2>
+      <h2>Step 2: Contact Details</h2>
       <Card className="contact-card">
         <CardContent className="card-content">
           <FormControl fullWidth>

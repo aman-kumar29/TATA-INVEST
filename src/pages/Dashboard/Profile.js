@@ -32,8 +32,16 @@ const ProfilePage = () => {
     }, []);
 
     const handleDeleteUserAccount = () => {
-        handleDeleteAccount();
-        history('/signup');
+        if (window.confirm('Are you sure you want to delete your account?')) {
+            handleDeleteAccount()
+                .then(() => {
+                    localStorage.removeItem('userId');
+                    history('/login');
+                })
+                .catch((error) => {
+                    console.log('Error deleting user account:', error);
+                });
+        }
     }
 
     const copyReferralCode = () => {
@@ -63,11 +71,10 @@ const ProfilePage = () => {
                         <ProfileItem label="Address" value={user.address} iconClass="fas fa-map-marker-alt" />
                         <ProfileItem label="KYC" value={user.kycDone ? "Done" : "Not Done"} iconClass="fas fa-check-circle" />
                         <div className="profile-item">
-                            <p>Referral Code:  <span>{user.referralCode}</span>
+                            <p> <i className='fas fa-handshake'></i>  Referral Code:  <span>{user.referralCode}</span>
                             <span className="icon" onClick={copyReferralCode}>
                                 {copied ? <i className="fas fa-check-circle"></i> : <i className="far fa-copy"></i>}
-                            </span></p>
-                            
+                            </span> <span onClick={handleShareToSocialMedia}> <i className='fa fa-share'></i> </span> </p>
                         </div>
                         <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                             <ActionButton onClick={handleDeleteUserAccount} text="Delete Account" iconClass="fas fa-trash" color="danger" />
