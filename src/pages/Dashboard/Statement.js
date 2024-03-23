@@ -9,15 +9,11 @@ const Statement = () => {
     const [referralAmount, setReferralAmount] = useState(0);
     const [selectedOption, setSelectedOption] = useState('investments');
 
-    
+
     useEffect(() => {
         const fetchUserData = async () => {
-            try { 
+            try {
                 const userId = localStorage.getItem('userId');
-                // console.log("AXIOS Working");
-                // const usergetName = await axios.get(`http://localhost:8000/api/parentReferralUpdate/${userId}`);
-                // console.log("AXIOS Done", usergetName);
-
                 if (!userId) {
                     throw new Error('User ID not found');
                 }
@@ -56,8 +52,8 @@ const Statement = () => {
                     <div>
                         <p className='mx-2'>Invested Amount: ₹ {investedAmount} </p>
                         <p className='mx-2'>Interest Income: ₹ {userData.interestAmount}</p>
-                        <p className='mx-2'>Life Time Earning: ₹ {referralAmount + userData.interestAmount}</p>
                         <p className='mx-2'>Referral Income: ₹ {referralAmount}</p>
+                        <p className='mx-2'>Life Time Earning: ₹ {referralAmount + userData.interestAmount}</p>
                         <p className='mx-2'>Total Balance Withdrawable: ₹ {userData.withdrawableAmount}</p>
                     </div>
                 ) : (
@@ -65,15 +61,15 @@ const Statement = () => {
                 )}
             </div>
 
-                  <h1 className="mx-5 mt-5">Transaction Page</h1>
-                  <div className="d-flex justify-content-center">
-                      <button className={selectedOption === 'investments' ? 'btn btn-success mx-3' : 'btn btn-primary mx-3'} onClick={() => handleToggle('investments')}>
-                          Investments
-                      </button>
-                      <button className={selectedOption === 'withdrawals' ? 'btn btn-success mx-3' : 'btn btn-primary mx-3'} onClick={() => handleToggle('withdrawals')}>
-                          Withdrawals
-                      </button>
-                  </div>
+            <h1 className="mx-5 mt-5">Transaction Page</h1>
+            <div className="d-flex justify-content-center">
+                <button className={selectedOption === 'investments' ? 'btn btn-success mx-3' : 'btn btn-primary mx-3'} onClick={() => handleToggle('investments')}>
+                    Investments
+                </button>
+                <button className={selectedOption === 'withdrawals' ? 'btn btn-success mx-3' : 'btn btn-primary mx-3'} onClick={() => handleToggle('withdrawals')}>
+                    Withdrawals
+                </button>
+            </div>
 
             <div className="card shadow profile-card mx-5 my-3">
                 <h2 className="mx-3">{selectedOption === 'investments' ? 'Investments' : 'Withdrawals'}</h2>
@@ -122,7 +118,7 @@ const Statement = () => {
                                         return (
                                             <li key={index} className="list-group-item d-flex justify-content-between align-items-start list-design">
                                                 <div className="ms-2 me-auto">
-                                                    <div className="fw-bold">Investment Amount: {transaction.amount}</div>
+                                                    <div className="fw-bold">Withdrawal Amount: {transaction.amount}</div>
                                                     Transaction ID - {transaction.transactionId}
                                                 </div>
                                                 <span className="badge bg-primary rounded-pill">Date: {formattedDate}</span>

@@ -6,7 +6,6 @@ import "./css/dashboard.css";
 
 function DashboardScreen() {
     const [userData, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
     const history = useNavigate();
 
     useEffect(() => {
@@ -19,11 +18,9 @@ function DashboardScreen() {
                     } else {
                         console.log('User not found');
                     }
-                    setLoading(false);
                 })
                 .catch((error) => {
                     console.log('Error fetching user data:', error);
-                    setLoading(false);
                 });
         } else {
             history('/login');

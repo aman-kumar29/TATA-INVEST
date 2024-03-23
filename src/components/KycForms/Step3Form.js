@@ -7,19 +7,16 @@ function Step3Form() {
   const [inputValues, setInputValues] = useState({
     input1: '',
     input2: '',
-    input3: '',
-    input4: '',
-    input5: '',
-    input6: ''
   });
   const history = useNavigate();
   const nextStep = () => {
-    history("/kyc-step4");
+    history("/dashboard");
   };
 
   const prevStep = () => {
     history("/kyc-step2");
   };
+
   const handleDocumentUpload = (event) => {
     const file = event.target.files[0];
     if (file && (file.type === 'application/pdf' || file.type === 'image/jpeg' || file.type === 'image/jpg')) {
@@ -61,34 +58,6 @@ function Step3Form() {
               label="Input 2"
               value={inputValues.input2}
               onChange={(event) => handleInputChange(event, 'input2')}
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <TextField
-              label="Input 3"
-              value={inputValues.input3}
-              onChange={(event) => handleInputChange(event, 'input3')}
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <TextField
-              label="Input 4"
-              value={inputValues.input4}
-              onChange={(event) => handleInputChange(event, 'input4')}
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <TextField
-              label="Input 5"
-              value={inputValues.input5}
-              onChange={(event) => handleInputChange(event, 'input5')}
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <TextField
-              label="Input 6"
-              value={inputValues.input6}
-              onChange={(event) => handleInputChange(event, 'input6')}
             />
           </FormControl>
         </CardContent>

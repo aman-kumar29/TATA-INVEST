@@ -22,7 +22,7 @@ export default function HappyFamily() {
               You are eligible for pre-approved offers. Apply now!
             </Typography>
             <Button variant="contained" size="large" color="primary">
-              Invest Now
+            <Link to="/signup" style={{color:"white"}}>Invest Now</Link>
             </Button>
             <div style={{ fontWeight: 600 }}>
               Already Invested?{' '}

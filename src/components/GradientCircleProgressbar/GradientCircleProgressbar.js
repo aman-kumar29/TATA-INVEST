@@ -63,16 +63,16 @@ const GradientCircleProgressbar = ({
           <stop offset="100%" stopColor={primaryColor[1]} />
         </linearGradient>
         <circle
-          strokeWidth={strokeWidth}
+          strokeWidth={15}
           fill="transparent"
           r={R}
           cx={width / 2}
           cy={width / 2}
-          stroke={secondaryColor}
+          stroke={"#e0e0e0"}
           strokeDasharray={`${circumference} ${circumference}`}
         />
         <StyledCircle
-          strokeWidth={strokeWidth}
+          strokeWidth={15}
           fill={fill}
           r={R}
           cx={width / 2}

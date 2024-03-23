@@ -54,7 +54,7 @@ function Navbar() {
               {authenticated ? (
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <Link to="/dashboard"><p className="nav-link active mx-2" aria-current="page" >Dashboard</p></Link>
+                  <Link to="/dashboard"><p className="nav-link active" aria-current="page" >Dashboard</p></Link>
                 </li>
                 <li className="nav-item">
                 <Link to="/profile"><p className="nav-link active" aria-current="page" >Profile</p></Link>
@@ -75,13 +75,13 @@ function Navbar() {
                   <Link to="/"><p className="nav-link active mx-2" aria-current="page" >Home</p></Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#about">About Us</a>
+                <Link to="/aboutus"><p className="nav-link active" aria-current="page" >About Us</p></Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">Investment</a>
+                <Link to="/signup"><p className="nav-link active" aria-current="page" >Investment</p></Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#"><i className="fas fa-download"></i> Download App</a>
+                  <a className="nav-link active" href="#"><i className="fas fa-download"></i> Download App</a>
                 </li>
               </ul>
               )}
