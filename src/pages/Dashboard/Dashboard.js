@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getUser } from "../../utils/getUser.js";
 import ProgressBar from "../../components/ProgressBar/ProgressBar.js";
 import "./css/dashboard.css";
@@ -34,22 +34,26 @@ function DashboardScreen() {
         history("/addmoney");
     }
 
+    const completeKYCOnClick = () => {
+        history("/kyc-step1");
+    }
+
     return (
         <div className="dashboard-container">
-            <h1>Dashboard</h1>
+            <h1 className="dashboard-title">Dashboard</h1>
             <div className="progress-bar-container">
                 <ProgressBar investedAmount={userData?.investedAmount || 0} />
             </div>
             <button className="add-money-button" onClick={addMoneyOnClick}>Add Money</button> 
             <div className="info-container">
-                <div className="info-card">
+                <div className="info-card learn-more-card">
                     <h3>Complete Your KYC</h3>
-                    <p>Some content about completing KYC</p>
-                    <Link to="/kyc-step1"> Complete KYC </Link> 
+                    <p>Unlock full benefits by completing KYC</p>
+                    <button className="action-button" onClick={completeKYCOnClick}>Complete KYC</button> 
                 </div>
-                <div className="info-card">
+                <div className="info-card learn-more-card">
                     <h3>Know More</h3>
-                    <p>Some content about different plans</p>
+                    <p>Explore our investment plans</p>
                     <button className="action-button">Learn More</button> 
                 </div>
             </div>
@@ -58,3 +62,4 @@ function DashboardScreen() {
 }
 
 export default DashboardScreen;
+                   

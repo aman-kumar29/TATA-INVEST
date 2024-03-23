@@ -11,7 +11,6 @@ export default function Home() {
   const history = useNavigate();
 
   useEffect(() => {
-    // Check if user is logged in
     const checkLoggedIn = () => {
       auth.onAuthStateChanged((user) => {
         if (user) {

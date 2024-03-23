@@ -5,11 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-<<<<<<< HEAD
 import './investmentPlans.css'
-=======
-
->>>>>>> 5e165939e001994268e237b2bc0c460371939a9d
+ 
 const investmentPlans = [
     {
         amount: 1000,
