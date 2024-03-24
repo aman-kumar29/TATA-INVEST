@@ -2,11 +2,22 @@ import ImageSlider from "../ImageSlider/ImageSlider.js";
 import React from 'react';
 
 const Carousel = () => {
-  const slides = [
+  const desktopSlides = [
     { url: "/assets/image-1.jpg", title: "beach" },
     { url: "/assets/image-2.jpg", title: "boat" },
     { url: "/assets/image-3.jpg", title: "forest" },
   ];
+
+  const mobileSlides = [
+    { url: "/assets/mobile-1.jpg", title: "beac" },
+    { url: "/assets/mobile-2.jpg", title: "boat" },
+    { url: "/assets/mobile-3.jpg", title: "forest" },
+  ];
+
+  const isMobile = window.innerWidth <= 768; // Define the breakpoint for mobile
+
+  const slides = isMobile ? mobileSlides : desktopSlides;
+
 
   const containerStyles = {
     width: "100%", // Responsive full width
