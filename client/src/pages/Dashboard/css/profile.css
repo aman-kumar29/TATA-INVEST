@@ -1,68 +1,76 @@
-.profile-card {
-    max-width: 70%;
-    margin: 0 auto;
-    border-radius: 20px;
-    padding: 20px;
-    background-color: #f1f1f1;
+.profile-section {
+    padding: 10px;
+    border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.profile-item {
+    margin: 0 auto;
+  }
+  
+  .kyc-card {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
-}
-
-.profile-item p {
+    justify-content: center;
+    padding: 2px;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    color: white;
+    transition: all 0.2s ease-in-out;
+  }
+  .kyc-card h6 {
     font-weight: bold;
-    margin-right: 10px;
-}
-
-.profile-item span {
-    font-weight:normal ;
-    padding: 8px;
-    box-shadow:1px 1px rgb(177, 177, 177);
-}
-
-.copy-icon {
-    cursor: pointer;
-    margin-left: 5px;
-    color: #007bff;
-}
-
-.copy-icon i {
+    margin-bottom: 5px;
+  }
+  p {
+    font-size: 13px;
+  }
+  
+  .account-details {
+    margin-top: 20px;
+  }
+  
+  .account-details h2 {
     font-size: 18px;
-}
-
-.copy-icon i:hover {
-    color: #0056b3;
-}
-
-.share-buttons {
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .account-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .account-details li {
+    margin-bottom: 10px;
     display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-}
-
-.social-media-icon {
-    cursor: pointer;
-}
-
-.social-media-icon i {
-    font-size: 24px;
+    align-items: center;
+  }
+  
+  .account-details li i {
+    margin-right: 10px;
     color: #007bff;
-}
-
-.social-media-icon i:hover {
-    color: #0056b3;
-}
-
-.action-button {
-    margin-top: 10px;
-}
-
-@media (max-width: 768px) {
-    .profile-card {
-        width: 90%;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .action-buttons button {
+    margin-left: 10px;
+  }
+  
+  /* Media query for mobile responsiveness (adjust as needed) */
+  
+  @media (max-width: 768px) {
+    .profile-section {
+      width: 90%;
     }
-}
+  
+    .kyc-card,
+    .action-buttons button {
+      font-size: 14px;
+    }
+  }
+  
