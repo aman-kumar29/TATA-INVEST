@@ -30,28 +30,38 @@ function DashboardScreen() {
     const addMoneyOnClick = () => {
         history("/addmoney");
     }
+    const withdrawMoneyOnClick = () => {
+        history("/withdrawmoney");
+    }
 
     const completeKYCOnClick = () => {
         history("/kyc-step1");
     }
 
     return (
-        <div className="dashboard-container">
-            <h1 className="dashboard-title">Dashboard</h1>
-            <div className="progress-bar-container">
-                <ProgressBar investedAmount={userData?.investedAmount || 0} />
-            </div>
-            <button className="add-money-button" onClick={addMoneyOnClick}>Add Money</button> 
-            <div className="info-container">
-                <div className="info-card learn-more-card">
-                    <h3>Complete Your KYC</h3>
-                    <p>Unlock full benefits by completing KYC</p>
-                    <button className="action-button" onClick={completeKYCOnClick}>Complete KYC</button> 
+        <div className="container">
+            <div className="dashboard-container">
+                <h5>Your Account Balance</h5>
+                <div className="progress-bar-container">
+                    <ProgressBar investedAmount={userData?.investedAmount || 0} />
                 </div>
-                <div className="info-card learn-more-card">
-                    <h3>Know More</h3>
-                    <p>Explore our investment plans</p>
-                    <button className="action-button">Learn More</button> 
+                <div style={{ margin: '0 auto' }}>
+                    <button className="add-money-button btn-1"  onClick={addMoneyOnClick}>Add Money</button>
+                    <button className="add-money-button btn-2"  onClick={withdrawMoneyOnClick}>Withdraw</button>
+                </div>
+            </div>
+            <div>
+                <div className="info-container">
+                    <div className="info-card learn-more-card">
+                        <h3><i class="fa fa-line-chart" aria-hidden="true"> </i> Complete Your KYC</h3>
+                        <p>and start withdrawing money effortlessly</p>
+                        <button className="action-button" onClick={completeKYCOnClick}>Complete KYC</button> 
+                    </div>
+                    <div className="info-card learn-more-card">
+                        <h3><i class="fa fa-usd" aria-hidden="true"> </i> Know Your Earnings</h3>
+                        <p>Explore our investment plans</p>
+                        <button className="action-button">Learn More</button> 
+                    </div>
                 </div>
             </div>
         </div>

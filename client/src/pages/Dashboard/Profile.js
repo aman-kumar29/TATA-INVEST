@@ -54,13 +54,13 @@ const ProfilePage = () => {
 
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 mb-5">
       {loading ? (
         <p className="text-center">Loading user data...</p>
       ) : user ? (
         <div className="profile-section">
           { user.kycDone ? <div className="kyc-card">
-          <i className="fa fa-check" style={{ fontSize: '25px' }}></i>
+          <i className="fa fa-check" style={{ fontSize: '25px'}}></i>
           <div className='card-content'>
             <h6>KYC Done</h6>
             <p>Can Start borrowing @ 1.2% daily</p>
@@ -81,7 +81,7 @@ const ProfilePage = () => {
             <h2>Account</h2>
             <ul>
               <li>
-                <div className=''>
+                <div>
                   <i className="fas fa-phone"></i> Phone Number: {user.phone}
                 </div>
               </li>
@@ -97,8 +97,8 @@ const ProfilePage = () => {
               </li>
               <li>
                 <div>
-                  <i className="fas fa-check-circle"></i> KYC Verification:{" "}
-                  {user.kycDone ? 'Done' : 'Pending'}
+                  <i className="fas fa-user"></i> KYC Verification:{" "}
+                  {user.kycDone ? <i className="fas fa-check-circle">Done</i>: <i className="fas fa-exclamation-circle"></i>} 
                 </div>
               </li>
             </ul>

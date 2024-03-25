@@ -2,7 +2,9 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    margin-top: 2%;
     text-align: center;
+    box-shadow: 2px 2px 2px 2px grey;
 }
 
 .dashboard-title {
@@ -15,21 +17,41 @@
 }
 
 .add-money-button {
-    background-color: #4caf50;
-    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     padding: 10px 20px;
+    margin: 10px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.5s ease;
 }
-
+.btn-1{
+    background-color: white;
+    color: rgba(135,132,220,1);
+    border : 2px solid rgba(135,132,220,1);
+}
+.btn-1:hover{
+    background-color: rgba(135,132,220,1);
+    color: white;
+    border: 2px solid white ;
+}
+.btn-2{
+    color: white;
+    background-color: rgba(135,132,220,1);
+    border: 2px solid white ;
+}
+.btn-2:hover{
+    color: rgba(135,132,220,1);
+    background-color: white;
+    border : 2px solid rgba(135,132,220,1); 
+}
 .add-money-button:hover {
-    background-color: #45a049;
+    transform: translateY(-2px);
 }
 
 .info-container {
+    max-width: 800px;
+    margin: 0 auto;
     display: flex;
     justify-content:center;
     margin-top: 40px;
@@ -68,10 +90,10 @@
 }
 
 .action-button {
-    background-color: #2196f3;
-    color: white;
+    background-color: white;
+    color: rgba(135,132,220,1) ;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     padding: 8px 16px;
     font-size: 14px;
     cursor: pointer;
@@ -79,7 +101,9 @@
 }
 
 .action-button:hover {
-    background-color: #1e87dc;
+    background-color: rgba(135,132,220,1);
+    color: white;
+    border:2px solid #fff;
 }
 
 /* Add media queries for responsiveness */
@@ -99,5 +123,8 @@
 
     .info-card {
         margin-bottom: 20px;
+    }
+    .add-money-button{
+        margin: 3px;
     }
 }

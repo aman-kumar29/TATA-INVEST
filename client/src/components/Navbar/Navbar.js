@@ -70,13 +70,14 @@ function Navbar() {
                 <Link to="/signup"><p className="nav-link active" aria-current="page" >Investment</p></Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="/download"><i className="fas fa-download"></i> Download App</a>
+                  <a className="nav-link active" href="/download"><i className="fas fa-download"> </i> Download App</a>
                 </li>
               </ul>
               )}
               {authenticated ? (
                 <>
-                  <button className="btn btn-danger mx-2" onClick={handleSignOut}>Sign Out </button>
+                  <button className="btn btn-danger mx-2" onClick={handleSignOut} style={{fontSize: 12, padding: '10px 20px', borderRadius:'20px'}}>Log Out  <i class="fa fa-sign-out" aria-hidden="true"></i>
+</button>
                 </>
               ) : (
                 <>

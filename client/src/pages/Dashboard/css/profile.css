@@ -6,10 +6,12 @@
   }
   
   .kyc-card {
+    width: 50%;
     display: flex;
+    margin: 0 auto;
     align-items: center;
     justify-content: center;
-    padding: 2px;
+    padding: 20px;
     border-radius: 5px;
     background-color: #fff;
     cursor: pointer;
@@ -25,7 +27,10 @@
   }
   
   .account-details {
-    margin-top: 20px;
+    margin: 0 auto;
+    padding:15px 2px;
+    align-items: center;
+    justify-content: center;
   }
   
   .account-details h2 {
@@ -41,7 +46,7 @@
   }
   
   .account-details li {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     display: flex;
     align-items: center;
   }
@@ -67,7 +72,11 @@
     .profile-section {
       width: 90%;
     }
-  
+
+    .kyc-card{
+      width: auto;
+      padding: 2px;
+    }
     .kyc-card,
     .action-buttons button {
       font-size: 14px;

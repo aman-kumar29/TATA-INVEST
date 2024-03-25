@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
 const CircleContainer = styled.div`
   display: inline-block;
@@ -53,6 +54,9 @@ const GradientCircleProgressbar = ({
         <PercentageContainer className="react-super-progressbar__percentage-container">
           <span className="react-super-progressbars__percentage" style={{ fontSize, fontFamily, color: fontColor }}>
           ₹ {investedAmount}
+          </span>
+          <span>
+          <Link to = '/statement'><p style={{color:'gray',fontSize:'16px'}}>Portfolio Value</p></Link>
           </span>
         </PercentageContainer>
       )}

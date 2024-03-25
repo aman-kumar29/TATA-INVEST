@@ -9,7 +9,6 @@ const Statement = () => {
     const [referralAmount, setReferralAmount] = useState(0);
     const [selectedOption, setSelectedOption] = useState('investments');
 
-
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -45,20 +44,26 @@ const Statement = () => {
 
 
     return (
-        <div className="container mt-5 my-5 statement">
-            <h1 className="mx-5">Statement</h1>
-            <div className="card shadow profile-card mx-5">
-                {userData ? (
-                    <div>
-                        <p className='mx-2'>Invested Amount: ₹ {investedAmount} </p>
-                        <p className='mx-2'>Interest Income: ₹ {userData.interestAmount}</p>
-                        <p className='mx-2'>Referral Income: ₹ {referralAmount}</p>
-                        <p className='mx-2'>Life Time Earning: ₹ {referralAmount + userData.interestAmount}</p>
-                        <p className='mx-2'>Total Balance Withdrawable: ₹ {userData.withdrawableAmount}</p>
+        <div className="container mt-5 my-5">
+            <h5 className="mt-2">Account Summary</h5>
+            <div className="account-details shadow profile-card mx-5">
+                <div className="summary-items">
+                    <div className="summary-item">
+                        <p>Invested Amount:</p><p> ₹ {investedAmount}</p>
                     </div>
-                ) : (
-                    <p>Loading user data...</p>
-                )}
+                    <div className="summary-item">
+                        <p>Interest Income:</p><p> ₹ {userData?.interestAmount}</p>
+                    </div>
+                    <div className="summary-item">
+                        <p>Referral Income: </p><p>₹ {referralAmount}</p>
+                    </div>
+                    <div className="summary-item">
+                        <p>Life Time Earning: </p><p>₹ {referralAmount + userData?.interestAmount}</p>
+                    </div>
+                    <div className="summary-item">
+                        <p>Total Balance Withdrawable: </p><p>₹ {userData?.withdrawableAmount}</p>
+                    </div>
+                </div>
             </div>
 
             <h1 className="mx-5 mt-5">Transaction Page</h1>
