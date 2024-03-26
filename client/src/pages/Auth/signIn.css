@@ -1,5 +1,5 @@
-.container {
-  margin-top: 5%;
+.container-signin {
+  padding: 9%;
 }
 .signin-container {
   max-width: 400px;
@@ -47,13 +47,14 @@
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: white;
+  color: rgba(135,132,220,1);
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .signin-button:hover {
-  background-color: #0056b3;
+  color: white;
+  background-color: rgba(135,132,220,1);
 }

@@ -1,6 +1,6 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { auth,createUserDocument } from "../../Firebase/config.js";
+import { auth, createUserDocument } from "../../Firebase/config.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "./signUp.css"; // Assume SignUp.css is the CSS file for styling
@@ -13,54 +13,55 @@ function SignUp() {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    user_name: '',
-    phone: '',
-    address: '',
-    parentReferralCode: ''
+    email: "",
+    password: "",
+    user_name: "",
+    phone: "",
+    address: "",
+    parentReferralCode: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
- const handleParentReferralCode = async (childrenId) => {
+  const handleParentReferralCode = async (childrenId) => {
     const dummyData = await axios.get(`/api/parentReferralUpdate/${childrenId}`);
     console.log(dummyData, "dummyData");
-
-  }
-
-
-
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-     if (!formData.email || !formData.password || !formData.user_name || !formData.phone || !formData.address) {
-      alert('All fields are compulsory');
+    if (
+      !formData.email ||
+      !formData.password ||
+      !formData.user_name ||
+      !formData.phone ||
+      !formData.address
+    ) {
+      alert("All fields are compulsory");
       return;
     }
-    // Perform form submission
-    console.log('Form submitted:', formData);
 
     createUserWithEmailAndPassword(auth, formData.email, formData.password)
       .then((data) => {
-        createUserDocument(data.user, formData.user_name, formData.parentReferralCode, formData.phone, formData.address)
-        .then(() => {
-          if(formData.parentReferralCode!==''){
+        createUserDocument(
+          data.user,
+          formData.user_name,
+          formData.parentReferralCode,
+          formData.phone,
+          formData.address
+        ).then(() => {
+          if (formData.parentReferralCode !== "") {
             console.log("Entering handleParentReferralCode");
             handleParentReferralCode(data.user.uid);
           }
         });
-        
-          // handleParentReferralCode(docRef.id);
-        console.log(data.user, "authData");
-        
-        // console.log(data?.user.uid, "UID");
+
         localStorage.setItem("userId", data?.user.uid);
         dispatch(authActions.login());
         history("/dashboard");
@@ -71,7 +72,7 @@ function SignUp() {
   };
 
   return (
-<div className="container">
+    <div className="container-signup">
       <div className="signup-container">
         <h1>Sign Up</h1>
         <form onSubmit={handleSubmit} className="signup-form">
@@ -141,7 +142,7 @@ function SignUp() {
             />
           </div>
           <div className="form-group">
-            <Link to="/signin" className="signin-link" style={{color:'white'}}>
+            <Link to="/signin" className="signin-link" style={{ color: "white" }}>
               Already have an account? Sign In
             </Link>
           </div>
@@ -151,7 +152,7 @@ function SignUp() {
         </form>
       </div>
     </div>
-);
+  );
 }
 
 export default SignUp;

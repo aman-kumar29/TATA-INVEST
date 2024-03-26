@@ -1,0 +1,28 @@
+.card {
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.16), 0px 1px 1.5px rgba(0, 0, 0, 0.14); /* Equivalent to Material-UI's shadow[4] */
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.02); /* Subtle hover effect */
+  }
+  
+  .card-content {
+    text-align: center;
+    padding: 24px; /* Equivalent to Material-UI's spacing(3) */
+  }
+  
+  .card-heading {
+    margin-bottom: 16px; /* Equivalent to Material-UI's spacing(2) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon {
+    margin-right: 8px; /* Equivalent to Material-UI's spacing(1) */
+    font-size: 24px;
+    color: #007bff; /* Assuming primary color is blue */
+  }
+  
