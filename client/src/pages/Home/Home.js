@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { mobileSlides, desktopSlides } from '../../data.js';
-import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
 import InvestmentPlans from '../../components/InvestmentPlans/InvestmentPlans.jsx';
 import HappyFamily from '../../components/HappyFamily/HappyFamily.js';
 import PoweredBy from "../../components/Poweredby/PoweredBy.js";
@@ -10,7 +8,6 @@ import GreatInvestment from "../../components/GreatInvestment/GreatInvestment.js
 
 export default function Home() {
   const history = useNavigate();
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [user,setUser] = useState('');
   useEffect(() => {
     const checkLoggedIn = () => {
@@ -21,16 +18,6 @@ export default function Home() {
     };
 
     checkLoggedIn();
-
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
   }, [history,user]);
 
   return (
@@ -38,9 +25,8 @@ export default function Home() {
       <InvestmentPlans/>
       <HappyFamily />
       <GreatInvestment/>
-      <ImageSlider slides={isMobile ? mobileSlides : desktopSlides} />
-      <NumbersInvestment/>
       <PoweredBy/>
+      <NumbersInvestment/>
     </>
   );
 }

@@ -1,5 +1,5 @@
-.container {
-  margin-top: 5%;
+.container-signup{
+  padding: 7%;
 }
 .signup-container {
     max-width: 400px;
@@ -7,7 +7,7 @@
     padding: 20px;
     box-shadow: 5px 5px #0056b3;
     border-radius: 5px;
-    background: linear-gradient(90deg, rgba(79,96,193,1) 0%, rgba(135,132,220,1) 35%, rgba(178,160,254,1) 100%);
+    background: linear-gradient(90deg, rgb(104, 122, 227) 0%, rgba(135,132,220,1) 35%, rgba(178,160,254,1) 100%);
   }
   
   .signup-form {
@@ -37,14 +37,14 @@
     width: 100%;
     padding: 10px;
     font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: white;
+    color: rgba(135,132,220,1);
     border: none;
     border-radius: 5px;
     cursor: pointer;
   }
   
   .signup-button:hover {
-    background-color: #0056b3;
+    color: white;
+    background-color: rgba(135,132,220,1);
   }
-  
