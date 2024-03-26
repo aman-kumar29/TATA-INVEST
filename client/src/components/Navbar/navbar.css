@@ -1,6 +1,7 @@
 .custom-bg-color {
   background: linear-gradient(90deg, rgba(99, 96, 193, 1) 0%, rgba(135, 132, 220, 1) 35%, rgba(178, 160, 254, 1) 100%);
-  border-radius: 30px;
+  position:static;
+  box-shadow: 10px 5px 5px white;
 }
 
 .navbar-toggler-icon {

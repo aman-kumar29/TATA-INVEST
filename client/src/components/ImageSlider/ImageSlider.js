@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 
 const slideStyles = {
   width: "100%",
-  height: "100%",
+  height: "70vh",
   backgroundSize: "cover",
   backgroundPosition: "center",
-  borderRadius: "50px", // Border radius for the slides
 };
 
 const rightArrowStyles = {

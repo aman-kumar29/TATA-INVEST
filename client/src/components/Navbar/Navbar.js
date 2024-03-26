@@ -30,8 +30,7 @@ function Navbar() {
   };
 
   return (
-    <>
-      <div className="container mt-3 custom-bg-color">
+      <div className="container custom-bg-color mt-0 mb-0" style={{maxWidth:'100%'}}>
         <nav className="navbar navbar-expand-lg " data-bs-theme="dark" >
           <div className="container-fluid ">
             <img src="https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/logo.png?alt=media&token=47531390-01cb-40a6-9ab0-bca7f18cfec0" alt="TataInvest" height="50" width="70" />
@@ -41,7 +40,7 @@ function Navbar() {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
              
               {authenticated ? (
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul className="navbar-nav me-auto mb-lg-0">
                 <li className="nav-item">
                   <Link to="/dashboard"><p className="nav-link active" aria-current="page" >Dashboard</p></Link>
                 </li>
@@ -101,7 +100,6 @@ function Navbar() {
           </div>
         </nav>
       </div>
-    </>
   );
 }
 

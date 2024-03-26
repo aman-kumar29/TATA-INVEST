@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { mobileContainerStyles, desktopContainerStyles } from '../../components/Carousel/carousel.module.js';
 import { mobileSlides, desktopSlides } from '../../data.js';
 import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
 import InvestmentPlans from '../../components/InvestmentPlans/InvestmentPlans.jsx';
 import HappyFamily from '../../components/HappyFamily/HappyFamily.js';
+import PoweredBy from "../../components/Poweredby/PoweredBy.js";
+import NumbersInvestment from "../../components/NumbersInvestment/NumbersInvestment.js";
+import GreatInvestment from "../../components/GreatInvestment/GreatInvestment.js";
 
 export default function Home() {
   const history = useNavigate();
@@ -33,11 +35,12 @@ export default function Home() {
 
   return (
     <>
-      <div style={isMobile ? mobileContainerStyles : desktopContainerStyles}>
-        <ImageSlider slides={isMobile ? mobileSlides : desktopSlides} />
-      </div>
+      <InvestmentPlans/>
       <HappyFamily />
-      <InvestmentPlans />
+      <GreatInvestment/>
+      <ImageSlider slides={isMobile ? mobileSlides : desktopSlides} />
+      <NumbersInvestment/>
+      <PoweredBy/>
     </>
   );
 }

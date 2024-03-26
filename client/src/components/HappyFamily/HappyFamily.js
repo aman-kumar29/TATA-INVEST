@@ -19,7 +19,6 @@ export default function HappyFamily() {
               Enjoy Monthly Returns
             </Typography>
             <Typography variant="body2" color="primary" gutterBottom className="happy-family-paragraph">
-              You are eligible for pre-approved offers. Apply now!
             </Typography>
             <Button variant="contained" size="large" color="primary">
             <Link to="/signup" style={{color:"white"}}>Invest Now</Link>

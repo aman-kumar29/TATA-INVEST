@@ -1,9 +1,8 @@
 export const desktopContainerStyles = {
-  width: "80%",
-  height: "80vh",
+  width: "90%",
+  height: "90vh",
   margin: "0 auto",
-  padding: "40px 20px",
-  borderRadius: "50px",
+  padding: "20px 10px",
 };
 
 export const mobileContainerStyles = {
