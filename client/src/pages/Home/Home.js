@@ -5,6 +5,8 @@ import HappyFamily from '../../components/HappyFamily/HappyFamily.js';
 import PoweredBy from "../../components/Poweredby/PoweredBy.js";
 import NumbersInvestment from "../../components/NumbersInvestment/NumbersInvestment.js";
 import GreatInvestment from "../../components/GreatInvestment/GreatInvestment.js";
+import MaximizeWealth from "../../components/MaximizeWealth/MaximizeWealth.jsx";
+import PerfectPlan from "../../components/PerfectPlan/PerfectPlan.jsx";
 
 export default function Home() {
   const history = useNavigate();
@@ -22,6 +24,8 @@ export default function Home() {
 
   return (
     <>
+      <MaximizeWealth/>
+      <PerfectPlan/>
       <InvestmentPlans/>
       <HappyFamily />
       <GreatInvestment/>
