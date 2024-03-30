@@ -5,6 +5,7 @@ import PoweredBy from "../../components/Poweredby/PoweredBy.js";
 import MaximizeWealth from "../../components/MaximizeWealth/MaximizeWealth.jsx";
 import PerfectPlan from "../../components/PerfectPlan/PerfectPlan.jsx";
 import InvestorReviews from "../../components/InvestorReviews/InvestorReviews.jsx";
+import HiddenImageComponent from "../../components/HiddenImageComponent/HiddenImageComponent.js";
 
 export default function Home() {
   const history = useNavigate();
@@ -26,6 +27,7 @@ export default function Home() {
       <PerfectPlan/>
       <InvestorReviews/>
       <InvestmentPlans/>
+      <HiddenImageComponent/>
       <PoweredBy/>
     </>
   );

@@ -1,0 +1,51 @@
+.mobile-image-container {
+  position: relative;
+  background-color: #8784dc;
+  transition: background-color 0.5s ease; /* Smooth transition for background color */
+}
+
+.image-wrapper {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobile-image {
+  width: 30%;
+  height: auto;
+  display: block;
+  transition: opacity 0.5s ease; /* Smooth transition for image opacity */
+}
+
+.know-more-button {
+  text-align: center;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.know-more-button .button-text {
+  font-weight: bold;
+}
+
+.know-more-button .arrow-icon {
+  margin-left: 5px;
+  transition: transform 0.5s ease; /* Smooth transition for arrow icon */
+}
+
+.additional-images {
+  display: none; /* Initially hide additional images */
+  margin-top: 20px;
+}
+
+.additional-images.show {
+  display: block; /* Show additional images when isVisible is true */
+  transition: opacity 0.5s ease; /* Smooth transition for opacity */
+}
+
+/* Animation for arrow icon */
+.know-more-button.active .arrow-icon {
+  transform: rotate(180deg); /* Rotate arrow icon when active */
+}
