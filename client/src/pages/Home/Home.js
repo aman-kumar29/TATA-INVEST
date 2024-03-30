@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InvestmentPlans from '../../components/InvestmentPlans/InvestmentPlans.jsx';
-import HappyFamily from '../../components/HappyFamily/HappyFamily.js';
 import PoweredBy from "../../components/Poweredby/PoweredBy.js";
-import NumbersInvestment from "../../components/NumbersInvestment/NumbersInvestment.js";
-import GreatInvestment from "../../components/GreatInvestment/GreatInvestment.js";
 import MaximizeWealth from "../../components/MaximizeWealth/MaximizeWealth.jsx";
 import PerfectPlan from "../../components/PerfectPlan/PerfectPlan.jsx";
+import InvestorReviews from "../../components/InvestorReviews/InvestorReviews.jsx";
 
 export default function Home() {
   const history = useNavigate();
@@ -26,11 +24,9 @@ export default function Home() {
     <>
       <MaximizeWealth/>
       <PerfectPlan/>
+      <InvestorReviews/>
       <InvestmentPlans/>
-      <HappyFamily />
-      <GreatInvestment/>
       <PoweredBy/>
-      <NumbersInvestment/>
     </>
   );
 }

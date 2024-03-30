@@ -27,7 +27,7 @@ export default function MaximizeWealth() {
                 <div className="rightColumn">
                     <div className="mobileImageContainer">
                         <a href="#">
-                            <img src="/assets/mobile-1.jpg" alt="Mobile Investment App" className="mobileImage" />
+                            <img src="/assets/mobile-image-paisa.png" alt="Mobile Investment App" className="mobileImage" />
                         </a>
                     </div>
                 </div>

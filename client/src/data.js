@@ -19,11 +19,11 @@ export const investmentPlansSlidesDesktop = [
   { url: "/assets/plan-7.jpg", title: "fest" },
 ];
 export const investmentPlansSlidesMobile = [
-  { url: "/assets/mobile-plan-1.jpg", title: "beach" },
-  { url: "/assets/mobile-plan-2.jpg", title: "boat" },
-  { url: "/assets/mobile-plan-3.jpg", title: "forest" },
-  { url: "/assets/mobile-plan-4.jpg", title: "egg" },
-  { url: "/assets/mobile-plan-5.jpg", title: "human" },
-  { url: "/assets/mobile-plan-6.jpg", title: "dump" },
-  { url: "/assets/mobile-plan-7.jpg", title: "not" },
+  { url: "/assets/mobile-plan-1.png", title: "beach" },
+  { url: "/assets/mobile-plan-2.png", title: "boat" },
+  { url: "/assets/mobile-plan-3.png", title: "forest" },
+  { url: "/assets/mobile-plan-4.png", title: "egg" },
+  { url: "/assets/mobile-plan-5.png", title: "human" },
+  { url: "/assets/mobile-plan-6.png", title: "dump" },
+  { url: "/assets/mobile-plan-7.png", title: "not" },
 ];

@@ -15,6 +15,7 @@
     flex: 0 0 60%;
     display: flex;
     flex-direction: column; /* Align text vertically */
+    margin: 0;
 }
 
 .rightColumn {
@@ -50,12 +51,12 @@
 .mobileImageContainer {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: top;
 }
 
 .mobileImage {
     width: 100%;
-    height: auto;
+    height:auto;
 }
 .buttons {
     display: flex;
@@ -130,6 +131,7 @@
         flex: 1;
         width: 100%;
         text-align: center;
+        overflow: hidden;
     }
 
     .rightColumn {
@@ -148,6 +150,10 @@
         font-size: 3rem;
         margin-bottom: 15px;
     }
+    .mobileImage {
+        width: 100%;
+        height:auto;
+    }
     .buttons {
         display: flex;
         flex-direction: row;
@@ -155,7 +161,6 @@
         margin-top: 20px;
         justify-content: center;
     }
-
 
     .appButton {
         margin: 5px;
