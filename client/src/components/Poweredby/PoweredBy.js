@@ -4,7 +4,7 @@ import tataCapitalLogo from '../../assets/Tata-capital.png';
 export default function PoweredBy() {
   const containerStyle = {
     backgroundImage: 'linear-gradient(to bottom, #ffffff, #fff)',
-    padding: "6%",
+    padding: "3%",
     textAlign: "center",
     display: "flex",
     alignItems: "center",

@@ -27,9 +27,9 @@ const InvestorReviews = () => {
 
   return (
     <div className="investor-reviews-container">
-      <h2 className="reviews-heading">Reviews & experiences of our investors</h2>
+      <h2 className="reviews-heading" >Reviews & Experiences Of Our Investors</h2>
       <Slider {...settings}>
-        <div className="review-card">
+        <div className="review-card ">
           <h4>Very great experience</h4>
           <p className="review-text">“ Great investment platform! I've been using it for a year now and the returns are excellent. ”</p>
           <div className="reviewer-info">
@@ -58,6 +58,7 @@ const InvestorReviews = () => {
           </div>
         </div>
       </Slider>
+      <br /><br />
     </div>
   );
 };

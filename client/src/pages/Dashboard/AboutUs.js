@@ -36,14 +36,7 @@ function AboutUs() {
           Documents, Terms and Conditions
         </Link>
         </div>
-        {/* Footer */}
-        <footer className="footer mt-5 py-3 text-center">
-          <div className="container">
-            <span className="text-muted">
-              &copy; 2023 TATA Invest. All rights reserved.
-            </span>
-          </div>
-        </footer>
+        <br />
       </div>
     </>
 

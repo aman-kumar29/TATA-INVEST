@@ -52,11 +52,11 @@ const GradientCircleProgressbar = ({
     <CircleContainer className="react-super-progressbar__base" style={{ height: `${width}px`, width: `${width}px` }}>
       {!hidePercentageText && (
         <PercentageContainer className="react-super-progressbar__percentage-container">
-          <span className="react-super-progressbars__percentage" style={{ fontSize, fontFamily, color: fontColor }}>
+          <span className="react-super-progressbars__percentage" style={{ fontSize, fontFamily, color: fontColor, fontWeight:"bold" }}>
           ₹ {investedAmount}
           </span>
           <span>
-          <Link to = '/statement'><p style={{color:'gray',fontSize:'16px'}}>Portfolio Value</p></Link>
+          <Link to = '/statement'><p style={{color:'gray',fontSize:'16px'}}>PORTFOLIO VALUE</p></Link>
           </span>
         </PercentageContainer>
       )}
@@ -67,12 +67,12 @@ const GradientCircleProgressbar = ({
           <stop offset="100%" stopColor={primaryColor[1]} />
         </linearGradient>
         <circle
-          strokeWidth={15}
+          strokeWidth={9}
           fill="transparent"
           r={R}
           cx={width / 2}
           cy={width / 2}
-          stroke={"#e0e0e0"}
+          stroke={"#888"}
           strokeDasharray={`${circumference} ${circumference}`}
         />
         <StyledCircle
