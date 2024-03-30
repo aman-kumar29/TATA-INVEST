@@ -6,6 +6,7 @@ import MaximizeWealth from "../../components/MaximizeWealth/MaximizeWealth.jsx";
 import PerfectPlan from "../../components/PerfectPlan/PerfectPlan.jsx";
 import InvestorReviews from "../../components/InvestorReviews/InvestorReviews.jsx";
 import HiddenImageComponent from "../../components/HiddenImageComponent/HiddenImageComponent.js";
+import LendingPartners from "../../components/LendingPartners/LendingPartners.js";
 
 export default function Home() {
   const history = useNavigate();
@@ -29,6 +30,7 @@ export default function Home() {
       <InvestmentPlans/>
       <HiddenImageComponent/>
       <PoweredBy/>
+      <LendingPartners/>
     </>
   );
 }

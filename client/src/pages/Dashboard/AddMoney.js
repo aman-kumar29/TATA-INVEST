@@ -5,7 +5,6 @@ import { getUser } from "../../utils/getUser.js";
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/config.js';
 import {Container, Typography} from '@mui/material'
-import InvestmentPlans from '../../components/InvestmentPlans/InvestmentPlans.jsx';
 
 const AddMoneyPage = () => {
   const [amount, setAmount] = useState('');
@@ -128,9 +127,6 @@ const AddMoneyPage = () => {
             </Form>
           </Card>
         </Col>
-      </Row>
-      <Row>
-        <InvestmentPlans/>
       </Row>
     </Container>
   );

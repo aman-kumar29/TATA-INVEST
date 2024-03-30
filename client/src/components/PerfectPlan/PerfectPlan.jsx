@@ -12,22 +12,22 @@ export default function PerfectPlan() {
                 <div className="perfect-plan-card">
                     <img src="/assets/leaves.png" alt="Card Image" />
                     <h6>Grow at up to</h6>
-                    <h4>9.5% returns*</h4>
+                    <h4>1.2% returns/day*</h4>
                     <p> <i className='fas fa-calender'></i>0 lock-in period</p>
-                    <p> <i className='fas fa-money'></i>₹10,000 min. amount</p>
+                    <p> <i className='fas fa-money'></i>₹1000 min. amount</p>
                 </div>
                 <div className="perfect-plan-card">
                     <img src="/assets/leaves2.png" alt="Card Image" />
                     <h6>Grow at up to</h6>
-                    <h4>10% returns*</h4>
-                    <p> <i className='fas fa-calender'></i>6 months lock-in period</p>
-                    <p> <i className='fas fa-money'></i>₹10,000 min. amount</p>
+                    <h4>1.5% returns/day*</h4>
+                    <p> <i className='fas fa-calender'></i>0 lock-in period</p>
+                    <p> <i className='fas fa-money'></i>₹5000 min. amount</p>
                 </div>
                 <div className="perfect-plan-card">
                     <img src="/assets/leaves3.png" alt="Card Image" />
                     <h6>Grow at up to</h6>
-                    <h4>10.5% returns*</h4>
-                    <p> <i className='fas fa-calender'></i>12 months lock-in period</p>
+                    <h4>1.8% returns/day*</h4>
+                    <p> <i className='fas fa-calender'></i>10 lock-in period</p>
                     <p> <i className='fas fa-money'></i>₹10,000 min. amount</p>
                 </div>
             </div>

@@ -7,14 +7,14 @@
 .image-wrapper {
   display: flex;
   width: 100%;
-  overflow: hidden;
   margin: 0 auto;
-  justify-content: center;
   align-items: center;
+  flex-direction: row;
+  padding-top: 20%;
 }
 
 .mobile-image {
-  width: 30%;
+  width: 350px;
   height: auto;
   display: block;
   transition: opacity 0.5s ease; /* Smooth transition for image opacity */
@@ -27,7 +27,9 @@
 }
 
 .know-more-button .button-text {
+  font-size: 25px;
   font-weight: bold;
+  color: white;
 }
 
 .know-more-button .arrow-icon {
@@ -48,4 +50,57 @@
 /* Animation for arrow icon */
 .know-more-button.active .arrow-icon {
   transform: rotate(180deg); /* Rotate arrow icon when active */
+}
+
+/* Styles for left and right text */
+.left-text,
+.right-text {
+  flex: 1; /* Make left and right text take up equal space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4%;
+}
+
+.left-text {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-text {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.step-text {
+  font-size: 70px;
+  font-weight: 700;
+  color: white;
+}
+
+.step-text-small {
+  font-size: 40px;
+  font-weight: 700;
+  color:#49469c;
+}
+
+@media screen and (max-width: 768px) {
+  /* Decrease font sizes for mobile screens */
+  .image-wrapper{
+    display: flex;
+    flex-direction: column;
+  }
+  .mobile-image{
+    width: 120px;
+    height: auto;
+  }
+  .step-text {
+    font-size: 50px;
+  }
+
+  .step-text-small {
+    font-size: 25px;
+  }
 }
