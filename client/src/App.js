@@ -17,6 +17,10 @@ import ConfirmationStep from './components/KycForms/ConfirmationStep.js';
 import Kyc from './pages/KYC/Kyc.js';
 import AddMoneyPage from './pages/Dashboard/AddMoney.js';
 import Footer from './components/Footer/Footer.js';
+import HowToUsePage from './pages/Dashboard/HowToUse.js';
+import TnC from './pages/Dashboard/TnC.js';
+import FAQs from './pages/Dashboard/FAQs.js';
+import PrivacyPolicyPage from './pages/Dashboard/PrivacyPolicy.js';
 
 function App() {
 
@@ -39,6 +43,11 @@ function App() {
       <Route path="/kyc-step3" element={<Step3Form/>} />
       <Route path="/kyc-confirmation" element={<ConfirmationStep/>} />
       <Route path="/addmoney" element={<AddMoneyPage />} />
+      <Route path="/faqs" element={<FAQs />} />
+      <Route path="/tnc" element={<TnC />} />
+      <Route path="/howtouse" element={<HowToUsePage />} />
+      <Route path="/privacypolicy" element={<PrivacyPolicyPage />} />
+
     </Routes>
     <Footer/>
     </>

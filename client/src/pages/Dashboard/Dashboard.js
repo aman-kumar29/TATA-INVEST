@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { getUser } from "../../utils/getUser.js";
 import ProgressBar from "../../components/ProgressBar/ProgressBar.js";
 import "./css/dashboard.css";
+import PoweredBy from "../../components/Poweredby/PoweredBy.js";
+import InvestorReviews from "../../components/InvestorReviews/InvestorReviews.jsx";
 
 function DashboardScreen() {
     const [userData, setUser] = useState(null);
@@ -37,17 +39,29 @@ function DashboardScreen() {
     const completeKYCOnClick = () => {
         history("/kyc-step1");
     }
+    const handleWhatsAppClick = () => {
+        // Replace the phone number and message with your desired values
+        const phoneNumber = '919057725694';
+        const message = 'Hello! I would like to withdraw my earnings. Please help me with the process.';
+    
+        // Construct the WhatsApp URL
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.location.href = whatsappUrl;
+      };
+
 
     return (
         <div className="container">
+        <h1 className="mt-3 text-center">Hi {userData?.name}, <br /> Welcome to the TATA Invest</h1>
             <div className="dashboard-container">
-                <h5>Your Account Balance</h5>
+            <h5 style={{fontWeight:"bold"}}>Invest and Earn</h5>
                 <div className="progress-bar-container">
                     <ProgressBar investedAmount={userData?.investedAmount || 0} />
+                    <h6>Invest More Upto <strong>₹ 100000</strong></h6>
                 </div>
                 <div style={{ margin: '0 auto' }}>
                     <button className="add-money-button btn-1"  onClick={addMoneyOnClick}>Add Money</button>
-                    <button className="add-money-button btn-2"  onClick={withdrawMoneyOnClick}>Withdraw</button>
+                    <button className="add-money-button btn-2"  onClick={handleWhatsAppClick}>Withdraw</button>
                 </div>
             </div>
             <div>
@@ -63,6 +77,8 @@ function DashboardScreen() {
                         <button className="action-button">Learn More</button> 
                     </div>
                 </div>
+                <PoweredBy/>
+                <InvestorReviews/>
             </div>
         </div>
     );

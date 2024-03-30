@@ -78,6 +78,7 @@ const ProfilePage = () => {
           }
 
           <div className="account-details text-center">
+            <h1>Hi {user.name} !</h1>
             <h1>Account</h1>
             <ul class="list-group" >
               <li className="list-group-item" >
