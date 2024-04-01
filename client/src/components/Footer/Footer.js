@@ -11,10 +11,10 @@ const Footer = () => {
                 </div>
                 <div className="footer-links">
                     <ul>
-                        <li><Link to="#">Contact Us</Link></li>
-                        <li><Link to="#">FAQs</Link></li>
-                        <li><Link to="/aboutus">Privacy Policy</Link></li>
-                        <li><Link to="#">Terms of Services</Link></li>
+                        <li><Link to="/aboutus">Contact Us</Link></li>
+                        <li><Link to="/faqs">FAQs</Link></li>
+                        <li><Link to="/privacypolicy">Privacy Policy</Link></li>
+                        <li><Link to="/tnc">Terms of Services</Link></li>
                     </ul>
                 </div>
                 <div className="social-links">
