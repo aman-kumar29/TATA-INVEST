@@ -21,6 +21,7 @@ import HowToUsePage from './pages/Dashboard/HowToUse.js';
 import TnC from './pages/Dashboard/TnC.js';
 import FAQs from './pages/Dashboard/FAQs.js';
 import PrivacyPolicyPage from './pages/Dashboard/PrivacyPolicy.js';
+import AdminDashboard from './pages/Admin/AdminDashboard.js';
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
       <Route path="/tnc" element={<TnC />} />
       <Route path="/howtouse" element={<HowToUsePage />} />
       <Route path="/privacypolicy" element={<PrivacyPolicyPage />} />
+      <Route path="/admin" element={<AdminDashboard />} />
 
     </Routes>
     <Footer/>

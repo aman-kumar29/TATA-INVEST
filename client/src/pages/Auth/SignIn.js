@@ -23,7 +23,14 @@ function Login() {
       .then((data) => {
         localStorage.setItem("userId", data?.user.uid);
         dispatch(authActions.login());
-        history("/dashboard");
+
+        if(email==="admin@tatainvest.org" && password==="admin123"){
+          history("/admin");
+        }else{
+          history("/dashboard");
+        }
+
+
       })
       .catch((err) => {
         setLoading(false);

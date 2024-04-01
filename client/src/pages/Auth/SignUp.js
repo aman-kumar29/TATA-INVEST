@@ -31,7 +31,7 @@ function SignUp() {
 
   const handleParentReferralCode = async (childrenId) => {
     const dummyData = await axios.get(`/api/parentReferralUpdate/${childrenId}`);
-    console.log(dummyData, "dummyData");
+    // console.log(dummyData, "dummyData");
   };
 
   const handleSubmit = (e) => {
@@ -57,7 +57,7 @@ function SignUp() {
           formData.address
         ).then(() => {
           if (formData.parentReferralCode !== "") {
-            console.log("Entering handleParentReferralCode");
+            // console.log("Entering handleParentReferralCode");
             handleParentReferralCode(data.user.uid);
           }
         });
