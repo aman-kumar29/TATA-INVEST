@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { investmentPlansSlidesMobile } from "../../data.js";
-import investmentImage from '../../assets/numbers.png';
-import investmentImageMobile from '../../assets/numbers-mobile.png';
+// import investmentImage from '../../assets/numbers.png';
+// import investmentImageMobile from '../../assets/numbers-mobile.png';
 import './investmentPlans.css';
 
 const InvestmentPlans = () => {
@@ -36,7 +36,19 @@ const InvestmentPlans = () => {
   return (
     <div className="slider-container">
       <div className='numbers-image-container'>
-        <img src={isMobile ? investmentImageMobile : investmentImage} alt="Investment" className='numbers-image' />
+        {/* <img src={isMobile ? investmentImageMobile : investmentImage} alt="Investment" className='numbers-image' /> */}
+        <div>
+          <h1 className="crore-heading">Rs 3,100 lakhs +</h1>
+          <h3 className="subheading-crore">money invested</h3>
+          <p className="content-crore">through us with NBFC P2P partners</p>
+        </div>
+        <div className="line">
+        </div>
+        <div>
+          <h1 className="crore-heading">1.6 Mn+</h1>
+          <h3 className="subheading-crore">investors community</h3>
+          <p className="content-crore">Strong and Growing</p>
+        </div>
       </div>
       <div className="container inside-container">
         <div className="slides-container leftColumnInvestment">

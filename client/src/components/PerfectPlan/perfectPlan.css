@@ -5,6 +5,7 @@
     justify-content: center;
     padding-top: 100px;
     background-color: #8784dc;
+    padding-bottom: 13px;
 }
 
 .perfectPlanText {
@@ -103,13 +104,14 @@
         margin: 10px 5px; /* Adjusted margin for mobile devices */
         padding: 5%;
         height: 250px;
+        justify-content: space-evenly;
     }
     .perfect-plan-card h4{
         font-size: smaller;
     }
     .perfect-plan-card img {
-        width: 40%; /* Adjust the maximum width of the image */
-        height: auto;
+        width: 100px; /* Adjust the maximum width of the image */
+        height: 200px;
         margin-bottom: 10px;
     }
     .perfect-plan-card-container{

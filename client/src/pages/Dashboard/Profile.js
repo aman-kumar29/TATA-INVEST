@@ -61,7 +61,7 @@ const ProfilePage = () => {
         <div className="profile-section">
           {user.kycDone ? <div className="kyc-card">
             <i className="fa fa-check" style={{ fontSize: '25px' }}></i>
-            <div className='card-content'>
+            <div className='card-content-kyc'>
               <h6>KYC Done</h6>
               <p>Can Start borrowing @ 1.2% daily</p>
             </div>
@@ -69,7 +69,7 @@ const ProfilePage = () => {
             :
             <Link to="/kyc" className="kyc-card">
               <i className="fa fa-exclamation-circle" style={{ fontSize: '25px' }}></i>
-              <div className="card-content">
+              <div className="card-content-kyc">
                 <h6>Complete Your KYC</h6>
                 <p>Start borrowing @ 1.2% daily</p>
               </div>

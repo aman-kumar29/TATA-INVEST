@@ -10,13 +10,13 @@
     display: flex;
     margin: 0 auto;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     padding: 20px;
     border-radius: 5px;
-    background-color: #fff;
+    color: rgb(97, 92, 226);
     cursor: pointer;
-    color: white;
     transition: all 0.2s ease-in-out;
+    box-shadow: 5px 3px 5px rgba(0, 0, 0, 0.1);
   }
   .kyc-card h6 {
     font-weight: bold;
