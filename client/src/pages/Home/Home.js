@@ -30,7 +30,6 @@ export default function Home() {
       <InvestmentPlans/>
       <HiddenImageComponent/>
       <PoweredBy/>
-      <LendingPartners/>
     </>
   );
 }

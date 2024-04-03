@@ -59,15 +59,14 @@
     color: #6a54cf;
 }
 .invest-now-button{
-    padding: 15px 29px;
-    background-color: white;
-    margin: 5%;
-    border-radius: 30px;
-    color:'#6a54cf';
-}
-.invest-now-button h5{
-    color:'#6a54cf';
-    margin-top: 5px;
+    width: 25%;
+    background-color: #fff;
+    color: rgba(145, 92, 220, 1);
+    font-weight: bold;
+    font-size: 22px;
+    padding: 15px 30px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 .invest-now-button:hover{
     background-color:#6a54cf;
@@ -100,9 +99,25 @@
         margin-bottom: 20px;
     }
     .perfect-plan-card {
+        flex-direction: row;
         margin: 10px 5px; /* Adjusted margin for mobile devices */
+        padding: 5%;
+        height: 250px;
+    }
+    .perfect-plan-card h4{
+        font-size: smaller;
+    }
+    .perfect-plan-card img {
+        width: 40%; /* Adjust the maximum width of the image */
+        height: auto;
+        margin-bottom: 10px;
     }
     .perfect-plan-card-container{
         padding: 5%;
+    }
+    .invest-now-button{
+        width: 50%;
+        margin: 0 auto;
+        margin-bottom: 7px;
     }
 }
