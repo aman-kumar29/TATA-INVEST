@@ -49,7 +49,6 @@ function App() {
       <Route path="/howtouse" element={<HowToUsePage />} />
       <Route path="/privacypolicy" element={<PrivacyPolicyPage />} />
       <Route path="/admin" element={<AdminDashboard />} />
-
     </Routes>
     <Footer/>
     </>

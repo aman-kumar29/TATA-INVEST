@@ -31,7 +31,7 @@ function Kyc() {
 
   return (
     <div>
-      <h1>KYC Process</h1>
+      <h1 className='text-center mt-3'><img src="https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/assets%2Faadhar-log.png?alt=media&token=2f84a256-2cac-4fe3-abc9-5fb3097ab664" alt="adhaar-logo" height="40px" width="40px" className='mx-3'/>KYC Process</h1>
       {loading && <p>Loading...</p>}
       {step === 1 && (
         <Step1Form formData={formData} handleChange={handleChange} nextStep={nextStep} />
