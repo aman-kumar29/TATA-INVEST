@@ -44,6 +44,7 @@ const ProfilePage = () => {
         });
     }
   };
+
   const copyReferralCode = () => {
     navigator.clipboard.writeText(user.referralCode);
     setCopied(true);
@@ -52,7 +53,44 @@ const ProfilePage = () => {
     }, 3000);
   };
 
+  const shareOnWhatsApp = () => {
+    const message = `Get daily 1.2% returns on investments at Tatainvest! 💰 Invest now for hassle-free earnings. Use my referral code: ${user.referralCode}`;
+    // Construct the WhatsApp URL
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.location.href = whatsappUrl;
+};
+// nst shareOnFacebook = () => {
+//   // Implement sharing on Facebook
+//   const message = 
+//   `Get daily 1.2% returns on investments at Tatainvest! 💰 Invest now for hassle-free earnings. Use my referral code : ${user.referralCode}`;
 
+//   const encodedMessage = encodeURIComponent(message);
+//   const shareUrl = `https://www.facebook.com/sharer/sharer.php?quote=${encodedMessage}`;
+
+//   const handleShareClick = () => {
+//     window.open(shareUrl, '_blank');
+//   };
+
+// };
+
+
+
+//   const shareOnInstagram = () => {
+//     const message = 
+//       `Get daily 1.2% returns on investments at Tatainvest! 💰 Invest now for hassle-free earnings. Use my referral code : ${user.referralCode}`;
+//     const referralText = `Get daily 1.2% returns on investments at Tatainvest! 💰 Invest now for hassle-free earnings. Use my referral code : ${user.referralCode}`;
+//     const referralLink = `https://www.instagram.com/?text=${encodeURIComponent(referralText)}`;
+//     window.open(referralLink, '_blank');
+//   };
+
+//   const shareOnLinkedIn = () => {
+//     const message = 
+//       `Get daily 1.2% returns on investments at Tatainvest! 💰 Invest now for hassle-free earnings. Use my referral code : ${user.referralCode}`;
+//     const encodedMessage = encodeURIComponent(message);
+//     const linkedinInboxURL = `https://www.linkedin.com/messaging/?subject=${encodedMessage}`;
+//     window.open(linkedinInboxURL, '_blank');
+
+//   };
   return (
     <div className="container mt-5 mb-5">
       {loading ? (
@@ -94,6 +132,11 @@ const ProfilePage = () => {
               </div></li>
               <li className="list-group-item">  <div>
                 <i className="fas fa-calendar" style={{ color: "rgba(135, 132, 220, 1)" }}></i> Referral Code :  {copied ? <i className="fas fa-check-circle"></i> : <i className="far fa-copy" onClick={copyReferralCode}></i>}
+                {/* Add social media icons for sharing */}
+                <i className="fab fa-whatsapp" onClick={shareOnWhatsApp}></i>
+                {/* <i className="fab fa-facebook" onClick={shareOnFacebook}></i>
+                <i className="fab fa-instagram" onClick={shareOnInstagram}></i>
+                <i className="fab fa-linkedin" onClick={shareOnLinkedIn}></i> */}
               </div></li>
               <li className="list-group-item"> <div>
                 <i className="fas fa-user" style={{ color: "rgba(135, 132, 220, 1)" }}></i> KYC Verification:{" "}

@@ -32,9 +32,9 @@ function DashboardScreen() {
     const addMoneyOnClick = () => {
         history("/addmoney");
     }
-    const withdrawMoneyOnClick = () => {
-        history("/withdrawmoney");
-    }
+    // const withdrawMoneyOnClick = () => {
+    //     history("/withdrawmoney");
+    // }
 
     const completeKYCOnClick = () => {
         history("/kyc-step1");

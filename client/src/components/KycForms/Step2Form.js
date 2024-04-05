@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import "./css/Step2Form.css";
+
+// Replace with your actual Fast2SMS API key
+const senderId = 'FSTSMS'; // Default sender ID for Fast2SMS
 
 function Step2Form() {
   const [authType, setAuthType] = useState('Aadhaar Card'); // Pre-select Aadhaar Card
@@ -11,7 +15,7 @@ function Step2Form() {
   const [otp, setOtp] = useState('');
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [otpTimer, setOtpTimer] = useState(0); 
+  const [otpTimer, setOtpTimer] = useState(0);
   const history = useNavigate();
   const handleAuthTypeChange = (event) => {
     setAuthType(event.target.value);
@@ -24,17 +28,21 @@ function Step2Form() {
   const prevStep = () => {
     history("/kyc-step1");
   };
+  const proxyServerUrl = 'http://localhost:8000/api/send-otp';
 
   const handleGenerateOtp = async () => {
     if (!phoneNumber) {
       alert('Please enter your phone number.');
       return;
     }
+    const otp1 = Math.floor(100000 + Math.random() * 900000);
+    setOtp(otp1);
+    const message = `Verify you Aadhar. OTP for verification : ${otp}`;
 
     setLoading(true);
     try {
       // Replace with actual API call to send OTP
-      const response = await simulateSendOtp(phoneNumber);
+      const response = await axios.get(`http://localhost:8000/api/send-otp?phoneNumber=${phoneNumber}`);
       console.log('OTP sent successfully:', response);
       setIsOtpSent(true);
       setOtpTimer(60); // Start 60-second timer for resend OTP
