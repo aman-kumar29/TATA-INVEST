@@ -35,11 +35,21 @@ const UpdateInfoPage = () => {
   const handleUpdateInfo = async () => {
     try {
       const userRef = doc(db, 'users', userId);
-      await updateDoc(userRef, { 
-        name: newName,
-        phone: newPhone,
-        address: newAddress,
-       });
+      if(newName !== ''){
+        await updateDoc(userRef, { 
+          name: newName,
+         });
+      }
+      if(newAddress !== ''){
+        await updateDoc(userRef, { 
+          address:newAddress
+         });
+      }
+      if(newPhone !== ''){
+        await updateDoc(userRef, { 
+          phone:newPhone
+         });
+      }
       console.log('User info updated successfully!');
       history('/profile');
     } catch (error) {

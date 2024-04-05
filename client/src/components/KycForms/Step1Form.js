@@ -5,7 +5,7 @@ import './css/Step1Form.css'; // Import the CSS file
 
 function Step1Form({ formData, handleChange, nextStep, prevStep }) {
   const documentsRequired = [
-    { name: "Aadhaar Card", description: "This is your Aadhaar card", img:"https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/assets%2Faadhar.jpg?alt=media&token=5733d13a-a4d9-4454-90d1-80f5bb7488c5" },
+    { name: "Aadhaar Card", description: "This is your Aadhaar card", img:"https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/assets%2Faadhar.jpg?alt=media&token=e2eb9284-ef13-4a58-a97b-1acebe2a279d" },
     { name: "PAN Card", description: "This is your PAN card",  img:"https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/assets%2Fpan.webp?alt=media&token=518d3fd1-a5cb-41b6-b1ad-92a55055cc83" },
     // { name: "Address Proof", description: "This is your address proof" },
     // { name: "Identity Proof", description: "This is your identity proof" },

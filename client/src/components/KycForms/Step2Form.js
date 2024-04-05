@@ -174,8 +174,8 @@ function Step2Form() {
         </CardContent>
       </Card>
       <div className="buttons-container">
-        <Button variant="contained" onClick={prevStep}>
-          Go back
+      <Button color='error' variant='contained' onClick={prevStep}>
+          Cancel KYC
         </Button>
       </div>
     </div>

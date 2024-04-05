@@ -80,7 +80,7 @@ function DashboardScreen() {
                     </div>
                     <div className="info-card learn-more-card">
                         <h3><i class="fa fa-usd" aria-hidden="true"> </i> <br />Know Your Earnings</h3>
-                        <button className="action-button">LEARN MORE</button>
+                        <button className="action-button" onClick={()=>{history('/statement')}}>LEARN MORE</button>
                     </div>
                 </div>
                 <PoweredBy />
