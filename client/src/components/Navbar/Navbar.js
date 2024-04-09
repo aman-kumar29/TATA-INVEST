@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getUser } from "../../utils/getUser.js";
 import { auth } from '../../Firebase/config.js';
@@ -10,24 +10,24 @@ function Navbar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [userData, setUser] = useState(null);
 
-    useEffect(() => {
-        const fetchedUser = localStorage.getItem('userId');
-        if (fetchedUser) {
-            getUser(fetchedUser)
-                .then((userData) => {
-                    if (userData) {
-                        setUser(userData);
-                    } else {
-                        console.log('User not found');
-                    }
-                })
-                .catch((error) => {
-                    console.log('Error fetching user data:', error);
-                });
-        } else {
-            history('/login');
-        }
-    });
+  useEffect(() => {
+    const fetchedUser = localStorage.getItem('userId');
+    if (fetchedUser) {
+      getUser(fetchedUser)
+        .then((userData) => {
+          if (userData) {
+            setUser(userData);
+          } else {
+            console.log('User not found');
+          }
+        })
+        .catch((error) => {
+          console.log('Error fetching user data:', error);
+        });
+    } else {
+      history('/login');
+    }
+  });
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -52,36 +52,56 @@ function Navbar() {
           <button className="navbar-toggler d-lg-none" type="button" onClick={toggleDrawer}>
             <i className="fa fa-bars" aria-hidden="true"></i>
           </button>
-          <Drawer anchor="right"
+          <Drawer
+            anchor="right"
             open={isDrawerOpen}
             onClose={toggleDrawer}
-            className="full-screen-drawer">
-            <div className="drawer-content" onClick={toggleDrawer}>
-            <div>
-            Hi {userData?.name}, <br /> Welcome to the TATA Invest
-            </div>
+            className="full-screen-drawer"
+          >
+            <div className="drawer-content drawer-card" onClick={toggleDrawer}>
+              <div style={{ paddingTop: '5px', paddingLeft: '15px', display: 'flex', flexDirection: 'row' }} className='drawer-header'>
+                <h3 style={{ paddingRight: '10px' }}>
+                  Hi {userData?.name}, <br /> Welcome to the <br /> <img src="https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/logo.png?alt=media&token=47531390-01cb-40a6-9ab0-bca7f18cfec0" alt="TataInvest" width="130" />
+                </h3>
+                <div className="close-icon" onClick={toggleDrawer} style={{ marginRight: '20px', marginTop: '10px' }}>
+                  <i className="fas fa-times" style={{ fontSize: '34px' }}></i>
+                </div>
+              </div>
               <List>
-                <ListItem>
-                  <Link to="/dashboard">Home</Link>
+                <ListItem className="list-item">
+                  <Link to="/dashboard">
+                    <i className="fas fa-home"></i> Home
+                  </Link>
                 </ListItem>
-                <ListItem>
-                  <Link to="/profile">Profile</Link>
+                <ListItem className="list-item">
+                  <Link to="/profile">
+                    <i className="fas fa-user"></i> Profile
+                  </Link>
                 </ListItem>
-                <ListItem>
-                  <Link to="/statement">Statement</Link>
+                <ListItem className="list-item">
+                  <Link to="/statement">
+                    <i className="fas fa-file-alt"></i> Statement
+                  </Link>
                 </ListItem>
-                <ListItem>
-                  <Link to="/aboutus">About Us</Link>
+                <ListItem className="list-item">
+                  <Link to="/aboutus">
+                    <i className="fas fa-info-circle"></i> About Us
+                  </Link>
                 </ListItem>
-                <ListItem>
-                  <a href="/download">Download App</a>
+                <ListItem className="list-item">
+                  <a href="/download">
+                    <i className="fas fa-download"></i> Download App
+                  </a>
                 </ListItem>
-                <ListItem onClick={handleSignOut}>
-                  Log Out
+                <ListItem className="list-item" style={{
+                  color: 'red', /* Change text color */
+                }} onClick={handleSignOut}>
+                  <i className="fas fa-sign-out-alt"></i> Log Out
                 </ListItem>
               </List>
             </div>
           </Drawer>
+
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-none d-lg-flex">
               <li className="nav-item">
@@ -100,7 +120,7 @@ function Navbar() {
                 <a href="/download" className="nav-link active"><i className="fas fa-download"></i> Download App</a>
               </li>
             </ul>
-            <Button onClick={handleSignOut} style={{ backgroundColor: 'white', color: 'blue', fontSize: 12, padding: '10px 20px', borderRadius: '20px', margin: '5px' }}>Log Out</Button>
+            <Button onClick={handleSignOut} style={{ backgroundColor: 'white', fontSize: 12, padding: '10px 20px', borderRadius: '20px', margin: '5px' }}>Log Out</Button>
           </div>
         </div>
       </nav>
