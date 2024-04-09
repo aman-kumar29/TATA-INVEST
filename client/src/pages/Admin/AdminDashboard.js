@@ -11,7 +11,7 @@ export default function AdminDashboard() {
     useEffect(() => {
         const fetchUsersData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/getAllUsers`);
+                const response = await axios.get(`/api/getAllUsers`);
                 const filtered = response.data.filter(user => user.email !== 'admin@tatainvest.org');
                 const sortedUsers = filtered.sort((a, b) => {
                     const dateA = new Date(a.createdAt._seconds * 1000);
