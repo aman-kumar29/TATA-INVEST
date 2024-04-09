@@ -86,17 +86,21 @@
 .list-group {
   align-items: center; 
   }
-  .list-group-item {
+.list-group-item {
     border-radius: 10px;
-    padding: 20px;
-  width: 400px; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-size: 20px;
-  font-weight: bold;
+    padding: 15px;
+    width: 400px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+    font-weight: bold;
+    align-items: left;
 }
 
 @media (max-width: 768px) {
     .list-group-item {
         width: 100%; 
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 }
