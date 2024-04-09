@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Card, Row, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { getUser } from "../../utils/getUser.js";
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/config.js';
-import {Container, Typography} from '@mui/material'
+import { Container, Typography } from '@mui/material'
 
 const AddMoneyPage = () => {
+  const location = useLocation();
   const [amount, setAmount] = useState('');
   const history = useNavigate();
   const [user, setUser] = useState(null);
-
+  const query = new URLSearchParams(location.search);
   const handleAmountChange = (event) => {
     setAmount(event.target.value);
   };
@@ -22,6 +23,10 @@ const AddMoneyPage = () => {
   const fetchedUser = localStorage.getItem('userId');
 
   useEffect(() => {
+    const amount1 = query.get("amount");
+    if(amount1){
+      setAmount(amount1);
+    }
     if (fetchedUser) {
       getUser(fetchedUser)
         .then((userData) => {
@@ -37,7 +42,7 @@ const AddMoneyPage = () => {
     } else {
       history('/login');
     }
-  }, [fetchedUser,history]);
+  }, [fetchedUser, history]);
 
   const handleUpdateInfo = async (investedAmount, transactionId) => {
     try {
@@ -99,31 +104,30 @@ const AddMoneyPage = () => {
             <Typography variant="h5" className="text-center mb-4">
               Add Money
             </Typography>
-              <Form>
-                <Form.Group className="mb-3">
-                  <Form.Label>Enter Amount</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="Enter amount"
-                    value={amount}
-                    onChange={handleAmountChange}
-                  />
-                </Form.Group>
-                <div className="mb-3">
-                  <p className="mb-1">Suggestions:</p>
-                  <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('1000')}>₹ 1000</Button>
-                  <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('5000')}>₹ 5000</Button>
-                  <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('10000')}>₹ 10000</Button>
-                  {/* Add more suggestion buttons as needed */}
-                </div>
-                <Button
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Enter Amount</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter amount"
+                  value={amount}
+                  onChange={handleAmountChange}
+                />
+              </Form.Group>
+              <div className="mb-3">
+                <p className="mb-1">Suggestions:</p>
+                <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('1000')}>₹ 1000</Button>
+                <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('5000')}>₹ 5000</Button>
+                <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('10000')}>₹ 10000</Button>
+                {/* Add more suggestion buttons as needed */}
+              </div>
+              <a href={`upi://pay?pa=amankumar76814@oksbi&pn=Aman Kumar&cu=INR&am=${amount}`}>                <Button
                 variant="primary"
-                type="submit"
                 className="w-100 mt-4"
-                onClick={handleProceedToPay}
               >
                 Proceed to Pay
-              </Button>
+              </Button></a>
+
             </Form>
           </Card>
         </Col>

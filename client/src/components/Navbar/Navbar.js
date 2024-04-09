@@ -24,8 +24,6 @@ function Navbar() {
         .catch((error) => {
           console.log('Error fetching user data:', error);
         });
-    } else {
-      history('/login');
     }
   });
 
@@ -47,8 +45,11 @@ function Navbar() {
   return (
     <div className="container custom-bg-color mt-0 mb-0" style={{ maxWidth: '100%' }}>
       <nav className="navbar navbar-expand-lg " data-bs-theme="dark">
+
         <div className="container-fluid ">
-          <img src="https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/logo.png?alt=media&token=47531390-01cb-40a6-9ab0-bca7f18cfec0" alt="TataInvest" height="50" width="70" />
+        <Link to='/'>
+        <img src="https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/logo.png?alt=media&token=47531390-01cb-40a6-9ab0-bca7f18cfec0" alt="TataInvest" height="50" width="70" />
+        </Link>
           <button className="navbar-toggler d-lg-none" type="button" onClick={toggleDrawer}>
             <i className="fa fa-bars" aria-hidden="true"></i>
           </button>

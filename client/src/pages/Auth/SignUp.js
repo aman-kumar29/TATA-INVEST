@@ -148,8 +148,8 @@ function SignUp() {
             </div>
           )}
           <div className="form-group">
-            <Link to="/login" className="signin-link" style={{ color: "white" }}>
-              Already have an account? Sign In
+            <Link to="/login" className="signin-link" style={{ color: "white", fontSize:'16px'}}>
+              Already have an account? <span style={{color:'blue',textDecoration:'underline'}}> Sign In</span>
             </Link>
           </div>
           <button type="submit" className="signup-button">
