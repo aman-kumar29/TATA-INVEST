@@ -48,6 +48,14 @@ function DashboardScreen() {
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
         window.location.href = whatsappUrl;
     };
+    const handleReferralClick = () => {
+        // Replace the phone number and message with your desired values
+        const phoneNumber = '919057725694';
+        const message = `Get daily 1.2% returns on investments at Tatainvest! 💰 Invest now for hassle-free earnings. Click on this link - https://tatainvest.org/signup?referralCode=${userData.referralCode}`;
+        // Construct the WhatsApp URL
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.location.href = whatsappUrl;
+    };
 
 
     return (
@@ -68,6 +76,9 @@ function DashboardScreen() {
                 <i class="fas fa-info-circle"></i>
                 <div>
                     Earn daily returns by referring friends! Get 0.3% return of the referred friend's investment. Plus, earn 0.2% when they refer someone, and 0.1% from the subsequent referrals. Start investing and referring today to maximize your earnings!
+                    <button className="action-button" align="left" style={{margin:"2px"}} onClick={handleReferralClick}>
+                        REFER & EARN
+                    </button>
                 </div>
             </div>
 

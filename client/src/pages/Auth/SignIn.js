@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../../Firebase/config.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -13,6 +13,14 @@ function Login() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchedUser = localStorage.getItem('userId');
+    if (fetchedUser) {
+      history('/dashboard');
+    }
+  });
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -24,9 +32,9 @@ function Login() {
         localStorage.setItem("userId", data?.user.uid);
         dispatch(authActions.login());
 
-        if(email==="admin@tatainvest.org" && password==="admin123"){
+        if (email === "admin@tatainvest.org" && password === "admin123") {
           history("/admin");
-        }else{
+        } else {
           history("/dashboard");
         }
 
@@ -78,7 +86,7 @@ function Login() {
               <p onClick={handleReset}>Forgot Password?</p>
             </div>
             <div className="signup-link">
-              <Link to="/signup" className="signup-link-text" style={{color:'#fff'}}>
+              <Link to="/signup" className="signup-link-text" style={{ color: '#fff' }}>
                 Don't have an account? Sign Up
               </Link>
             </div>

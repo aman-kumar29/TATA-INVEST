@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { auth, createUserDocument } from "../../Firebase/config.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import "./signUp.css"; // Assume SignUp.css is the CSS file for styling
+import "./signUp.css"; 
 import { useDispatch } from "react-redux";
 import { authActions } from "../../redux/store.js";
-import axios from "axios";
+import axios from 'axios';
 
 function SignUp() {
   const history = useNavigate();
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,6 +22,23 @@ function SignUp() {
     parentReferralCode: "",
   });
 
+  useEffect(() => {
+    const fetchedUser = localStorage.getItem('userId');
+    if (fetchedUser) {
+      history('/dashboard');
+    }
+    const query = new URLSearchParams(location.search);
+    const referralCode = query.get("referralCode");
+    if (referralCode) {
+      setFormData((prevData) => ({
+        ...prevData,
+        parentReferralCode: referralCode,
+      }));
+      console.log(formData.parentReferralCode);
+    }
+  }, [location.search]);
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -28,10 +46,9 @@ function SignUp() {
       [name]: value,
     });
   };
-
   const handleParentReferralCode = async (childrenId) => {
     const dummyData = await axios.get(`/api/parentReferralUpdate/${childrenId}`);
-    // console.log(dummyData, "dummyData");
+    console.log(dummyData);
   };
 
   const handleSubmit = (e) => {
@@ -57,7 +74,6 @@ function SignUp() {
           formData.address
         ).then(() => {
           if (formData.parentReferralCode !== "") {
-            // console.log("Entering handleParentReferralCode");
             handleParentReferralCode(data.user.uid);
           }
         });
@@ -131,18 +147,20 @@ function SignUp() {
               required
             />
           </div>
+          {formData.parentReferralCode === "" && (
+            <div className="form-group">
+              <input
+                name="parentReferralCode"
+                type="text"
+                placeholder="Referral Code"
+                className="input-field"
+                value={formData.parentReferralCode}
+                onChange={handleChange}
+              />
+            </div>
+          )}
           <div className="form-group">
-            <input
-              name="parentReferralCode"
-              type="text"
-              placeholder="Referral Code"
-              className="input-field"
-              value={formData.parentReferralCode}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <Link to="/signin" className="signin-link" style={{ color: "white" }}>
+            <Link to="/login" className="signin-link" style={{ color: "white" }}>
               Already have an account? Sign In
             </Link>
           </div>

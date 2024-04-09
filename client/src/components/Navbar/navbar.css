@@ -11,3 +11,15 @@
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   transform: rotate(90deg);
 }
+.full-screen-drawer .MuiDrawer-paper {
+  width: 100vw;
+  max-width: 100%;
+}
+
+.full-screen-drawer .MuiDrawer-paper {
+  width: 100vw;
+  max-width: 100%;
+  height: 100vh;
+  max-height: 100%;
+}
+

@@ -54,7 +54,7 @@ const ProfilePage = () => {
   };
 
   const shareOnWhatsApp = () => {
-    const message = `Get daily 1.2% returns on investments at Tatainvest! 💰 Invest now for hassle-free earnings. Use my referral code: ${user.referralCode}`;
+    const message = `Get daily 1.2% returns on investments at Tatainvest! 💰 Invest now for hassle-free earnings. Click on this link - https://tatainvest.org/signup?referralCode=${user.referralCode}`;
     // Construct the WhatsApp URL
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.location.href = whatsappUrl;
