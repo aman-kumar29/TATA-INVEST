@@ -11,7 +11,7 @@ export default function PerfectPlan() {
             <h2 className='perfectPlanText2'>~ Plans starting with 0 lock-in period ~</h2>
             <div className="perfect-plan-card-container">
                 <div className="perfect-plan-card">
-                    <img src="/assets/leaves.png" alt="Card Image" />
+                    <img src="/assets/leaves.svg" alt="Card Image" />
                     <div>
                         <h6>Grow at up to</h6>
                         <h4>1.2% returns/day*</h4>
@@ -20,7 +20,7 @@ export default function PerfectPlan() {
                     </div>
                 </div>
                 <div className="perfect-plan-card">
-                    <img src="/assets/leaves2.png" alt="Card Image" />
+                    <img src="/assets/leaves2.svg" alt="Card Image" />
                     <div>
                         <h6>Grow at up to</h6>
                         <h4>1.5% returns/day*</h4>
@@ -29,7 +29,7 @@ export default function PerfectPlan() {
                     </div>
                 </div>
                 <div className="perfect-plan-card">
-                    <img src="/assets/leaves3.png" alt="Card Image" />
+                    <img src="/assets/leaves3.svg" alt="Card Image" />
                     <div>
                         <h6>Grow at up to</h6>
                         <h4>1.8% returns/day*</h4>

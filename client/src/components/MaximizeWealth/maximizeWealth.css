@@ -113,7 +113,7 @@
 }
 
 .card img {
-    max-width: 50%; /* Adjust the maximum width of the image */
+    max-width: 90%; /* Adjust the maximum width of the image */
     height: auto;
     margin-bottom: 4px;
 }

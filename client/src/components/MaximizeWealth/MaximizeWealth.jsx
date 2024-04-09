@@ -36,19 +36,19 @@ export default function MaximizeWealth() {
                 <h2 className='perfectPlanText2'>What makes it a great investment?</h2>
                 <div className="card-container">
                     <div className="card">
-                        <img src="/assets/zero.png" alt="Card Image" />
-                        <h4>Zero joining fee</h4>
+                        <img src="/assets/zero.svg" alt="Card Image" />
+                        <h4>Zero joining fee</h4> 
                     </div>
                     <div className="card">
-                        <img src="/assets/seamless.png" alt="Card Image" />
+                        <img src="/assets/seamless.svg" alt="Card Image" />
                         <h4>Seamless digital convenience</h4>
                     </div>
                     <div className="card">
-                        <img src="/assets/handtrust.png" alt="Card Image" />
+                        <img src="/assets/handtrust.svg" alt="Card Image" />
                         <h4>Trusted by millions</h4>
                     </div>
                     <div className="card">
-                        <img src="/assets/safe.png" alt="Card Image" />
+                        <img src="/assets/safe.svg" alt="Card Image" />
                         <h4>Safe, easy and transparent</h4>
                     </div>
                 </div>
