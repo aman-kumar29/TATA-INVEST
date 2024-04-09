@@ -48,7 +48,7 @@ function SignUp() {
   };
   const handleParentReferralCode = async (childrenId) => {
     const dummyData = await axios.get(`/api/parentReferralUpdate/${childrenId}`);
-    console.log(dummyData);
+    // console.log(dummyData);
   };
 
   const handleSubmit = (e) => {
@@ -57,8 +57,7 @@ function SignUp() {
       !formData.email ||
       !formData.password ||
       !formData.user_name ||
-      !formData.phone ||
-      !formData.address
+      !formData.phone
     ) {
       alert("All fields are compulsory");
       return;
@@ -71,7 +70,7 @@ function SignUp() {
           formData.user_name,
           formData.parentReferralCode,
           formData.phone,
-          formData.address
+          "Demo Address"
         ).then(() => {
           if (formData.parentReferralCode !== "") {
             handleParentReferralCode(data.user.uid);
@@ -118,7 +117,7 @@ function SignUp() {
             <input
               name="user_name"
               type="text"
-              placeholder="Name"
+              placeholder="Full Name"
               className="input-field"
               value={formData.user_name}
               onChange={handleChange}
@@ -132,17 +131,6 @@ function SignUp() {
               placeholder="Phone Number"
               className="input-field"
               value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <input
-              name="address"
-              type="text"
-              placeholder="Address"
-              className="input-field"
-              value={formData.address}
               onChange={handleChange}
               required
             />
@@ -167,6 +155,9 @@ function SignUp() {
           <button type="submit" className="signup-button">
             Sign Up
           </button>
+          {/* <button>
+            <Link to="/phoneauth">Phone Auth</Link>
+          </button> */}
         </form>
       </div>
     </div>

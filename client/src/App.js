@@ -24,6 +24,7 @@ import PrivacyPolicyPage from './pages/Dashboard/PrivacyPolicy.js';
 import AdminDashboard from './pages/Admin/AdminDashboard.js';
 import NavbarBeforeLogin from './components/NavbarBeforeLogin/NavbarBeforeLogin.jsx';
 import { useEffect, useState } from 'react';
+import PhoneAuth from './pages/Auth/PhoneAuth.js';
 
 function App() {
   // Check if user is authenticated
@@ -63,6 +64,7 @@ function App() {
         <Route path="/howtouse" element={<HowToUsePage />} />
         <Route path="/privacypolicy" element={<PrivacyPolicyPage />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/phoneauth" element={<PhoneAuth />} />
       </Routes>
       <Footer />
     </>
