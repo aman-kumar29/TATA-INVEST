@@ -39,6 +39,7 @@ function Step2Form() {
     try {
       // Replace with actual API call to send OTP
       const response = await axios.get('http://localhost:8000/api/sendotp');
+      
       console.log('OTP sent successfully:', response);
       setIsOtpSent(true);
       setOtpTimer(60); // Start 60-second timer for resend OTP

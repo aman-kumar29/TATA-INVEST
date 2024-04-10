@@ -25,6 +25,8 @@ import AdminDashboard from './pages/Admin/AdminDashboard.js';
 import NavbarBeforeLogin from './components/NavbarBeforeLogin/NavbarBeforeLogin.jsx';
 import { useEffect, useState } from 'react';
 import PhoneAuth from './pages/Auth/PhoneAuth.js';
+import PaymentRequest from './pages/Admin/PaymentRequest.js';
+import WithdrawalRequest from './pages/Admin/WithdrawalRequests.js';
 
 function App() {
   // Check if user is authenticated
@@ -64,6 +66,8 @@ function App() {
         <Route path="/howtouse" element={<HowToUsePage />} />
         <Route path="/privacypolicy" element={<PrivacyPolicyPage />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/paymentrequest" element={<PaymentRequest />} />
+        <Route path="/withdrawalrequest" element={<WithdrawalRequest />} />
         <Route path="/phoneauth" element={<PhoneAuth />} />
       </Routes>
       <Footer />

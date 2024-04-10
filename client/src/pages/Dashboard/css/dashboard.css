@@ -139,3 +139,10 @@
         margin: 3px;
     }
 }
+
+.slide-img{
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+    border-radius: 10px;
+}

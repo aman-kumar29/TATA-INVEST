@@ -5,12 +5,15 @@ import { getUser } from "../../utils/getUser.js";
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/config.js';
 import { Container, Typography } from '@mui/material'
+import { create } from '@mui/material/styles/createTransitions.js';
+import { createPaymentApprovalRequest } from '../../Firebase/config.js';
 
 const AddMoneyPage = () => {
   const location = useLocation();
   const [amount, setAmount] = useState('');
   const history = useNavigate();
   const [user, setUser] = useState(null);
+  const [paymentApprovalRequest, setPaymentApprovalRequest] = useState(false);
   const query = new URLSearchParams(location.search);
   const handleAmountChange = (event) => {
     setAmount(event.target.value);
@@ -96,6 +99,12 @@ const AddMoneyPage = () => {
     console.log(`Proceeding to pay ${amount}...`);
   };
 
+  const handelPaymentApprovalRequest = async () => {
+    createPaymentApprovalRequest(fetchedUser,user.name,user.phone,amount).then((response) => {
+        setPaymentApprovalRequest(true);
+    });
+  }
+
   return (
     <Container className="py-5">
       <Row className="justify-content-center each-row">
@@ -127,6 +136,14 @@ const AddMoneyPage = () => {
               >
                 Proceed to Pay
               </Button></a>
+              
+              {
+              !paymentApprovalRequest?
+              <Button className='mt-2' onClick={handelPaymentApprovalRequest}>
+                Reuest Payment Approval
+              </Button>
+              :<p>Payment Approval Request Sent</p>
+              }
             </Form>
           </Card>
         </Col>

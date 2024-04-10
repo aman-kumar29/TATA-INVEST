@@ -170,9 +170,36 @@ app.get("/api/getAllUsers", async (req, res) => {
   const users = snapshot.docs.map(doc => doc.data());
   res.json(users);
 });
+app.get("/api/getAllPaymentRequests", async (req, res) => {
+  try {
+    const usersRef = firestore.collection('paymentApprovalRequests');
+    const snapshot = await usersRef.get();
+    const users = snapshot.docs.map(doc => {
+      return { id: doc.id, ...doc.data() }; // Include document ID in the response
+    });
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching payment requests:', error);
+    res.status(500).json({ error: 'Error fetching payment requests' });
+  }
+});
+app.get("/api/getAllWithdrawalRequests", async (req, res) => {
+  try {
+    const usersRef = firestore.collection('withdrawalApprovalRequests');
+    const snapshot = await usersRef.get();
+    const users = snapshot.docs.map(doc => {
+      return { id: doc.id, ...doc.data() }; // Include document ID in the response
+    });
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching withdrawal requests:', error);
+    res.status(500).json({ error: 'Error fetching withdrawal requests' });
+  }
+});
+
 app.get("/api/sendotp", async (req, res) => {
   try {
-    const apiKey = '099EyX9a2PuiR05YjQbYVxexc7RsvkjcJVVppnEoNFqpQ5QdS5iubPlKvkBH'; // Replace 'YOUR_API_KEY' with your Fast2SMS API key
+    const apiKey = 'pqAUHY3WhXsfNOiPJatdueV5mF9EgKMGn6Z4bQLlvTwc28Rz7o4HnrQXxZtM5PhYsTfj83GIaJKAvBFC'; // Replace 'YOUR_API_KEY' with your Fast2SMS API key
     const smsData = {
       sender_id: 'FSTSMS',
       message: 'This is your OTP',

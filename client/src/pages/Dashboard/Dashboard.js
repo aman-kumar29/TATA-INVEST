@@ -6,13 +6,16 @@ import "./css/dashboard.css";
 import PoweredBy from "../../components/Poweredby/PoweredBy.js";
 import InvestorReviews from "../../components/InvestorReviews/InvestorReviews.jsx";
 import { investmentPlansSlidesMobile } from "../../data.js";
+import { createWithdrawalApprovalRequest } from "../../Firebase/config.js";
 
 function DashboardScreen() {
     const [userData, setUser] = useState(null);
     const history = useNavigate();
+    const fetchedUser = localStorage.getItem('userId');
+    const [withdrawalApprovalRequest, setWithdrawalApprovalRequest] = useState(false);
+
 
     useEffect(() => {
-        const fetchedUser = localStorage.getItem('userId');
         if (fetchedUser) {
             getUser(fetchedUser)
                 .then((userData) => {
@@ -48,15 +51,20 @@ function DashboardScreen() {
     const completeKYCOnClick = () => {
         history("/kyc-step1");
     }
-    const handleWhatsAppClick = () => {
-        // Replace the phone number and message with your desired values
-        const phoneNumber = '917976189199';
-        const message = 'Hello! I would like to withdraw my earnings. Please help me with the process.';
+    // const handleWhatsAppClick = () => {
+    //     // Replace the phone number and message with your desired values
+    //     const phoneNumber = '917976189199';
+    //     const message = 'Hello! I would like to withdraw my earnings. Please help me with the process.';
 
-        // Construct the WhatsApp URL
-        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-        window.location.href = whatsappUrl;
-    };
+    //     // Construct the WhatsApp URL
+    //     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    //     window.location.href = whatsappUrl;
+    // };
+    const handelWithdrawalApprovalRequest = async () => {
+        createWithdrawalApprovalRequest(fetchedUser,userData.name,userData.phone,userData.withdrawableAmount).then((response) => {
+            setWithdrawalApprovalRequest(true);
+        });
+      }
     const handleReferralClick = () => {
         // Replace the phone number and message with your desired values
         const message = `Get daily 1.2% returns on investments at Tatainvest! 💰 Invest now for hassle-free earnings. Click on this link - https://tatainvest.org/signup?referralCode=${userData.referralCode}`;
@@ -75,10 +83,14 @@ function DashboardScreen() {
                     <ProgressBar investedAmount={userData?.investedAmount || 0} />
                     <h6>Invest More Upto <strong>₹ 300000</strong></h6>
                 </div>
-                <div style={{ margin: '0 auto' }}>
+                <div style={{ marginTop:'100px' }}>
                     <button className="add-money-button btn-1" onClick={addMoneyOnClick}>Add Money</button>
-                    <button className="add-money-button btn-2" onClick={handleWhatsAppClick}>Withdraw</button>
-                </div>
+                    {
+                !withdrawalApprovalRequest ?
+              <button className="add-money-button btn-2" onClick={handelWithdrawalApprovalRequest}>Withdraw</button>
+                
+              :<p>Withdrawal Request Sent Successfully !</p>
+              }</div>
             </div>
             <center className="slides-container leftColumnInvestment">
 
@@ -86,7 +98,7 @@ function DashboardScreen() {
                     <i class="fa-solid fa-backward" onClick={prevSlide}></i>
                 </div>
 
-                <div className="slide">
+                <div className="slide slide-img">
                     <img src={slides[currentIndex].url} alt="Slide" className="slide-image" onClick={()=>{
                         history(`/addmoney?amount=${slidesmoney[currentIndex]}`);
                     }} />

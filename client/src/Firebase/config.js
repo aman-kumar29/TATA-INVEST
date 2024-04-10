@@ -2,20 +2,31 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { getAuth, setPersistence, browserSessionPersistence, deleteUser } from "firebase/auth";
-import { getFirestore, setDoc, doc, getDoc, deleteDoc} from "firebase/firestore";
+import { getFirestore, setDoc, addDoc, doc, getDoc, deleteDoc,query, where, collection, getDocs} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyC_Tcx4yIyJCfJK6VhpHRM8Vq9TRKK6dgU",
+//   authDomain: "tatainvest-71bd6.firebaseapp.com",
+//   projectId: "tatainvest-71bd6",
+//   storageBucket: "tatainvest-71bd6.appspot.com",
+//   messagingSenderId: "1022642675405",
+//   appId: "1:1022642675405:web:2eebe654aa302eb17e9384",
+//   measurementId: "G-6DPQ2X6M6Z"
+// };
+
 const firebaseConfig = {
-  apiKey: "AIzaSyC_Tcx4yIyJCfJK6VhpHRM8Vq9TRKK6dgU",
-  authDomain: "tatainvest-71bd6.firebaseapp.com",
-  projectId: "tatainvest-71bd6",
-  storageBucket: "tatainvest-71bd6.appspot.com",
-  messagingSenderId: "1022642675405",
-  appId: "1:1022642675405:web:2eebe654aa302eb17e9384",
-  measurementId: "G-6DPQ2X6M6Z"
+  apiKey: "AIzaSyCdi7XXQy0IEbeyA8ZQfW29vWJ4P5zf7_o",
+  authDomain: "tata-c37fc.firebaseapp.com",
+  projectId: "tata-c37fc",
+  storageBucket: "tata-c37fc.appspot.com",
+  messagingSenderId: "941632957677",
+  appId: "1:941632957677:web:466985c69fdbed5bf630e4",
+  measurementId: "G-LWV5RRM6WE"
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -63,6 +74,7 @@ export const createUserDocument = async (user, name, parentReferralCode,phone,ad
     console.log('Error in creating user', error);
   }
 }
+
 export const getSingleUser = async (uid) => {
   // Wait until auth.currentUser is available
   while (!auth.currentUser) {
@@ -105,3 +117,59 @@ export const handleDeleteAccount = async () => {
     console.warn('No user is signed in');
   }
 };
+
+export const checkUserExists = async (phone) => {
+  try {
+    // Create a query to check if a user with the given phone number exists
+    const usersRef = collection(db, 'users');
+    const q = query(usersRef, where('phone', '==', phone));
+
+    // Execute the query
+    const querySnapshot = await getDocs(q);
+
+    // Return true if a user with the given phone number exists, otherwise false
+    return !querySnapshot.empty;
+  } catch (error) {
+    console.error('Error checking user existence:', error);
+    throw error;
+  }
+};
+
+
+
+
+export const createPaymentApprovalRequest = async (userId, userName, phone, amount) => {
+  try {
+    await addDoc(collection(db, "paymentApprovalRequests"),
+      {
+        userId: userId,
+        name: userName,
+        phone: phone,
+        amount: amount,
+        status: 'pending',
+        createdAt: new Date()
+      });
+
+    console.log("Payment approval request created successfully!");
+  } catch (error) {
+    console.log('Error in creating payment approval request', error);
+  }
+}
+
+export const createWithdrawalApprovalRequest = async (userId, userName, phone, amount) => {
+  try {
+    await addDoc(collection(db, "withdrawalApprovalRequests"),
+      {
+        userId: userId,
+        name: userName,
+        phone: phone,
+        amount: amount,
+        status: 'pending',
+        createdAt: new Date()
+      });
+
+    console.log("Withdrawl approval request created successfully!");
+  } catch (error) {
+    console.log('Error in creating Withdrawl approval request', error);
+  }
+}

@@ -133,13 +133,10 @@ function Navbar() {
                     <Link to="/admin" className="nav-link active" aria-current="page">Users</Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="/profile" className="nav-link active" aria-current="page">Profile</Link>
+                    <Link to="/paymentrequest" className="nav-link active" aria-current="page">Payment Requests</Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="/paymentrequests" className="nav-link active" aria-current="page">Payment Requests</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/withdrawalrequests" className="nav-link active" aria-current="page">Withdrawal Requests</Link>
+                    <Link to="/withdrawalrequest" className="nav-link active" aria-current="page">Withdrawal Requests</Link>
                   </li>
                 </>
               ) : (
