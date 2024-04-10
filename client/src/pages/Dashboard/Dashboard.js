@@ -75,10 +75,10 @@ function DashboardScreen() {
                     <ProgressBar investedAmount={userData?.investedAmount || 0} />
                     <h6>Invest More Upto <strong>₹ 300000</strong></h6>
                 </div>
-                <div style={{ margin: '0 auto' }}>
+                <center className="buttons-container">
                     <button className="add-money-button btn-1" onClick={addMoneyOnClick}>Add Money</button>
                     <button className="add-money-button btn-2" onClick={handleWhatsAppClick}>Withdraw</button>
-                </div>
+                </center>
             </div>
             <center className="slides-container leftColumnInvestment">
 
