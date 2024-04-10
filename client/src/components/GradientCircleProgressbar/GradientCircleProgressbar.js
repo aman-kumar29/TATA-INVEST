@@ -1,93 +1,50 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "@emotion/styled";
+import { CircularProgressbar} from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import { Link } from "react-router-dom";
-
-const CircleContainer = styled.div`
-  display: inline-block;
-  border-radius: 100%;
-  position: relative;
-`;
-
-const PercentageContainer = styled.div`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-`;
-
-const StyledCircle = styled.circle`
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-`;
 
 const GradientCircleProgressbar = ({
   percentage,
   investedAmount,
   width,
-  strokeWidth,
-  fontSize,
-  fontColor,
-  fontFamily,
   primaryColor,
-  secondaryColor,
-  fill,
-  hidePercentageText,
-  strokeLinecap,
 }) => {
-  const PI = 3.14;
-  const R = width / 2 - strokeWidth * 2;
-
-  const circumference = 2 * PI * R;
-  const offset = circumference - (percentage / 100) * circumference;
-  const gradientId = `${primaryColor[0]}${primaryColor[1]}`.replace(/#/g, "");
-
   return (
-    <CircleContainer className="react-super-progressbar__base" style={{ height: `${width}px`, width: `${width}px` }}>
-      {!hidePercentageText && (
-        <PercentageContainer className="react-super-progressbar__percentage-container">
-          <span className="react-super-progressbars__percentage" style={{ fontSize, fontFamily, color: fontColor, fontWeight:"bold" }}>
-          ₹ {investedAmount}
-          </span>
-          <span>
-          <Link to = '/statement'><p style={{color:'gray',fontSize:'16px'}}>PORTFOLIO VALUE</p></Link>
-          </span>
-        </PercentageContainer>
-      )}
+    <center style={{ position: 'relative', width: width , height:'200px'}}>
+      <Link to="/statement">
+        <CircularProgressbar
+          value={percentage}
+          text={`₹ ${investedAmount}`}
+          circleRatio={0.5}
+          styles={{
+            trail: {
+              strokeLinecap: 'butt',
+              transform: 'rotate(-90deg)',
+              transformOrigin: 'center center'
+            },
+            path: {
+              strokeLinecap: 'butt',
+              transform: 'rotate(-90deg)',
+              transformOrigin: 'center center',
+              color:'purple'
+            },
+            text: {
+              fill: 'black',
+              fontSize:'13px'
+            }
+          }}
+        />
+      </Link>
 
-      <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
-        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+
+      <defs>
+        <linearGradient id={`gradient-${primaryColor[0]}-${primaryColor[1]}`} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor={primaryColor[0]} />
           <stop offset="100%" stopColor={primaryColor[1]} />
         </linearGradient>
-        <circle
-          strokeWidth={9}
-          fill="transparent"
-          r={R}
-          cx={width / 2}
-          cy={width / 2}
-          stroke={"#888"}
-          strokeDasharray={`${circumference} ${circumference}`}
-        />
-        <StyledCircle
-          strokeWidth={15}
-          fill={fill}
-          r={R}
-          cx={width / 2}
-          cy={width / 2}
-          stroke={`url(#${gradientId})`}
-          strokeLinecap={strokeLinecap}
-          strokeDasharray={`${circumference} ${circumference}`}
-          strokeDashoffset={offset}
-        />
-      </svg>
-    </CircleContainer>
+      </defs>
+    </center>
   );
 };
 
@@ -105,16 +62,5 @@ GradientCircleProgressbar.propTypes = {
   hidePercentageText: PropTypes.bool,
 };
 
-GradientCircleProgressbar.defaultProps = {
-  width: 200,
-  strokeWidth: 5,
-  strokeLinecap: "round",
-  fontSize: "inherit",
-  fontColor: "inherit",
-  fontFamily: "inherit",
-  primaryColor: ["#00BBFF", "#92d7f1"],
-  secondaryColor: "transparent",
-  fill: "transparent",
-};
 
 export default GradientCircleProgressbar;

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 export default function NavbarBeforeLogin() {
     const history = useNavigate();
     const handleInvestNow = () => {
-        history('/signup');
+        history('/login');
     };
     return (
         <div className='nav-background'>
