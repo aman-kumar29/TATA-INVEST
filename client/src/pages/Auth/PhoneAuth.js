@@ -74,8 +74,6 @@ export default function PhoneAuth() {
                     onChange={(e) => setOtp(e.target.value)}
                 />
                 <Button onClick={verifyOTP} variant='contained'>Verify OTP</Button>
-                {newUser && <Button onClick={handleLogout} variant='contained'>Logout</Button>}
-                {newUser && <div> {newUserr} </div>}
                 <br />
             </div>
         </div>
