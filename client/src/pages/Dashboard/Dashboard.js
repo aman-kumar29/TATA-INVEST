@@ -83,7 +83,7 @@ function DashboardScreen() {
                     <ProgressBar investedAmount={userData?.investedAmount || 0} />
                     <h6>Invest More Upto <strong>₹ 300000</strong></h6>
                 </div>
-                <div style={{ marginTop:'100px' }}>
+                <center className="buttons-container">
                     <button className="add-money-button btn-1" onClick={addMoneyOnClick}>Add Money</button>
                     {
                 !withdrawalApprovalRequest ?

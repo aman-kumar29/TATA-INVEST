@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { CircularProgressbar} from 'react-circular-progressbar';
+import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { Link } from "react-router-dom";
 
@@ -11,33 +11,33 @@ const GradientCircleProgressbar = ({
   primaryColor,
 }) => {
   return (
-    <center style={{ position: 'relative', width: width , height:'200px'}}>
-      <Link to="/statement">
-        <CircularProgressbar
-          value={percentage}
-          text={`₹ ${investedAmount}`}
-          circleRatio={0.5}
-          styles={{
-            trail: {
-              strokeLinecap: 'butt',
-              transform: 'rotate(-90deg)',
-              transformOrigin: 'center center'
-            },
-            path: {
-              strokeLinecap: 'butt',
-              transform: 'rotate(-90deg)',
-              transformOrigin: 'center center',
-              color:'purple'
-            },
-            text: {
-              fill: 'black',
-              fontSize:'13px'
-            }
-          }}
-        />
-      </Link>
-
-
+    <center style={{ position: 'relative', width: width, height: '200px' }}>
+      <CircularProgressbar
+        value={percentage}
+        text={
+          <Link to='/statement'>
+            ₹ {investedAmount}
+          </Link>
+        }
+        circleRatio={0.5}
+        styles={{
+          trail: {
+            strokeLinecap: 'butt',
+            transform: 'rotate(-90deg)',
+            transformOrigin: 'center center'
+          },
+          path: {
+            strokeLinecap: 'butt',
+            transform: 'rotate(-90deg)',
+            transformOrigin: 'center center',
+            color: 'purple'
+          },
+          text: {
+            fill: 'black',
+            fontSize: '13px'
+          }
+        }}
+      />
       <defs>
         <linearGradient id={`gradient-${primaryColor[0]}-${primaryColor[1]}`} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor={primaryColor[0]} />
