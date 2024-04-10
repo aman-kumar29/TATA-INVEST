@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import GradientCircleProgressbar from "../../components/GradientCircleProgressbar/GradientCircleProgressbar.js";
 
 const ProgressBar = ({ investedAmount }) => {
-  const maxAmount = 100000; // Update the max amount as per your requirement
+  const maxAmount = 300000; // Update the max amount as per your requirement
   const progress = (investedAmount / maxAmount) * 100;
 
   return (

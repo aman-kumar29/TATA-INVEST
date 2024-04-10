@@ -10,13 +10,13 @@ export default function MaximizeWealth() {
                     <div className="line" />
                     <h1 className="industryLeadingText">Grow with industry leading returns</h1>
                     <div className="buttons">
-                        <a href="#" className="appButton">
+                        <a href="https://play.google.com/store/games?hl=en&gl=US&pli=1" className="appButton">
                             <img
                                 src='/assets/playstore.png'
                                 alt='playstore'
                             />
                         </a>
-                        <a href="#" className="appButton">
+                        <a href="https://www.apple.com/in/app-store/" className="appButton">
                             <img
                                 src='/assets/appstore.png'
                                 alt='appstore'

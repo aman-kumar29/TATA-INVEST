@@ -86,8 +86,8 @@ function Login() {
               <p onClick={handleReset}>Forgot Password?</p>
             </div>
             <div className="signup-link">
-              <Link to="/signup" className="signup-link-text" style={{ color: '#fff' }}>
-                Don't have an account? Sign Up
+              <Link to="/signup" className="signup-link-text" style={{ color: '#fff', fontSize:'16px'}}>
+                Don't have an account? <span style={{color:'blue',textDecoration:'underline'}}> Sign Up</span>
               </Link>
             </div>
             <button type="submit" className="signin-button">
