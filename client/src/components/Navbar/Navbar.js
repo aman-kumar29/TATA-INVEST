@@ -25,7 +25,7 @@ function Navbar() {
           console.log('Error fetching user data:', error);
         });
     }
-  });
+  }, []);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -69,31 +69,53 @@ function Navbar() {
                 </div>
               </div>
               <List>
-                <ListItem className="list-item">
-                  <Link to="/dashboard">
-                    <i className="fas fa-home"></i> Home
-                  </Link>
-                </ListItem>
-                <ListItem className="list-item">
-                  <Link to="/profile">
-                    <i className="fas fa-user"></i> Profile
-                  </Link>
-                </ListItem>
-                <ListItem className="list-item">
-                  <Link to="/statement">
-                    <i className="fas fa-file-alt"></i> Statement
-                  </Link>
-                </ListItem>
-                <ListItem className="list-item">
-                  <Link to="/aboutus">
-                    <i className="fas fa-info-circle"></i> About Us
-                  </Link>
-                </ListItem>
-                <ListItem className="list-item">
-                  <a href="/download">
-                    <i className="fas fa-download"></i> Download App
-                  </a>
-                </ListItem>
+                {userData && userData.email === 'admin@tatainvest.org' ? (
+                  <>
+                    <ListItem className="list-item">
+                      <Link to="/admin">
+                        <i className="fas fa-person"></i> Users
+                      </Link>
+                    </ListItem>
+                    <ListItem className="list-item">
+                      <Link to="/paymentrequest">
+                        <i className="fas fa-person"></i> Payment Requests
+                      </Link>
+                    </ListItem>
+                    <ListItem className="list-item">
+                      <Link to="/withdrawalrequest">
+                        <i className="fas fa-person"></i> Withdrawal Requests
+                      </Link>
+                    </ListItem>
+                  </>
+                ) : (
+                  <>
+                    <ListItem className="list-item">
+                      <Link to="/dashboard">
+                        <i className="fas fa-home"></i> Home
+                      </Link>
+                    </ListItem>
+                    <ListItem className="list-item">
+                      <Link to="/profile">
+                        <i className="fas fa-user"></i> Profile
+                      </Link>
+                    </ListItem>
+                    <ListItem className="list-item">
+                      <Link to="/statement">
+                        <i className="fas fa-file-alt"></i> Statement
+                      </Link>
+                    </ListItem>
+                    <ListItem className="list-item">
+                      <Link to="/aboutus">
+                        <i className="fas fa-info-circle"></i> About Us
+                      </Link>
+                    </ListItem>
+                    <ListItem className="list-item">
+                      <a href="/download">
+                        <i className="fas fa-download"></i> Download App
+                      </a>
+                    </ListItem>
+                  </>
+                )}
                 <ListItem className="list-item" style={{
                   color: 'red', /* Change text color */
                 }} onClick={handleSignOut}>
@@ -105,21 +127,40 @@ function Navbar() {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-none d-lg-flex">
-              <li className="nav-item">
-                <Link to="/dashboard" className="nav-link active" aria-current="page">Dashboard</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/profile" className="nav-link active" aria-current="page">Profile</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/statement" className="nav-link active" aria-current="page">Statement</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/aboutus" className="nav-link active" aria-current="page">About Us</Link>
-              </li>
-              <li className="nav-item">
-                <a href="/download" className="nav-link active"><i className="fas fa-download"></i> Download App</a>
-              </li>
+              {userData && userData.email === 'admin@tatainvest.org' ? (
+                <>
+                  <li className="nav-item">
+                    <Link to="/admin" className="nav-link active" aria-current="page">Users</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/profile" className="nav-link active" aria-current="page">Profile</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/paymentrequests" className="nav-link active" aria-current="page">Payment Requests</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/withdrawalrequests" className="nav-link active" aria-current="page">Withdrawal Requests</Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <Link to="/dashboard" className="nav-link active" aria-current="page">Dashboard</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/profile" className="nav-link active" aria-current="page">Profile</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/statement" className="nav-link active" aria-current="page">Statement</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/aboutus" className="nav-link active" aria-current="page">About Us</Link>
+                  </li>
+                  <li className="nav-item">
+                    <a href="/download" className="nav-link active"><i className="fas fa-download"></i> Download App</a>
+                  </li>
+                </>
+              )}
             </ul>
             <Button onClick={handleSignOut} style={{ backgroundColor: 'white', fontSize: 12, padding: '10px 20px', borderRadius: '20px', margin: '5px' }}>Log Out</Button>
           </div>

@@ -28,21 +28,17 @@ function Step2Form() {
   const prevStep = () => {
     history("/kyc-step1");
   };
-  const proxyServerUrl = 'http://localhost:8000/api/send-otp';
 
   const handleGenerateOtp = async () => {
     if (!phoneNumber) {
       alert('Please enter your phone number.');
       return;
     }
-    const otp1 = Math.floor(100000 + Math.random() * 900000);
-    setOtp(otp1);
-    const message = `Verify you Aadhar. OTP for verification : ${otp}`;
-
     setLoading(true);
+    fetch('')
     try {
       // Replace with actual API call to send OTP
-      const response = await axios.get(`http://localhost:8000/api/send-otp?phoneNumber=${phoneNumber}`);
+      const response = await axios.get('http://localhost:8000/api/sendotp');
       console.log('OTP sent successfully:', response);
       setIsOtpSent(true);
       setOtpTimer(60); // Start 60-second timer for resend OTP
