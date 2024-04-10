@@ -199,27 +199,27 @@ app.get("/api/getAllWithdrawalRequests", async (req, res) => {
 
 app.get("/api/sendotp", async (req, res) => {
   try {
-    const apiKey = 'pqAUHY3WhXsfNOiPJatdueV5mF9EgKMGn6Z4bQLlvTwc28Rz7o4HnrQXxZtM5PhYsTfj83GIaJKAvBFC'; // Replace 'YOUR_API_KEY' with your Fast2SMS API key
-    const smsData = {
-      sender_id: 'FSTSMS',
-      message: 'This is your OTP',
-      language: 'english',
-      route: 'q',
-      numbers: '8927023672' // Replace with the recipient's phone number
-    };
+    // const apiKey = 'pqAUHY3WhXsfNOiPJatdueV5mF9EgKMGn6Z4bQLlvTwc28Rz7o4HnrQXxZtM5PhYsTfj83GIaJKAvBFC'; // Replace 'YOUR_API_KEY' with your Fast2SMS API key
+    // const smsData = {
+    //   sender_id: 'FSTSMS',
+    //   message: 'This is your OTP',
+    //   language: 'english',
+    //   route: 'q',
+    //   numbers: '8927023672' // Replace with the recipient's phone number
+    // };
 
-    const response = await fetch('https://www.fast2sms.com/dev/bulkV2', {
-      method: 'POST',
-      headers: {
-        'authorization': `${apiKey}`, // Update header key to 'Authorization' and add 'Bearer' prefix
-        'Content-Type': 'application/json' // Set content type to 'application/json'
-      },
-      body: JSON.stringify(smsData) // Convert smsData to JSON string
-    });
+    // const response = await fetch('https://www.fast2sms.com/dev/bulkV2', {
+    //   method: 'POST',
+    //   headers: {
+    //     'authorization': `${apiKey}`, // Update header key to 'Authorization' and add 'Bearer' prefix
+    //     'Content-Type': 'application/json' // Set content type to 'application/json'
+    //   },
+    //   body: JSON.stringify(smsData) // Convert smsData to JSON string
+    // });
 
-    const responseData = await response.json();
-    console.log('OTP sent successfully:', responseData);
-    res.status(200).json(responseData); // Send response data back to client
+    // const responseData = await response.json();
+    // console.log('OTP sent successfully:', responseData);
+    res.status(200).json({'aman':'kumar'}); // Send response data back to client
   } catch (error) {
     console.error('Error sending OTP:', error);
     res.status(500).json({ error: 'Failed to send OTP' }); // Send error response
