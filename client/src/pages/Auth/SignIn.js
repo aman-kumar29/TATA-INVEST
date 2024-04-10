@@ -82,9 +82,9 @@ function Login() {
                 className="input-field"
               />
             </div>
-            <div className="forgot-password">
+            {/* <div className="forgot-password">
               <p onClick={handleReset}>Forgot Password?</p>
-            </div>
+            </div> */}
             <div className="signup-link">
               <Link to="/signup" className="signup-link-text" style={{ color: '#fff', fontSize:'16px'}}>
                 Don't have an account? <span style={{color:'blue',textDecoration:'underline'}}> Sign Up</span>

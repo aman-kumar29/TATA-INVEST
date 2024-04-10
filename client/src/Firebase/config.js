@@ -42,7 +42,7 @@ export const createUserDocument = async (user, name, parentReferralCode,phone,ad
     await setDoc(doc(db, "users", user.uid),
       {
         name: name,
-        email: user.email,
+        email: "demo@g.com",
         phone: phone,
         address: address,
         investedAmount: 0,

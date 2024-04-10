@@ -31,7 +31,7 @@ function DashboardScreen() {
     });
     const [currentIndex, setCurrentIndex] = useState(0);
     const slides = investmentPlansSlidesMobile;
-    const slidesmoney = [1000,5000,2000,10000,20000,200000,100000];
+    const slidesmoney = [1000,2000,5000,10000,20000,50000,100000,200000,500000];
     const nextSlide = () => {
         const nextIndex = (currentIndex + 1) % slides.length;
         setCurrentIndex(nextIndex);

@@ -7,7 +7,7 @@ const Footer = () => {
         <footer className="footer">
             <div className="footer-content">
                 <div className="footer-logo">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/logo.png?alt=media&token=47531390-01cb-40a6-9ab0-bca7f18cfec0" alt="Logo" className="logo" />
+                    <img src="assets/logo.png" alt="Logo" className="logo" />
                 </div>
                 <div className="footer-links">
                     <ul>

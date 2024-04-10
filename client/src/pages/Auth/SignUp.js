@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { auth, createUserDocument } from "../../Firebase/config.js";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import "./signUp.css"; 
+import "./signUp.css";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../redux/store.js";
 import axios from 'axios';
+
 
 function SignUp() {
   const history = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  
+
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
     user_name: "",
-    phone: "",
-    address: "",
     parentReferralCode: "",
   });
+  const [phone, setPhone] = useState('');
+  const [otp, setOtp] = useState('');
+  const [user, setUser] = useState(null);
+  const [confirmationResult, setConfirmationResult] = useState(false);
 
   useEffect(() => {
     const fetchedUser = localStorage.getItem('userId');
@@ -34,10 +35,9 @@ function SignUp() {
         ...prevData,
         parentReferralCode: referralCode,
       }));
-      console.log(formData.parentReferralCode);
+      // console.log(formData.parentReferralCode);
     }
   }, [location.search]);
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,42 +48,54 @@ function SignUp() {
   };
   const handleParentReferralCode = async (childrenId) => {
     const dummyData = await axios.get(`/api/parentReferralUpdate/${childrenId}`);
-    // console.log(dummyData);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (
-      !formData.email ||
-      !formData.password ||
-      !formData.user_name ||
-      !formData.phone
-    ) {
-      alert("All fields are compulsory");
-      return;
+const sendOTP = async () => {
+    try {
+      if (phone === '' || formData.user_name === '') {
+        alert("Name and Phone Number required");
+        return;
+      }
+      const recaptcha = new RecaptchaVerifier(auth, 'recaptcha', {});
+      const confirmation = await signInWithPhoneNumber(auth, phone, recaptcha);
+      // console.log("confirmation", confirmation);
+      setUser(confirmation);
+      setConfirmationResult(true);
+    } catch (error) {
+      console.log("Error", error);
     }
+  }
 
-    createUserWithEmailAndPassword(auth, formData.email, formData.password)
-      .then((data) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (
+        otp === ''
+      ) {
+        alert("OTP is required !");
+        return;
+      }
+      const data = await user.confirm(otp);
+      console.log("OTP Verified");
+      if (data.user) {
         createUserDocument(
           data.user,
           formData.user_name,
           formData.parentReferralCode,
-          formData.phone,
+          phone,
           "Demo Address"
         ).then(() => {
           if (formData.parentReferralCode !== "") {
             handleParentReferralCode(data.user.uid);
           }
         });
-
         localStorage.setItem("userId", data?.user.uid);
         dispatch(authActions.login());
         history("/dashboard");
-      })
-      .catch((err) => {
-        alert(err.code);
-      });
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
 
   return (
@@ -91,28 +103,6 @@ function SignUp() {
       <div className="signup-container">
         <h1>Sign Up</h1>
         <form onSubmit={handleSubmit} className="signup-form">
-          <div className="form-group">
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              className="input-field"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              className="input-field"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
           <div className="form-group">
             <input
               name="user_name"
@@ -130,11 +120,19 @@ function SignUp() {
               type="tel"
               placeholder="Phone Number"
               className="input-field"
-              value={formData.phone}
-              onChange={handleChange}
+              onChange={(e) => setPhone("+91" + e.target.value)}
               required
             />
           </div>
+          <div className="btn my-3" onClick={sendOTP} variant='contained'>Get OTP</div>
+          <input
+            name="otp"
+            type="text"
+            placeholder="OTP"
+            className="input-field"
+            onChange={(e) => setOtp(e.target.value)}
+          />
+          <div className="mt-3"></div>
           {formData.parentReferralCode === "" && (
             <div className="form-group">
               <input
@@ -147,17 +145,20 @@ function SignUp() {
               />
             </div>
           )}
+          {confirmationResult ? (
+            <p style={{fontStyle:'italic', fontSize:'16px'}}>OTP sent on <strong>{phone}</strong>, Please check !</p>
+          ) : (
+            <div id="recaptcha"></div>
+          )}
+
           <div className="form-group">
-            <Link to="/login" className="signin-link" style={{ color: "white", fontSize:'16px'}}>
-              Already have an account? <span style={{color:'blue',textDecoration:'underline'}}> Sign In</span>
+            <Link to="/login" className="signin-link" style={{ color: "white", fontSize: '16px' }}>
+              Already have an account? <span style={{ color: 'blue', textDecoration: 'underline' }}> Sign In</span>
             </Link>
           </div>
           <button type="submit" className="signup-button">
-            Sign Up
+            Verify OTP & Sign Up
           </button>
-          {/* <button>
-            <Link to="/phoneauth">Phone Auth</Link>
-          </button> */}
         </form>
       </div>
     </div>

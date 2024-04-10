@@ -121,13 +121,12 @@ const AddMoneyPage = () => {
                 <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('10000')}>₹ 10000</Button>
                 {/* Add more suggestion buttons as needed */}
               </div>
-              <a href={`upi://pay?pa=amankumar76814@oksbi&pn=Aman Kumar&cu=INR&am=${amount}`}>                <Button
+              <a href={`upi://pay?pa=mahala.anand@ybl&pn=Tata Invest&cu=INR&am=${amount}`}>                <Button
                 variant="primary"
                 className="w-100 mt-4"
               >
                 Proceed to Pay
               </Button></a>
-
             </Form>
           </Card>
         </Col>

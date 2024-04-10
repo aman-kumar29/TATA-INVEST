@@ -47,9 +47,9 @@ function Navbar() {
       <nav className="navbar navbar-expand-lg " data-bs-theme="dark">
 
         <div className="container-fluid ">
-          <Link to='/'>
-            <img src="https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/logo.png?alt=media&token=47531390-01cb-40a6-9ab0-bca7f18cfec0" alt="TataInvest" height="50" width="70" />
-          </Link>
+        <Link to='/'>
+        <img src="assets/logo.png" alt="TataInvest" height="50" width="70" />
+        </Link>
           <button className="navbar-toggler d-lg-none" type="button" onClick={toggleDrawer}>
             <i className="fa fa-bars" aria-hidden="true"></i>
           </button>
@@ -62,7 +62,7 @@ function Navbar() {
             <div className="drawer-content drawer-card" onClick={toggleDrawer}>
               <div style={{ paddingTop: '5px', paddingLeft: '15px', display: 'flex', flexDirection: 'row' }} className='drawer-header'>
                 <h3 style={{ paddingRight: '10px' }}>
-                  Hi {userData?.name}, <br /> Welcome to the <br /> <img src="https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/logo.png?alt=media&token=47531390-01cb-40a6-9ab0-bca7f18cfec0" alt="TataInvest" width="130" />
+                  Hi {userData?.name}, <br /> Welcome to the <br /> <img src="assets/logo.png" alt="TataInvest" width="130" />
                 </h3>
                 <div className="close-icon" onClick={toggleDrawer} style={{ marginRight: '20px', marginTop: '10px' }}>
                   <i className="fas fa-times" style={{ fontSize: '34px' }}></i>
