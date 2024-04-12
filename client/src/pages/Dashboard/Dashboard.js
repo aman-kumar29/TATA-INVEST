@@ -10,10 +10,9 @@ import { createWithdrawalApprovalRequest } from "../../Firebase/config.js";
 
 function DashboardScreen() {
     const [userData, setUser] = useState(null);
+    const [withdrawalApprovalRequest, setWithdrawalApprovalRequest] = useState(false);
     const history = useNavigate();
     const fetchedUser = localStorage.getItem('userId');
-    const [withdrawalApprovalRequest, setWithdrawalApprovalRequest] = useState(false);
-
 
     useEffect(() => {
         if (fetchedUser) {
@@ -31,10 +30,29 @@ function DashboardScreen() {
         } else {
             history('/login');
         }
-    });
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const slides = investmentPlansSlidesMobile;
-    const slidesmoney = [1000,2000,5000,10000,20000,50000,100000,200000,500000];
+    }, [fetchedUser, history]);
+
+    const handelWithdrawalApprovalRequest = async () => {
+        createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, userData.withdrawableAmount)
+            .then((response) => {
+                setWithdrawalApprovalRequest(true);
+            });
+    }
+
+    const addMoneyOnClick = () => {
+        history("/addmoney");
+    }
+
+    const completeKYCOnClick = () => {
+        history("/kyc-step1");
+    }
+
+    const handleReferralClick = () => {
+        const message = `Get daily 1.2% returns on investments at Tatainvest! 💰 Invest now for hassle-free earnings. Click on this link - https://tatainvest.org/signup?referralCode=${userData.referralCode}`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        window.location.href = whatsappUrl;
+    };
+
     const nextSlide = () => {
         const nextIndex = (currentIndex + 1) % slides.length;
         setCurrentIndex(nextIndex);
@@ -45,34 +63,9 @@ function DashboardScreen() {
         setCurrentIndex(prevIndex);
     };
 
-    const addMoneyOnClick = () => {
-        history("/addmoney");
-    }
-    const completeKYCOnClick = () => {
-        history("/kyc-step1");
-    }
-    // const handleWhatsAppClick = () => {
-    //     // Replace the phone number and message with your desired values
-    //     const phoneNumber = '917976189199';
-    //     const message = 'Hello! I would like to withdraw my earnings. Please help me with the process.';
-
-    //     // Construct the WhatsApp URL
-    //     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    //     window.location.href = whatsappUrl;
-    // };
-    const handelWithdrawalApprovalRequest = async () => {
-        createWithdrawalApprovalRequest(fetchedUser,userData.name,userData.phone,userData.withdrawableAmount).then((response) => {
-            setWithdrawalApprovalRequest(true);
-        });
-      }
-    const handleReferralClick = () => {
-        // Replace the phone number and message with your desired values
-        const message = `Get daily 1.2% returns on investments at Tatainvest! 💰 Invest now for hassle-free earnings. Click on this link - https://tatainvest.org/signup?referralCode=${userData.referralCode}`;
-        // Construct the WhatsApp URL
-        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-        window.location.href = whatsappUrl;
-    };
-
+    const slides = investmentPlansSlidesMobile;
+    const slidesmoney = [1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000];
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     return (
         <div className="container">
@@ -85,12 +78,12 @@ function DashboardScreen() {
                 </div>
                 <center className="buttons-container">
                     <button className="add-money-button btn-1" onClick={addMoneyOnClick}>Add Money</button>
-                    {
-                !withdrawalApprovalRequest ?
-              <button className="add-money-button btn-2" onClick={handelWithdrawalApprovalRequest}>Withdraw</button>
-                
-              :<p>Withdrawal Request Sent Successfully !</p>
-              }</div>
+                    {!withdrawalApprovalRequest ? (
+                        <button className="add-money-button btn-2" onClick={handelWithdrawalApprovalRequest}>Withdraw</button>
+                    ) : (
+                        <p>Withdrawal Request Sent Successfully !</p>
+                    )}
+                </center>
             </div>
             <center className="slides-container leftColumnInvestment">
 
@@ -99,7 +92,7 @@ function DashboardScreen() {
                 </div>
 
                 <div className="slide slide-img">
-                    <img src={slides[currentIndex].url} alt="Slide" className="slide-image" onClick={()=>{
+                    <img src={slides[currentIndex].url} alt="Slide" className="slide-image" onClick={() => {
                         history(`/addmoney?amount=${slidesmoney[currentIndex]}`);
                     }} />
                 </div>

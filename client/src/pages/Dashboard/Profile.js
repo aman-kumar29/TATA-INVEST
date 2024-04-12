@@ -124,12 +124,6 @@ const ProfilePage = () => {
                   <i className="fas fa-phone" style={{ color: "rgba(135, 132, 220, 1)" }}></i> Phone Number: {user.phone}
                 </div>
               </li>
-              <li className="list-group-item "> <div>
-                <i className="fas fa-envelope" style={{ color: "rgba(135, 132, 220, 1)" }}></i> Email: {user.email}
-              </div></li>
-              <li className="list-group-item">  <div>
-                <i className="fas fa-home" style={{ color: "rgba(135, 132, 220, 1)" }}></i> Address: {user.address}
-              </div></li>
               <li className="list-group-item">  <div>
                 <i className="fas fa-calendar" style={{ color: "rgba(135, 132, 220, 1)" }}></i> Referral Code :  {copied ? <i className="fas fa-check-circle"></i> : <i className="far fa-copy" onClick={copyReferralCode}></i>}
                 {/* Add social media icons for sharing */}

@@ -7,25 +7,25 @@ import { getFirestore, setDoc, addDoc, doc, getDoc, deleteDoc,query, where, coll
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyC_Tcx4yIyJCfJK6VhpHRM8Vq9TRKK6dgU",
-//   authDomain: "tatainvest-71bd6.firebaseapp.com",
-//   projectId: "tatainvest-71bd6",
-//   storageBucket: "tatainvest-71bd6.appspot.com",
-//   messagingSenderId: "1022642675405",
-//   appId: "1:1022642675405:web:2eebe654aa302eb17e9384",
-//   measurementId: "G-6DPQ2X6M6Z"
-// };
-
 const firebaseConfig = {
-  apiKey: "AIzaSyCdi7XXQy0IEbeyA8ZQfW29vWJ4P5zf7_o",
-  authDomain: "tata-c37fc.firebaseapp.com",
-  projectId: "tata-c37fc",
-  storageBucket: "tata-c37fc.appspot.com",
-  messagingSenderId: "941632957677",
-  appId: "1:941632957677:web:466985c69fdbed5bf630e4",
-  measurementId: "G-LWV5RRM6WE"
+  apiKey: "AIzaSyC_Tcx4yIyJCfJK6VhpHRM8Vq9TRKK6dgU",
+  authDomain: "tatainvest-71bd6.firebaseapp.com",
+  projectId: "tatainvest-71bd6",
+  storageBucket: "tatainvest-71bd6.appspot.com",
+  messagingSenderId: "1022642675405",
+  appId: "1:1022642675405:web:2eebe654aa302eb17e9384",
+  measurementId: "G-6DPQ2X6M6Z"
 };
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCdi7XXQy0IEbeyA8ZQfW29vWJ4P5zf7_o",
+//   authDomain: "tata-c37fc.firebaseapp.com",
+//   projectId: "tata-c37fc",
+//   storageBucket: "tata-c37fc.appspot.com",
+//   messagingSenderId: "941632957677",
+//   appId: "1:941632957677:web:466985c69fdbed5bf630e4",
+//   measurementId: "G-LWV5RRM6WE"
+// };
 
 
 // Initialize Firebase
@@ -53,7 +53,7 @@ export const createUserDocument = async (user, name, parentReferralCode,phone,ad
     await setDoc(doc(db, "users", user.uid),
       {
         name: name,
-        email: "demo@g.com",
+        email: "",
         phone: phone,
         address: address,
         investedAmount: 0,

@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../../redux/store.js";
 import axios from 'axios';
 
-
 function SignUp() {
   const history = useNavigate();
   const dispatch = useDispatch();
@@ -21,7 +20,10 @@ function SignUp() {
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [user, setUser] = useState(null);
-  const [confirmationResult, setConfirmationResult] = useState(false);
+  const [confirmationResult, setConfirmationResult] = useState(null);
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+  const [timer, setTimer] = useState(60);
 
   useEffect(() => {
     const fetchedUser = localStorage.getItem('userId');
@@ -35,7 +37,6 @@ function SignUp() {
         ...prevData,
         parentReferralCode: referralCode,
       }));
-      // console.log(formData.parentReferralCode);
     }
   }, [location.search]);
 
@@ -46,11 +47,12 @@ function SignUp() {
       [name]: value,
     });
   };
+
   const handleParentReferralCode = async (childrenId) => {
     const dummyData = await axios.get(`/api/parentReferralUpdate/${childrenId}`);
   };
 
-const sendOTP = async () => {
+  const sendOTP = async () => {
     try {
       if (phone === '' || formData.user_name === '') {
         alert("Name and Phone Number required");
@@ -58,25 +60,33 @@ const sendOTP = async () => {
       }
       const recaptcha = new RecaptchaVerifier(auth, 'recaptcha', {});
       const confirmation = await signInWithPhoneNumber(auth, phone, recaptcha);
-      // console.log("confirmation", confirmation);
       setUser(confirmation);
-      setConfirmationResult(true);
+      setConfirmationResult(confirmation);
+      setCaptchaVerified(true);
+      setOtpSent(true);
+      setTimer(60);
+      const interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+      setTimeout(() => {
+        clearInterval(interval);
+        setOtpSent(false);
+      }, 60000);
     } catch (error) {
       console.log("Error", error);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (
-        otp === ''
+        otp === '' || !confirmationResult
       ) {
-        alert("OTP is required !");
+        alert("Please enter OTP !");
         return;
       }
-      const data = await user.confirm(otp);
-      console.log("OTP Verified");
+      const data = await confirmationResult.confirm(otp);
       if (data.user) {
         createUserDocument(
           data.user,
@@ -124,15 +134,29 @@ const sendOTP = async () => {
               required
             />
           </div>
-          <div className="btn my-3" onClick={sendOTP} variant='contained'>Get OTP</div>
-          <input
-            name="otp"
-            type="text"
-            placeholder="OTP"
-            className="input-field"
-            onChange={(e) => setOtp(e.target.value)}
-          />
-          <div className="mt-3"></div>
+          {!otpSent && <div id="recaptcha" className="recaptcha"></div>}
+          <div className="form-group">
+            <button
+              type="button"
+              className="btn get-otp-button"
+              onClick={sendOTP}
+              disabled={otpSent || captchaVerified}
+            >
+              {otpSent ? `Resend OTP (${timer}s)` : "Get OTP"}
+            </button>
+          </div>
+          {otpSent && (
+            <div className="form-group">
+              <input
+                name="otp"
+                type="text"
+                placeholder="Enter OTP"
+                className="input-field"
+                onChange={(e) => setOtp(e.target.value)}
+                required
+              />
+            </div>
+          )}
           {formData.parentReferralCode === "" && (
             <div className="form-group">
               <input
@@ -145,15 +169,9 @@ const sendOTP = async () => {
               />
             </div>
           )}
-          {confirmationResult ? (
-            <p style={{fontStyle:'italic', fontSize:'16px'}}>OTP sent on <strong>{phone}</strong>, Please check !</p>
-          ) : (
-            <div id="recaptcha"></div>
-          )}
-
           <div className="form-group">
-            <Link to="/login" className="signin-link" style={{ color: "white", fontSize: '16px' }}>
-              Already have an account? <span style={{ color: 'blue', textDecoration: 'underline' }}> Sign In</span>
+            <Link to="/login" className="signin-link">
+              Already have an account? <span>Sign In</span>
             </Link>
           </div>
           <button type="submit" className="signup-button">

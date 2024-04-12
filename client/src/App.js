@@ -1,6 +1,8 @@
 import './App.css';
+import React, { useState, useEffect } from "react";
 import Home from './pages/Home/Home.js';
 import Navbar from './components/Navbar/Navbar.js';
+import NotFound from './components/NotFound/NotFound.js';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import DashboardScreen from './pages/Dashboard/Dashboard.js';
 import ForgotPassword from './pages/Auth/ForgotPassword.js';
@@ -23,15 +25,18 @@ import FAQs from './pages/Dashboard/FAQs.js';
 import PrivacyPolicyPage from './pages/Dashboard/PrivacyPolicy.js';
 import AdminDashboard from './pages/Admin/AdminDashboard.js';
 import NavbarBeforeLogin from './components/NavbarBeforeLogin/NavbarBeforeLogin.jsx';
-import { useEffect, useState } from 'react';
 import PhoneAuth from './pages/Auth/PhoneAuth.js';
 import PaymentRequest from './pages/Admin/PaymentRequest.js';
 import WithdrawalRequest from './pages/Admin/WithdrawalRequests.js';
+import { getUser } from "./utils/getUser.js";
 
 function App() {
   // Check if user is authenticated
   const location = useLocation();
+  const [user, setUser] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const fetchedUser = localStorage.getItem('userId');
 
   useEffect(() => {
     const checkAuthentication = () => {
@@ -42,33 +47,55 @@ function App() {
     checkAuthentication();
   }, [location]);
 
+  useEffect(() => {
+    if (authenticated) {
+      getUser(fetchedUser)
+        .then(userData => {
+          setUser(userData);
+          setIsAdmin(userData?.phone === '+911111111111');
+        })
+        .catch(error => {
+          console.log('Error fetching user data:', error);
+        });
+    }
+  }, [authenticated, fetchedUser]);
+
   return (
     <>
       {authenticated ? <Navbar /> : <NavbarBeforeLogin />}
       <Routes>
-        <Route path="/" element=<Home /> />
+        <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/resetpassword" element={<ForgotPassword />} />
-        <Route path="/dashboard" element={<DashboardScreen />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/updateinfo" element={<UpdateInfo />} />
-        <Route path="/statement" element={<Statement />} />
-        <Route path="/aboutus" element={<AboutUs />} />
-        <Route path='/kyc' element={<Kyc />} />
-        <Route path="/kyc-step1" element={<Step1Form />} />
-        <Route path="/kyc-step2" element={<Step2Form />} />
-        <Route path="/kyc-step3" element={<Step3Form />} />
-        <Route path="/kyc-confirmation" element={<ConfirmationStep />} />
-        <Route path="/addmoney" element={<AddMoneyPage />} />
-        <Route path="/faqs" element={<FAQs />} />
-        <Route path="/tnc" element={<TnC />} />
-        <Route path="/howtouse" element={<HowToUsePage />} />
-        <Route path="/privacypolicy" element={<PrivacyPolicyPage />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/paymentrequest" element={<PaymentRequest />} />
-        <Route path="/withdrawalrequest" element={<WithdrawalRequest />} />
+        {authenticated && !isAdmin && (
+          <>
+            <Route path="/dashboard" element={<DashboardScreen />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/updateinfo" element={<UpdateInfo />} />
+            <Route path="/statement" element={<Statement />} />
+            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path='/kyc' element={<Kyc />} />
+            <Route path="/kyc-step1" element={<Step1Form />} />
+            <Route path="/kyc-step2" element={<Step2Form />} />
+            <Route path="/kyc-step3" element={<Step3Form />} />
+            <Route path="/kyc-confirmation" element={<ConfirmationStep />} />
+            <Route path="/addmoney" element={<AddMoneyPage />} />
+            <Route path="/faqs" element={<FAQs />} />
+            <Route path="/tnc" element={<TnC />} />
+            <Route path="/howtouse" element={<HowToUsePage />} />
+            <Route path="/privacypolicy" element={<PrivacyPolicyPage />} />
+          </>
+        )}
+        {isAdmin && (
+          <>
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/paymentrequest" element={<PaymentRequest />} />
+            <Route path="/withdrawalrequest" element={<WithdrawalRequest />} />
+          </>
+        )}
         <Route path="/phoneauth" element={<PhoneAuth />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>
