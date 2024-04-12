@@ -27,6 +27,7 @@ import AdminDashboard from './pages/Admin/AdminDashboard.js';
 import NavbarBeforeLogin from './components/NavbarBeforeLogin/NavbarBeforeLogin.jsx';
 import PhoneAuth from './pages/Auth/PhoneAuth.js';
 import PaymentRequest from './pages/Admin/PaymentRequest.js';
+import EditUserDetails from './pages/Admin/EditUserDetails.js';
 import WithdrawalRequest from './pages/Admin/WithdrawalRequests.js';
 import { getUser } from "./utils/getUser.js";
 
@@ -36,6 +37,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true); // State to track loading status
+
   const fetchedUser = localStorage.getItem('userId');
 
   useEffect(() => {
@@ -52,13 +55,26 @@ function App() {
       getUser(fetchedUser)
         .then(userData => {
           setUser(userData);
-          setIsAdmin(userData?.phone === '+911111111111');
+          setIsAdmin(userData.phone === "+918927023672" || userData.phone === "+917976189199");
+          setLoading(false); // Set loading to false when user data is fetched
         })
         .catch(error => {
           console.log('Error fetching user data:', error);
         });
+    } else {
+      setLoading(false); // Set loading to false when user is not authenticate
     }
   }, [authenticated, fetchedUser]);
+
+  if (loading) {
+    // Render rotating progress bar loading animation while loading
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+      </div>
+    );
+  }
+
 
   return (
     <>
@@ -92,10 +108,14 @@ function App() {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/paymentrequest" element={<PaymentRequest />} />
             <Route path="/withdrawalrequest" element={<WithdrawalRequest />} />
+            <Route path="/edit-user/:userId" element={<EditUserDetails />} /> {/* Add route for EditUserDetails */}
           </>
         )}
         <Route path="/phoneauth" element={<PhoneAuth />} />
-        <Route path="*" element={<NotFound />} />
+        {user && (
+          <Route path="*" element={<NotFound />} />
+        )}
+
       </Routes>
       <Footer />
     </>

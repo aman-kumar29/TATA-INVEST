@@ -17,6 +17,18 @@
   
   .form-group {
     margin-bottom: 15px;
+    padding: 5px;
+    font-size: 15px;
+  }
+  .signup-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .signin-link {
+    margin-left: auto;
   }
   
   .input-field {
@@ -42,9 +54,39 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-bottom: 5px;
   }
   
   .signup-button:hover {
     color: white;
     background-color: rgba(135,132,220,1);
+  }
+  .get-otp-button{
+    width: 60%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: white;
+    color: rgba(135,132,220,1);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .get-otp-button:hover{
+    background-color: rgb(172, 172, 172);
+    color: rgba(135,132,220,1);
+    border: none;
+  }
+  .resend-otp-button{
+    width: 60%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(104, 100, 231);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .resend-otp-button:hover{
+    background-color: rgb(182, 182, 182);
+    color: rgb(104, 100, 231);
   }

@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import Skeleton from './Skeletons/SkeletonAdmin.js';
 import './admin.css';
 
 export default function AdminDashboard() {
     const [usersData, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [showModal, setShowModal] = useState(false);
-
+    const [loading, setLoading] = useState(true); // Add loading state
+    const history = useNavigate();
+    
     useEffect(() => {
         const fetchUsersData = async () => {
             try {
                 const response = await axios.get(`/api/getAllUsers`);
-                const filtered = response.data.filter(user => user.email !== 'admin@tatainvest.org');
+                const filtered = response.data.filter(user => (user.phone !== "+918927023672" || user.phone !== "+917976189199"));
                 const sortedUsers = filtered.sort((a, b) => {
                     const dateA = new Date(a.createdAt._seconds * 1000);
                     const dateB = new Date(b.createdAt._seconds * 1000);
@@ -20,26 +24,29 @@ export default function AdminDashboard() {
                 });
 
                 setUsers(sortedUsers);
+                setLoading(false); // Set loading to false after data is fetched
             } catch (error) {
                 console.error('Error fetching user data:', error);
                 setUsers([]);
+                setLoading(false); // Set loading to false even if there's an error
             }
         };
-
+        
         fetchUsersData();
     }, []);
-
+    
     const currentDate = new Date();
-
+    
     const differenceInDays = (date1, date2) => {
         const diffInTime = date2.getTime() - date1.getTime();
         return diffInTime / (1000 * 3600 * 24);
     };
-
+    
     const handleUserClick = (user) => {
         setSelectedUser(user);
         setShowModal(true);
     };
+
     const handleCloseModal = () => {
         setShowModal(false);
         setSelectedUser(null);
@@ -50,6 +57,10 @@ export default function AdminDashboard() {
         const year = date.getFullYear().toString().slice(-2);
         return `${day}/${month}/${year}`;
     };
+
+    // Render Skeleton while loading
+    if (loading) return <Skeleton />;
+
     return (
         <div className="container">
             <h1 className='text-center mt-5 my-5'>USERS</h1>
@@ -62,7 +73,7 @@ export default function AdminDashboard() {
 
                         return (
                             <li
-                                key={user.email}
+                                key={index}
                                 className="list-group-item d-flex justify-content-between align-items-center"
                                 style={{ cursor: 'pointer' }}
                             >
@@ -103,9 +114,7 @@ export default function AdminDashboard() {
                             <br />
                             <h5>Contact Details</h5>
                             <hr />
-                            <p>Email : {selectedUser.email}</p>
                             <p>Phone : {selectedUser.phone}</p>
-                            <p>Address : {selectedUser.address}</p>
                             <br />
                             <h5>Investment Details</h5>
                             <hr />
@@ -151,6 +160,12 @@ export default function AdminDashboard() {
                     )}
                 </Modal.Body>
                 <Modal.Footer>
+                    <Button variant="secondary" onClick={()=>{
+                        console.log(selectedUser);
+                        history(`/edit-user/${selectedUser.referralCode}`)
+                    }}>
+                        Edit Details
+                    </Button>
                     <Button variant="secondary" onClick={handleCloseModal}>
                         Close
                     </Button>

@@ -70,12 +70,25 @@ function SignUp() {
       }, 1000);
       setTimeout(() => {
         clearInterval(interval);
-        setOtpSent(false);
       }, 60000);
     } catch (error) {
       console.log("Error", error);
     }
   };
+  const handleResendOTP = () => {
+    setTimer(60);
+    setOtpSent(true);
+    const timerInterval = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer === 1) {
+          clearInterval(timerInterval);
+        }
+        return prevTimer - 1;
+      });
+    }, 1000);
+  };
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -100,6 +113,7 @@ function SignUp() {
           }
         });
         localStorage.setItem("userId", data?.user.uid);
+        localStorage.setItem("phoneNumber", data?.user.phone);
         dispatch(authActions.login());
         history("/dashboard");
       }
@@ -111,10 +125,20 @@ function SignUp() {
   return (
     <div className="container-signup">
       <div className="signup-container">
-        <h1>Sign Up</h1>
+        <div className="signup-heading">
+          <h6 style={{ margin: '0 auto', color:'white' }}>Sign-Up</h6>
+          <div style={{ marginLeft: 'auto' }}>
+            <Link to="/login" className="signin-link" style={{ color: 'white', fontSize: '12px' }}>
+              Already have an account? <span style={{ color: 'blue', textDecoration: 'underline' }}>Sign In</span>
+            </Link>
+          </div>
+        </div>
+
         <form onSubmit={handleSubmit} className="signup-form">
           <div className="form-group">
+            <label htmlFor="user_name" className="required" style={{color:'white'}}>Full Name <span style={{ color: 'red' }}>*</span></label>
             <input
+              id="user_name"
               name="user_name"
               type="text"
               placeholder="Full Name"
@@ -125,40 +149,22 @@ function SignUp() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="phone" className="required" style={{color:'white'}}>Phone Number <span style={{ color: 'red' }}>*</span></label>
             <input
+              id="phone"
               name="phone"
               type="tel"
-              placeholder="Phone Number"
+              placeholder="Phone Number (10 digits)"
               className="input-field"
               onChange={(e) => setPhone("+91" + e.target.value)}
               required
+              pattern="[0-9]{10}"
+              maxLength="10"
             />
           </div>
-          {!otpSent && <div id="recaptcha" className="recaptcha"></div>}
-          <div className="form-group">
-            <button
-              type="button"
-              className="btn get-otp-button"
-              onClick={sendOTP}
-              disabled={otpSent || captchaVerified}
-            >
-              {otpSent ? `Resend OTP (${timer}s)` : "Get OTP"}
-            </button>
-          </div>
-          {otpSent && (
-            <div className="form-group">
-              <input
-                name="otp"
-                type="text"
-                placeholder="Enter OTP"
-                className="input-field"
-                onChange={(e) => setOtp(e.target.value)}
-                required
-              />
-            </div>
-          )}
           {formData.parentReferralCode === "" && (
             <div className="form-group">
+            <label htmlFor="phone" className="required" style={{color:'white'}}>Referral Code</label>
               <input
                 name="parentReferralCode"
                 type="text"
@@ -169,14 +175,52 @@ function SignUp() {
               />
             </div>
           )}
+          {!otpSent && <div id="recaptcha" className="recaptcha"></div>}
+          {otpSent && (
+            <div className="form-group">
+              <label htmlFor="otp" className="required">Enter OTP <span style={{ color: 'red' }}>*</span></label>
+              <input
+                id="otp"
+                name="otp"
+                type="text"
+                placeholder="Enter OTP"
+                className="input-field"
+                onChange={(e) => setOtp(e.target.value)}
+                required
+              />
+            </div>
+          )}
+          {!otpSent && (
+            <center className="form-group">
+              <button
+                type="button"
+                className="btn get-otp-button"
+                onClick={sendOTP}
+                disabled={captchaVerified}
+              >
+                Get OTP
+              </button>
+            </center>
+          )}
           <div className="form-group">
-            <Link to="/login" className="signin-link">
-              Already have an account? <span>Sign In</span>
-            </Link>
           </div>
-          <button type="submit" className="signup-button">
-            Verify OTP & Sign Up
-          </button>
+          {otpSent && (
+            <button type="submit" className="signup-button">
+              Verify OTP & Sign Up
+            </button>
+          )}
+          {otpSent && (
+            <center className="form-group">
+              <button
+                type="button"
+                className="btn resend-otp-button"
+                disabled={timer > 0}
+                onClick={handleResendOTP}
+              >
+                Resend OTP {timer > 0 && `(${timer}s)`}
+              </button>
+            </center>
+          )}
         </form>
       </div>
     </div>

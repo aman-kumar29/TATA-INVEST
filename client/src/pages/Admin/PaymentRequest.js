@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
-import './admin.css';
+import './css/paymentRequests.css';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/config.js';
 import { useNavigate } from 'react-router-dom';
@@ -82,10 +82,10 @@ export default function PaymentRequest() {
     };
 
     return (
-        <div className="container">
+        <div className="payment-container">
             <h1 className='text-center mt-5 my-5'>Payment Requests</h1>
-            <div className='my-5'>
-                <ul className="list-group">
+            <div>
+                <ul className="payment-list-group">
                     {[...paymentRequests].sort((a, b) => {
                         // Sort by status: pending requests first, then accepted, then rejected
                         if (a.status === 'pending' && (b.status === 'accepted' || b.status === 'rejected')) return -1;
@@ -94,12 +94,12 @@ export default function PaymentRequest() {
                     }).map((request, index) => (
                         <li
                             key={request.userId}
-                            className="list-group-item d-flex justify-content-between align-items-center"
+                            className="payment-item d-flex"
                         >
-                            <div>
-                                <span>{index + 1} .  {request.name}</span>
+                            <div className="payment-item-details">
+                                <span className="payment-item-name">{index + 1} .  {request.name}</span>
                                 <br />
-                                <small className="text-muted">Amount: ₹{request.amount}</small>
+                                <small className="payment-item-amount">Amount: ₹{request.amount}</small>
                             </div>
                             <div>
                                 {request.status === 'pending' && (
@@ -109,10 +109,10 @@ export default function PaymentRequest() {
                                     </>
                                 )}
                                 {request.status === 'accepted' && (
-                                    <span className="text-success">Accepted</span>
+                                    <span className="text-success payment-item-status-success" style={{fontWeight:'bold'}}>Accepted</span>
                                 )}
                                 {request.status === 'rejected' && (
-                                    <span className="text-danger">Rejected</span>
+                                    <span className="text-danger payment-item-status-danger" style={{fontWeight:'bold'}} >Rejected</span>
                                 )}
                             </div>
                         </li>
@@ -122,12 +122,12 @@ export default function PaymentRequest() {
 
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>User Details</Modal.Title>
+                    <Modal.Title className="payment-modal-title">User Details</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="payment-modal-body">
                     {/* Display user details here */}
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer className="payment-modal-footer">
                     <Button variant="secondary" onClick={handleCloseModal}>
                         Close
                     </Button>

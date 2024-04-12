@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
-import './admin.css';
+import './css/withdrawalRequests.css'; // Updated CSS file path
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/config.js';
 import { useNavigate } from 'react-router-dom';
@@ -82,10 +82,10 @@ export default function WithdrawalRequest() {
     };
 
     return (
-        <div className="container">
+        <div className="withdrawal-container"> {/* Updated container class name */}
             <h1 className='text-center mt-5 my-5'>Withdrawal Requests</h1>
             <div className='my-5'>
-                <ul className="list-group">
+                <ul className="withdrawal-list-group"> {/* Updated list group class name */}
                     {[...withdrawalRequests].sort((a, b) => {
                         // Sort by status: pending requests first, then accepted, then rejected
                         if (a.status === 'pending' && (b.status === 'accepted' || b.status === 'rejected')) return -1;
@@ -94,12 +94,12 @@ export default function WithdrawalRequest() {
                     }).map((request, index) => (
                         <li
                             key={request.userId}
-                            className="list-group-item d-flex justify-content-between align-items-center"
+                            className="withdrawal-item d-flex justify-content-between align-items-center"
                         >
-                            <div>
-                                <span>{index + 1} .  {request.name}</span>
+                            <div className="withdrawal-item-details"> {/* Updated details class name */}
+                                <span className="withdrawal-item-name">{index + 1} .  {request.name}</span>
                                 <br />
-                                <small className="text-muted">Amount: ₹{request.amount}</small>
+                                <small className="withdrawal-item-amount">Amount: ₹{request.amount}</small>
                             </div>
                             <div>
                                 {request.status === 'pending' && (

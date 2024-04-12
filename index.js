@@ -7,7 +7,8 @@ import morgan from 'morgan';
 import parentReferralRoutes from './routes/parentReferralRoutes.js';
 import dotenv from 'dotenv';
 import path from 'path';
-// import getAllUsersRoutes from './routes/getAllUsersRoutes.js';
+import { getDoc, doc } from 'firebase/firestore';
+import { db } from './config/config.js';
 
 
 import { fileURLToPath } from 'url';
@@ -146,8 +147,6 @@ async function updateInvestedAmount() {
 }
 
 
-
-
 // Schedule update using cron library (replace with your chosen scheduler)
 // Use a suitable scheduler library for production
 const task = cron.schedule('0 0 * * *', updateInterestAmounts); // Runs at midnight daily (for testing)
@@ -170,6 +169,26 @@ app.get("/api/getAllUsers", async (req, res) => {
   const users = snapshot.docs.map(doc => doc.data());
   res.json(users);
 });
+app.get("/api/getUserDetails/:userId", async (req, res) => {
+  try {
+      const userId = req.params.userId;
+      console.log("single user id", userId);
+      const userRef = doc(db, 'users', userId);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+          return res.status(404).json({ message: "User not found" });
+      }
+
+      const userData = userSnap.data();
+      res.status(200).json({ user: userData, message: "User details fetched successfully" });
+  } catch (error) {
+      console.error("Error fetching user details:", error);
+      res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
 app.get("/api/getAllPaymentRequests", async (req, res) => {
   try {
     const usersRef = firestore.collection('paymentApprovalRequests');
