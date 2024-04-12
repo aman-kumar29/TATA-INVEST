@@ -3,44 +3,65 @@ import { Card, CardContent, Typography, TextField, Button, Select, MenuItem, Inp
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "./css/Step2Form.css";
-
-// Replace with your actual Fast2SMS API key
-const senderId = 'FSTSMS'; // Default sender ID for Fast2SMS
+import ToastMessage from '../Toast/Toast.js';
 
 function Step2Form() {
   const [authType, setAuthType] = useState('Aadhaar Card'); // Pre-select Aadhaar Card
   const [phoneNumber, setPhoneNumber] = useState('');
   const [aadhaarNumber, setAadhaarNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
+  const [otp1, setOtp1] = useState('');
+  const [otp2, setOtp2] = useState('');
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [otpTimer, setOtpTimer] = useState(0);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+
   const history = useNavigate();
   const handleAuthTypeChange = (event) => {
     setAuthType(event.target.value);
   };
-
+  useEffect(() => {
+    generateOTP();
+}, []);
   const nextStep = () => {
     history("/kyc-step3");
   };
 
   const prevStep = () => {
-    history("/kyc-step1");
+    history("/dashboard");
   };
-
+  const generateOTP = () => {
+    // Generate random 6-digit OTP
+    const randomOTP = Math.floor(100000 + Math.random() * 900000);
+    setOtp1(randomOTP.toString());
+};
   const handleGenerateOtp = async () => {
-    if (!phoneNumber) {
-      alert('Please enter your phone number.');
+    if (!phoneNumber || !aadhaarNumber) {
+      alert('Please enter your phone number and Aadhaar number.');
+      return;
+    }
+  
+    if (phoneNumber.length !== 10) {
+      alert('Please enter a valid 10-digit phone number.');
+      return;
+    }
+  
+    if (aadhaarNumber.length !== 12) {
+      alert('Please enter a valid 12-digit Aadhaar number.');
       return;
     }
     setLoading(true);
     fetch('')
     try {
       // Replace with actual API call to send OTP
-      const response = await axios.get('http://localhost:8000/api/sendotp');
-      
-      console.log('OTP sent successfully:', response);
+      // generateOTP();
+      const number = phoneNumber+otp1;
+      // console.log('OTP1:', otp1, 'OTP2:', otp2);
+      const response = await axios.get(`/api/sendotp/${number}`);
+      setToastMessage('OTP sent successfully');
+      setShowToast(true);
+      // console.log('Response Data: ', response.data);
       setIsOtpSent(true);
       setOtpTimer(60); // Start 60-second timer for resend OTP
     } catch (error) {
@@ -52,18 +73,25 @@ function Step2Form() {
   };
 
   const handleVerifyOtp = async () => {
-    if (!otp) {
+    if (!otp2) {
       alert('Please enter the received OTP.');
       return;
     }
 
     setLoading(true); // Simulate API call for OTP verification
     try {
-      // Replace with actual API call to verify OTP
-      const response = await simulateVerifyOtp(phoneNumber, otp);
-      console.log('OTP verified:', response);
-      // Handle successful verification (e.g., move to next step)
-      nextStep();
+      // console.log('OTP1:', otp1, 'OTP2:', otp2);
+      if (otp2 !== otp1) {
+        alert('Incorrect OTP. Please try again.');
+        setOtp2('');
+        return;
+      }else{
+        setShowToast(true);
+        setToastMessage('OTP verified successfully');
+        setTimeout(() => {
+          nextStep();
+        }, 3000);
+      }
     } catch (error) {
       console.error('Error verifying OTP:', error);
       alert('Invalid OTP. Please try again.');
@@ -82,19 +110,15 @@ function Step2Form() {
     return () => clearInterval(timerId);
   }, [otpTimer]);
 
-  const simulateSendOtp = (phoneNumber) => {
-    // Replace with actual API call to send OTP to the phone number
-    return new Promise((resolve) => setTimeout(() => resolve({ success: true }), 1000)); // Simulate delay
-  };
-
-  const simulateVerifyOtp = (phoneNumber, otp) => {
-    // Replace with actual API call to verify OTP
-    return new Promise((resolve) => setTimeout(() => resolve({ success: true }), 1000)); // Simulate delay
-  };
-
   return (
     <div className="step2-form-container"> {/* Main container */}
       <h2>Step 2: Contact Details</h2>
+      {showToast && (
+        <ToastMessage 
+          message={toastMessage}
+          onClose={() => setShowToast(false)} 
+        />
+      )}
       <Card className="contact-card">
         <CardContent className="card-content">
           <FormControl fullWidth>
@@ -129,14 +153,6 @@ function Step2Form() {
             onChange={(event) => setPhoneNumber(event.target.value)}
             required
           />
-          <TextField
-            label="Email (as per Aadhaar if seeded)"
-            type="email"
-            fullWidth
-            margin="normal"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
           {isOtpSent && (
             <>
               <TextField
@@ -144,8 +160,8 @@ function Step2Form() {
                 type="number"
                 fullWidth
                 margin="normal"
-                value={otp}
-                onChange={(event) => setOtp(event.target.value)}
+                value={otp2}
+                onChange={(event) => setOtp2(event.target.value)}
                 required
               />
               <Button variant="contained" color="primary" onClick={handleVerifyOtp} disabled={loading}>

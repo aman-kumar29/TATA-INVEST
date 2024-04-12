@@ -2,7 +2,8 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { getAuth, setPersistence, browserSessionPersistence, deleteUser } from "firebase/auth";
-import { getFirestore, setDoc, addDoc, doc, getDoc, deleteDoc,query, where, collection, getDocs} from "firebase/firestore";
+import { getFirestore, setDoc, addDoc, doc, getDoc, deleteDoc,query, where, collection, getDocs,updateDoc} from "firebase/firestore";
+import { getStorage  } from 'firebase/storage';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -46,6 +47,7 @@ const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 const auth = getAuth(app);
 export const db = getFirestore(app);
+export const storage = getStorage(app);
 
 // Enable persistence 
 setPersistence(auth, browserSessionPersistence)
@@ -79,7 +81,8 @@ export const createUserDocument = async (user, name, parentReferralCode,phone,ad
         withdrawalTransactions: [],
         kycDone: false,
         referralUsers: [],
-        createdAt: new Date()
+        createdAt: new Date(),
+        documentUrl: ''
       });
 
     console.log("User document created successfully!");
@@ -184,5 +187,20 @@ export const createWithdrawalApprovalRequest = async (userId, userName, phone, a
     console.log("Withdrawl approval request created successfully!");
   } catch (error) {
     console.log('Error in creating Withdrawl approval request', error);
+  }
+}
+
+
+export const updateDocumentUrl = async (userId, downloadURL) => {
+  try {
+    const userRef = doc(db, "users", userId);
+    await updateDoc(userRef, {
+      documentUrl: downloadURL,
+      kycDone: true
+    });
+
+    console.log('Document URL updated successfully');
+  } catch (error) {
+    console.error('Error updating document URL:', error);
   }
 }
