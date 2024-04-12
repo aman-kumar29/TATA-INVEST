@@ -79,10 +79,10 @@ function DashboardScreen() {
                 <center className="buttons-container">
                     <button className="add-money-button btn-1" onClick={addMoneyOnClick}>Add Money</button>
                     {
-                !withdrawalApprovalRequest ?
-              (<button className="add-money-button btn-2" onClick={handelWithdrawalApprovalRequest}>Withdraw</button>)
-              :(<p>Withdrawal Request Sent Successfully !</p>)
-              }
+                        !withdrawalApprovalRequest ?
+                            (<button className="add-money-button btn-2" onClick={handelWithdrawalApprovalRequest}>Withdraw</button>)
+                            : (<p>Withdrawal Request Sent Successfully !</p>)
+                    }
                 </center>
             </div>
             <center className="slides-container leftColumnInvestment">

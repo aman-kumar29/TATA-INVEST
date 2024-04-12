@@ -69,7 +69,7 @@ function Navbar() {
                 </div>
               </div>
               <List>
-                {userData && userData.email === 'admin@tatainvest.org' ? (
+                {userData && userData.phone === "+911111111111" ? (
                   <>
                     <ListItem className="list-item">
                       <Link to="/admin">
@@ -127,7 +127,7 @@ function Navbar() {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-none d-lg-flex">
-              {userData && userData.email === 'admin@tatainvest.org' ? (
+              {userData && userData.phone === "+911111111111" ? (
                 <>
                   <li className="nav-item">
                     <Link to="/admin" className="nav-link active" aria-current="page">Users</Link>
