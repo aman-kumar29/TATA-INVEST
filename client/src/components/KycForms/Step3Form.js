@@ -1,73 +1,115 @@
 import React, { useState } from 'react';
 import { Card, CardContent, Typography, Button, TextField, FormControl } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import {storage, updateDocumentUrl} from '../../Firebase/config.js';
+import { ref, uploadBytes, getDownloadURL  } from 'firebase/storage';
+import ToastMessage from '../Toast/Toast.js';
 
 function Step3Form() {
-  const [inputValues, setInputValues] = useState({
-    input1: '',
-    input2: '',
-  });
   const history = useNavigate();
-  const nextStep = () => {
-    history("/dashboard");
-  };
+  const [selectedDocument, setSelectedDocument] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const currentUser = localStorage.getItem('userId');
+  const [showToast, setShowToast] = useState(false);
 
   const prevStep = () => {
-    history("/kyc-step2");
+    history("/dashboard");
   };
-
   const handleDocumentUpload = (event) => {
     const file = event.target.files[0];
     if (file && (file.type === 'application/pdf' || file.type === 'image/jpeg' || file.type === 'image/jpg')) {
-      // setDocumentFile(file);
+      setSelectedDocument(file);
     } else {
       alert('Please upload a valid PDF or JPEG/JPG file.');
     }
   };
 
-  const handleInputChange = (event, inputKey) => {
-    setInputValues({ ...inputValues, [inputKey]: event.target.value });
-  };
+  
+const handleSaveDocument = async () => {
+  setLoading(true);
+  const storageRef = ref(storage, `documents/${selectedDocument.name}`);
+  try {
+    await uploadBytes(storageRef, selectedDocument);
+    console.log('Document uploaded successfully');
+    const downloadURL = await getDownloadURL(storageRef);
+    await updateDocumentUrl(currentUser, downloadURL);
+    setShowToast(true); 
+    setLoading(false); // Upload complete, stop loading process
+    setSelectedDocument(null); // Clear the selected document after upload
+    setTimeout(() => {
+      history("/dashboard"); // Redirect after 5 seconds
+    }, 2000); // Redirect to dashboard after upload
+    return true; // Return true to indicate successful upload
+  } catch (error) {
+    console.error('Error uploading document:', error);
+    alert('Failed to upload document. Please try again.');
+    setLoading(false); // Stop loading process on error
+    return false; // Return false to indicate upload failure
+  }
+};
 
   return (
     <div className="step3-form-container">
-      <h2>Step 3: Upload Document and Input Data</h2>
+    {showToast && (
+        <ToastMessage 
+          message="KYC Successful" 
+          onClose={() => setShowToast(false)} 
+        />
+      )}
+      <center className='mt-3'><h2>Step 3: Upload Documents</h2></center>
       <Card>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            Upload Document:
-          </Typography>
+      <CardContent>
+        <label htmlFor="document-upload" className="custom-file-upload">
           <input
+            id="document-upload"
             type="file"
             accept=".pdf,.jpg,.jpeg"
             onChange={handleDocumentUpload}
           />
-          <Typography variant="h6" gutterBottom>
-            Input Data:
-          </Typography>
-          <FormControl fullWidth margin="normal">
-            <TextField
-              label="Input 1"
-              value={inputValues.input1}
-              onChange={(event) => handleInputChange(event, 'input1')}
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <TextField
-              label="Input 2"
-              value={inputValues.input2}
-              onChange={(event) => handleInputChange(event, 'input2')}
-            />
-          </FormControl>
-        </CardContent>
+          <i className="fa-solid fa-upload"></i> Upload Document
+        </label>
+        {selectedDocument && (
+          <div className="selected-document-container">
+            <Typography variant="subtitle1">Selected Document:</Typography>
+            {selectedDocument.type === 'application/pdf' ? (
+              <Button variant="outlined" color="primary" href={URL.createObjectURL(selectedDocument)} download>
+                Download PDF
+              </Button>) : (
+             <center>
+             <img src={URL.createObjectURL(selectedDocument)} alt="Selected Document" height={"200px"} />
+             </center>
+             )}
+
+          </div>
+        )}
+      </CardContent>
       </Card>
       <div className="buttons-container">
-        <Button variant="contained" onClick={prevStep}>
-          Go back
+        <Button color='error' variant="contained" onClick={prevStep}>
+         Cancel
         </Button>
-        <Button variant="contained" color="primary" onClick={nextStep}>
-          Continue
-        </Button>
+        {selectedDocument && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSaveDocument}
+            disabled={loading}
+            startIcon={loading ? null : <i className='fa-solid fa-backward'></i>}
+          >
+            {loading ? <i className='fa-solid fa-spinner fa-spin'></i> : 'Save'}
+          </Button>
+        )}
+        {
+          showToast && ( <Button
+            variant="contained"
+            color="success">
+            Redirecting to Dashboard...
+            </Button>
+          )
+        }
+        {/* <button onClick={()=>{
+          setShowToast(!showToast);
+        }}> TOAST </button> */}
       </div>
     </div>
   );

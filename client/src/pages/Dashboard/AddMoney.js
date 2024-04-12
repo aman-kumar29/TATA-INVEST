@@ -140,9 +140,10 @@ const AddMoneyPage = () => {
               {
               !paymentApprovalRequest?
               <Button className='mt-2' onClick={handelPaymentApprovalRequest}>
-                Reuest Payment Approval
+                Request Payment Approval
               </Button>
-              :<p>Payment Approval Request Sent</p>
+              :<div className='mt-2'><div  style={{fontWeight:"bold", color:"green"}}>Payment Approval Request Sent Successfully !</div>
+              Please wait your requestd amount will be updated soon,<br /> Don't spam by clicking continuously...</div>
               }
             </Form>
           </Card>

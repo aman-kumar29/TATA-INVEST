@@ -1,7 +1,7 @@
 import React from 'react';
 
 function ConfirmationStep({ formData }) {
-  return (
+  return ( 
     <div>
       <h2>KYC Confirmation</h2>
       <p>Thank you for completing the KYC process!</p>

@@ -7,12 +7,14 @@ import PoweredBy from "../../components/Poweredby/PoweredBy.js";
 import InvestorReviews from "../../components/InvestorReviews/InvestorReviews.jsx";
 import { investmentPlansSlidesMobile } from "../../data.js";
 import { createWithdrawalApprovalRequest } from "../../Firebase/config.js";
+import WithdrawalForm from "../../components/WithdrawalForm/Withdrawalform.js";
 
 function DashboardScreen() {
     const [userData, setUser] = useState(null);
     const [withdrawalApprovalRequest, setWithdrawalApprovalRequest] = useState(false);
     const history = useNavigate();
     const fetchedUser = localStorage.getItem('userId');
+    const [formOpen, setFormOpen] = useState(false);
 
     useEffect(() => {
         if (fetchedUser) {
@@ -31,14 +33,16 @@ function DashboardScreen() {
             history('/login');
         }
     }, [fetchedUser, history]);
-
     const handelWithdrawalApprovalRequest = async () => {
-        createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, userData.withdrawableAmount)
-            .then((response) => {
-                setWithdrawalApprovalRequest(true);
-            });
-    }
-
+        setFormOpen(true);
+      };
+    const handleWithdrawalSubmit = (amount) => {
+        userData?.investedAmount > 999 ?
+        createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, amount)
+          .then((response) => {
+            setWithdrawalApprovalRequest(true);
+          }): alert("Minimum Withdrawal Amount is ₹1000");
+      };
     const addMoneyOnClick = () => {
         history("/addmoney");
     }
@@ -69,6 +73,7 @@ function DashboardScreen() {
 
     return (
         <div className="container">
+         <WithdrawalForm open={formOpen} onClose={() => setFormOpen(false)} onSubmit={handleWithdrawalSubmit} />
             <h1 className="mt-3 text-center">Hi {userData?.name}, <br /> Welcome to the TATA Invest</h1>
             <div className="dashboard-container">
                 <h5 style={{ fontWeight: "bold" }}>Invest and Earn</h5>
@@ -81,7 +86,8 @@ function DashboardScreen() {
                     {
                         !withdrawalApprovalRequest ?
                             (<button className="add-money-button btn-2" onClick={handelWithdrawalApprovalRequest}>Withdraw</button>)
-                            : (<p>Withdrawal Request Sent Successfully !</p>)
+                            : (<p style={{fontWeight:"bold", color:"green"}}>Withdrawal Approval Request Sent Successfully !</p>
+              )
                     }
                 </center>
             </div>
@@ -116,12 +122,18 @@ function DashboardScreen() {
                     <div className="info-card learn-more-card">
                         <h3><i class="fa fa-line-chart" aria-hidden="true"> </i> <br />Complete Your KYC in one minute</h3>
                         {/* <p>and start withdrawing money effortlessly</p> */}
-                        <button className="action-button" onClick={completeKYCOnClick}>ACTIVATE NOW</button>
+
+                        {userData?.kycDone ? <button className="btn btn-success shadow" disabled='true'>
+                            KYC DONE
+                        </button> : (<button className="action-button shadow" onClick={completeKYCOnClick}>
+                            ACTIVATE NOW
+                        </button>)}
                     </div>
                     <div className="info-card learn-more-card">
                         <h3><i class="fa fa-usd" aria-hidden="true"> </i> <br />Know Your Earnings</h3>
-                        <button className="action-button" onClick={() => { history('/statement') }}>LEARN MORE</button>
-                    </div>
+                        <button className="action-button shadow" onClick={() => { history('/statement') }}>
+                            LEARN MORE
+                        </button></div>
                 </div>
                 <PoweredBy />
                 <InvestorReviews />
