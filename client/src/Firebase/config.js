@@ -28,6 +28,19 @@ const firebaseConfig = {
 // };
 
 
+
+// Demo
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCdi7XXQy0IEbeyA8ZQfW29vWJ4P5zf7_o",
+//   authDomain: "tata-c37fc.firebaseapp.com",
+//   projectId: "tata-c37fc",
+//   storageBucket: "tata-c37fc.appspot.com",
+//   messagingSenderId: "941632957677",
+//   appId: "1:941632957677:web:466985c69fdbed5bf630e4",
+//   measurementId: "G-LWV5RRM6WE"
+// };
+
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
