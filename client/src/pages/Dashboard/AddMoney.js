@@ -130,9 +130,12 @@ const AddMoneyPage = () => {
                 <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('10000')}>₹ 10000</Button>
                 {/* Add more suggestion buttons as needed */}
               </div>
+              <div style={{margin:'5px'}}>
+                Use <strong>UPI - mahala.anand@ybl</strong> if you are facing any challenges.
+              </div>
               <a href={`upi://pay?pa=mahala.anand@ybl&pn=Tata Invest&cu=INR&am=${amount}`}>                <Button
                 variant="primary"
-                className="w-100 mt-4"
+                className="w-100 mt-4 mb-2"
               >
                 Proceed to Pay
               </Button></a>
