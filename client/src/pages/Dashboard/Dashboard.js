@@ -37,7 +37,7 @@ function DashboardScreen() {
         setFormOpen(true);
       };
     const handleWithdrawalSubmit = (amount) => {
-        userData?.investedAmount > 999 ?
+        userData?.withdrawableAmount > 999 ?
         createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, amount)
           .then((response) => {
             setWithdrawalApprovalRequest(true);
