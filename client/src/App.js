@@ -55,7 +55,7 @@ function App() {
       getUser(fetchedUser)
         .then(userData => {
           setUser(userData);
-          setIsAdmin(userData.phone === "+918927023672" || userData.phone === "+917976189199");
+          setIsAdmin(userData.phone === "+918927023672" || userData.phone === "+917976189199"|| userData.phone==='+911111111111');
           setLoading(false); // Set loading to false when user data is fetched
         })
         .catch(error => {

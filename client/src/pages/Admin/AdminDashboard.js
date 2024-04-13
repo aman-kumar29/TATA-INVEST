@@ -11,12 +11,12 @@ export default function AdminDashboard() {
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(true); // Add loading state
     const history = useNavigate();
-    
+
     useEffect(() => {
         const fetchUsersData = async () => {
             try {
                 const response = await axios.get(`/api/getAllUsers`);
-                const filtered = response.data.filter(user => (user.phone !== "+918927023672" || user.phone !== "+917976189199"));
+                const filtered = response.data.filter(user => (user.phone !== "+918927023672" || user.phone !== "+917976189199" || user.phone === '+911111111111'));
                 const sortedUsers = filtered.sort((a, b) => {
                     const dateA = new Date(a.createdAt._seconds * 1000);
                     const dateB = new Date(b.createdAt._seconds * 1000);
@@ -31,17 +31,17 @@ export default function AdminDashboard() {
                 setLoading(false); // Set loading to false even if there's an error
             }
         };
-        
+
         fetchUsersData();
     }, []);
-    
+
     const currentDate = new Date();
-    
+
     const differenceInDays = (date1, date2) => {
         const diffInTime = date2.getTime() - date1.getTime();
         return diffInTime / (1000 * 3600 * 24);
     };
-    
+
     const handleUserClick = (user) => {
         setSelectedUser(user);
         setShowModal(true);
@@ -111,6 +111,9 @@ export default function AdminDashboard() {
                             <p>Registration Date : {formatDate(new Date(selectedUser.createdAt._seconds * 1000))}</p>
                             <p>Name : {selectedUser.name}</p>
                             <p>KYC : {selectedUser.kycDone ? "DONE" : "NOT DONE"}</p>
+                            {selectedUser.kycDone && <p>Document : <a className='btn btn-success' href={selectedUser.documentUrl} download target="_blank">
+                                Download PDF
+                            </a></p>}
                             <br />
                             <h5>Contact Details</h5>
                             <hr />
@@ -160,7 +163,7 @@ export default function AdminDashboard() {
                     )}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={()=>{
+                    <Button variant="secondary" onClick={() => {
                         console.log(selectedUser);
                         history(`/edit-user/${selectedUser.referralCode}`)
                     }}>

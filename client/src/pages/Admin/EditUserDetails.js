@@ -12,10 +12,10 @@ const EditUserDetails = () => {
         name: '',
         phone: '',
         address: '',
-        investedAmount: '',
-        interestAmount: '',
-        referralAmount: '',
-        withdrawableAmount: ''
+        investedAmount: 0,
+        interestAmount: 0,
+        referralAmount: 0,
+        withdrawableAmount: 0
     });
 
     const history = useNavigate();
@@ -41,6 +41,7 @@ const EditUserDetails = () => {
     const handleUpdateInfo = async () => {
         try {
             const userRef = doc(db, 'users', userId);
+            // console.log('User info:', typeof(newUserData.investedAmount));
             await updateDoc(userRef, newUserData);
             console.log('User info updated successfully!');
             history('/admin'); // Redirect to admin dashboard after updating user details
@@ -51,9 +52,11 @@ const EditUserDetails = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        const parsedValue = name.includes('Amount') ? parseFloat(value) : value;
+
         setNewUserData(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: parsedValue
         }));
     };
 
@@ -61,7 +64,7 @@ const EditUserDetails = () => {
 
     return (
         <div className="edit-user-container">
-            <h1>Edit User Details</h1>
+            <h1 className='text-center'>Edit User Details</h1>
             <div className="user-details">
                 <div className="detail">
                     <label>Name:</label>
@@ -84,7 +87,7 @@ const EditUserDetails = () => {
                 <div className="detail">
                     <label>Invested Amount:</label>
                     <input
-                        type="text"
+                        type="number"
                         name="investedAmount"
                         value={newUserData.investedAmount}
                         onChange={handleChange}
@@ -93,7 +96,7 @@ const EditUserDetails = () => {
                 <div className="detail">
                     <label>Interest Amount:</label>
                     <input
-                        type="text"
+                        type="number"
                         name="interestAmount"
                         value={newUserData.interestAmount}
                         onChange={handleChange}
@@ -102,7 +105,7 @@ const EditUserDetails = () => {
                 <div className="detail">
                     <label>Referral Amount:</label>
                     <input
-                        type="text"
+                        type="number"
                         name="referralAmount"
                         value={newUserData.referralAmount}
                         onChange={handleChange}
@@ -111,7 +114,7 @@ const EditUserDetails = () => {
                 <div className="detail">
                     <label>Withdrawable Amount:</label>
                     <input
-                        type="text"
+                        type="number"
                         name="withdrawableAmount"
                         value={newUserData.withdrawableAmount}
                         onChange={handleChange}

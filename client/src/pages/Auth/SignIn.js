@@ -33,13 +33,6 @@ function Login() {
         return;
       }
       
-      // Check if the entered phone number is the admin's number
-      if (phone === "+911111111111") {
-        setOtpSent(true);
-        setOtp('123456'); // Set the OTP value to '123456' for admin login
-        return;
-      }
-      
       const recaptcha = new RecaptchaVerifier(auth, 'recaptcha', {});
       const confirmation = await signInWithPhoneNumber(auth, phone, recaptcha);
       console.log("confirmation", confirmation);
@@ -75,7 +68,7 @@ function Login() {
               localStorage.setItem("userId", data?.user.uid);
               localStorage.setItem("phoneNumber", data?.user.phone);
               dispatch(authActions.login());
-              if (phone === "+918927023672" || phone === "+917976189199") {
+              if (phone === "+918927023672" || phone === "+917976189199" || phone ==='+911111111111') {
                 history('/admin');
               } else {
                 history('/dashboard');

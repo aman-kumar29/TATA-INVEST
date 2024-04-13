@@ -5,6 +5,7 @@ import './css/paymentRequests.css';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/config.js';
 import { useNavigate } from 'react-router-dom';
+import { formatDate } from './FormatDate.js';
 
 export default function PaymentRequest() {
     const [paymentRequests, setPaymentRequests] = useState([]);
@@ -99,7 +100,13 @@ export default function PaymentRequest() {
                             <div className="payment-item-details">
                                 <span className="payment-item-name">{index + 1} .  {request.name}</span>
                                 <br />
-                                <small className="payment-item-amount">Amount: ₹{request.amount}</small>
+                                <small className="payment-item-amount"><i className="fas fa-rupee-sign"></i> : ₹{request.amount}</small>
+                                <br />
+                                <small className="payment-item-amount"> <i className="fas fa-phone"></i> :  {request.phone}</small>
+                                <br />
+                                <small className="payment-item-amount">
+                                <i className="fas fa-calendar"></i> : {formatDate(new Date(request.createdAt._seconds * 1000))}
+                                </small>
                             </div>
                             <div>
                                 {request.status === 'pending' && (

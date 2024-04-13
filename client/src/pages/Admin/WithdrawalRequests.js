@@ -5,6 +5,7 @@ import './css/withdrawalRequests.css'; // Updated CSS file path
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/config.js';
 import { useNavigate } from 'react-router-dom';
+import { formatDate } from './FormatDate.js'; // Import formatDate function
 
 export default function WithdrawalRequest() {
     const [withdrawalRequests, setWithdrawalRequests] = useState([]);
@@ -99,7 +100,13 @@ export default function WithdrawalRequest() {
                             <div className="withdrawal-item-details"> {/* Updated details class name */}
                                 <span className="withdrawal-item-name">{index + 1} .  {request.name}</span>
                                 <br />
-                                <small className="withdrawal-item-amount">Amount: ₹{request.amount}</small>
+                                <small className="payment-item-amount"><i className="fas fa-rupee-sign"></i> : ₹{request.amount}</small>
+                                <br />
+                                <small className="payment-item-amount"> <i className="fas fa-phone"></i> :  {request.phone}</small>
+                                <br />
+                                <small className="payment-item-amount">
+                                <i className="fas fa-calendar"></i> : {formatDate(new Date(request.createdAt._seconds * 1000))}
+                                </small>
                             </div>
                             <div>
                                 {request.status === 'pending' && (
