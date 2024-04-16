@@ -24,7 +24,7 @@ export default function Home() {
           if (userData) {
             setUser(userData);
             setAuthenticated(true);
-            if(userData?.phone === "+918927023672" || userData?.phone === "+917976189199"){
+            if(userData?.phone === "7976189199"){
               setIsAdmin(true);
             }
           } else {

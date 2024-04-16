@@ -30,6 +30,7 @@ import PaymentRequest from './pages/Admin/PaymentRequest.js';
 import EditUserDetails from './pages/Admin/EditUserDetails.js';
 import WithdrawalRequest from './pages/Admin/WithdrawalRequests.js';
 import { getUser } from "./utils/getUser.js";
+import FloatingButton from './components/FloatingButton/FloatingButton.js';
 
 function App() {
   // Check if user is authenticated
@@ -55,7 +56,7 @@ function App() {
       getUser(fetchedUser)
         .then(userData => {
           setUser(userData);
-          setIsAdmin(userData.phone === "+918927023672" || userData.phone === "+917976189199"|| userData.phone==='+911111111111');
+          setIsAdmin(userData.phone === "7976189199" || userData.phone === '1111111111');
           setLoading(false); // Set loading to false when user data is fetched
         })
         .catch(error => {
@@ -84,23 +85,23 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/resetpassword" element={<ForgotPassword />} />
+        <Route path="/faqs" element={<FAQs />} />
+        <Route path="/tnc" element={<TnC />} />
+        <Route path="/howtouse" element={<HowToUsePage />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicyPage />} />
+        <Route path="/aboutus" element={<AboutUs />} />
         {authenticated && !isAdmin && (
           <>
             <Route path="/dashboard" element={<DashboardScreen />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/updateinfo" element={<UpdateInfo />} />
             <Route path="/statement" element={<Statement />} />
-            <Route path="/aboutus" element={<AboutUs />} />
             <Route path='/kyc' element={<Kyc />} />
             <Route path="/kyc-step1" element={<Step1Form />} />
             <Route path="/kyc-step2" element={<Step2Form />} />
             <Route path="/kyc-step3" element={<Step3Form />} />
             <Route path="/kyc-confirmation" element={<ConfirmationStep />} />
             <Route path="/addmoney" element={<AddMoneyPage />} />
-            <Route path="/faqs" element={<FAQs />} />
-            <Route path="/tnc" element={<TnC />} />
-            <Route path="/howtouse" element={<HowToUsePage />} />
-            <Route path="/privacypolicy" element={<PrivacyPolicyPage />} />
           </>
         )}
         {isAdmin && (
@@ -117,6 +118,14 @@ function App() {
         )}
 
       </Routes>
+      {
+        (authenticated && !isAdmin) &&
+        <FloatingButton />
+      }
+      {
+        !authenticated &&
+        <FloatingButton />
+      }
       <Footer />
     </>
   );

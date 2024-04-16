@@ -35,14 +35,14 @@ function DashboardScreen() {
     }, [fetchedUser, history]);
     const handelWithdrawalApprovalRequest = async () => {
         setFormOpen(true);
-      };
+    };
     const handleWithdrawalSubmit = (amount) => {
         userData?.withdrawableAmount > 999 ?
-        createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, amount)
-          .then((response) => {
-            setWithdrawalApprovalRequest(true);
-          }): alert("Minimum Withdrawal Amount is ₹1000");
-      };
+            createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, amount)
+                .then((response) => {
+                    setWithdrawalApprovalRequest(true);
+                }) : alert("Minimum Withdrawal Amount is ₹1000");
+    };
     const addMoneyOnClick = () => {
         history("/addmoney");
     }
@@ -73,7 +73,7 @@ function DashboardScreen() {
 
     return (
         <div className="container">
-         <WithdrawalForm open={formOpen} onClose={() => setFormOpen(false)} onSubmit={handleWithdrawalSubmit} />
+            <WithdrawalForm open={formOpen} onClose={() => setFormOpen(false)} onSubmit={handleWithdrawalSubmit} />
             <h1 className="mt-3 text-center">Hi {userData?.name}, <br /> Welcome to the TATA Invest</h1>
             <div className="dashboard-container">
                 <h5 style={{ fontWeight: "bold" }}>Invest and Earn</h5>
@@ -86,8 +86,8 @@ function DashboardScreen() {
                     {
                         !withdrawalApprovalRequest ?
                             (<button className="add-money-button btn-2" onClick={handelWithdrawalApprovalRequest}>Withdraw</button>)
-                            : (<p style={{fontWeight:"bold", color:"green"}}>Withdrawal Approval Request Sent Successfully !</p>
-              )
+                            : (<p style={{ fontWeight: "bold", color: "green" }}>Withdrawal Approval Request Sent Successfully !</p>
+                            )
                     }
                 </center>
             </div>
@@ -106,7 +106,7 @@ function DashboardScreen() {
                     <i class="fa-solid fa-forward" onClick={nextSlide}></i>                </div>
             </center>
 
-            <div class="info-box">
+            {/* <div class="info-box">
                 <i class="fas fa-info-circle"></i>
                 <div>
                     Earn daily returns by referring friends! Get 0.3% return of the referred friend's investment. Plus, earn 0.2% when they refer someone, and 0.1% from the subsequent referrals. Start investing and referring today to maximize your earnings!
@@ -116,7 +116,20 @@ function DashboardScreen() {
                         </button>
                     </center>
                 </div>
+            </div> */}
+            <center>
+            <div className="card-referral" >
+                <img src="assets/referralImg.jpg" className="card-img-top" alt="Referral Image"/>
+                <div className="card-body">
+                    <h5 className="card-title">Referral Scheme !</h5>
+                    <p className="card-text"> Earn daily returns by referring friends! Get 0.3% return of the referred friend's investment. Plus, earn 0.2% when they refer someone, and 0.1% from the subsequent referrals. Start investing and referring today to maximize your earnings!
+                    </p>
+                    <button className="add-money-button btn-2 mt-3" align="left" style={{ margin: "2px" }} onClick={handleReferralClick}>
+                        REFER & EARN
+                    </button>
+                </div>
             </div>
+            </center>
             <div>
                 <div className="info-container">
                     <div className="info-card learn-more-card">

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { auth, createUserDocument } from "../../Firebase/config.js";
+import { auth, createUserDocument, createUserDocumentFast2SMS } from "../../Firebase/config.js";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "./signUp.css";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../redux/store.js";
 import axios from 'axios';
+import { generateOTP, generateRandomUID } from "../../utils/generateCodes.js";
 
 function SignUp() {
   const history = useNavigate();
@@ -25,7 +26,13 @@ function SignUp() {
   const [otpSent, setOtpSent] = useState(false);
   const [timer, setTimer] = useState(60);
 
+  const [otp1, setOtp1] = useState('');
+  const [otp2, setOtp2] = useState('');
+  const [userUID, setUserUID] = useState('');
+  
   useEffect(() => {
+    setOtp1(generateOTP());
+    setUserUID(generateRandomUID());
     const fetchedUser = localStorage.getItem('userId');
     if (fetchedUser) {
       history('/dashboard');
@@ -52,29 +59,29 @@ function SignUp() {
     const dummyData = await axios.get(`/api/parentReferralUpdate/${childrenId}`);
   };
 
-  const sendOTP = async () => {
-    try {
-      if (phone === '' || formData.user_name === '') {
-        alert("Name and Phone Number required");
-        return;
-      }
-      const recaptcha = new RecaptchaVerifier(auth, 'recaptcha', {});
-      const confirmation = await signInWithPhoneNumber(auth, phone, recaptcha);
-      setUser(confirmation);
-      setConfirmationResult(confirmation);
-      setCaptchaVerified(true);
-      setOtpSent(true);
-      setTimer(60);
-      const interval = setInterval(() => {
-        setTimer((prevTimer) => prevTimer - 1);
-      }, 1000);
-      setTimeout(() => {
-        clearInterval(interval);
-      }, 60000);
-    } catch (error) {
-      console.log("Error", error);
-    }
-  };
+  // const sendOTP = async () => {
+  //   try {
+  //     if (phone === '' || formData.user_name === '') {
+  //       alert("Name and Phone Number required");
+  //       return;
+  //     }
+  //     const recaptcha = new RecaptchaVerifier(auth, 'recaptcha', {});
+  //     const confirmation = await signInWithPhoneNumber(auth, phone, recaptcha);
+  //     setUser(confirmation);
+  //     setConfirmationResult(confirmation);
+  //     setCaptchaVerified(true);
+  //     setOtpSent(true);
+  //     setTimer(60);
+  //     const interval = setInterval(() => {
+  //       setTimer((prevTimer) => prevTimer - 1);
+  //     }, 1000);
+  //     setTimeout(() => {
+  //       clearInterval(interval);
+  //     }, 60000);
+  //   } catch (error) {
+  //     console.log("Error", error);
+  //   }
+  // };
   const handleResendOTP = () => {
     setTimer(60);
     setOtpSent(true);
@@ -89,38 +96,102 @@ function SignUp() {
   };
 
 
+const handleGenerateOtp = async () => {
+  if (!phone || formData.user_name === '') {
+    alert('Please enter your phone number and full name.');
+    return;
+  }
+
+  fetch('')
+  try {
+    // Replace with actual API call to send OTP
+    // generateOTP();
+    const number = phone+otp1;
+    // console.log('OTP1:', otp1, 'OTP2:', otp2);
+    const response = await axios.get(`/api/sendotp/${number}`);
+    console.log("Response Daat: ", response.data);
+  setOtpSent(true);
+  setTimer(60);
+  const interval = setInterval(() => {
+    setTimer((prevTimer) => prevTimer - 1);
+  }, 1000);
+  setTimeout(() => {
+    clearInterval(interval);
+  }, 60000);
+  } catch (error) {
+    console.error('Error sending OTP:', error);
+    alert('Failed to send OTP. Please try again.');
+  }
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      if (
-        otp === '' || !confirmationResult
-      ) {
-        alert("Please enter OTP !");
+    if (!otp) {
+      alert('Please enter the received OTP.');
+      return;
+    }
+  try {
+      if (otp !== otp1) {
+        alert('Incorrect OTP. Please try again.');
+        setOtp('');
         return;
-      }
-      const data = await confirmationResult.confirm(otp);
-      if (data.user) {
-        createUserDocument(
-          data.user,
+      }else{
+        createUserDocumentFast2SMS(
+          userUID,
           formData.user_name,
           formData.parentReferralCode,
           phone,
           "Demo Address"
         ).then(() => {
           if (formData.parentReferralCode !== "") {
-            handleParentReferralCode(data.user.uid);
+            handleParentReferralCode(userUID);
           }
         });
-        localStorage.setItem("userId", data?.user.uid);
-        localStorage.setItem("phoneNumber", data?.user.phone);
+        localStorage.setItem("userId", userUID);
+        // localStorage.setItem("phoneNumber", phone);
         dispatch(authActions.login());
-        history("/dashboard");
+        if (phone === '7976189199') {
+          history("/admin");
+        }else{
+          history("/dashboard");
+        }
       }
     } catch (error) {
-      console.log("Error", error);
+      console.error('Error verifying OTP:', error);
+      alert('Invalid OTP. Please try again.');
     }
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     if (
+  //       otp === '' || !confirmationResult
+  //     ) {
+  //       alert("Please enter OTP !");
+  //       return;
+  //     }
+  //     const data = await confirmationResult.confirm(otp);
+  //     if (data.user) {
+        // createUserDocument(
+  //         data.user,
+  //         formData.user_name,
+  //         formData.parentReferralCode,
+  //         phone,
+  //         "Demo Address"
+  //       ).then(() => {
+  //         if (formData.parentReferralCode !== "") {
+  //           handleParentReferralCode(data.user.uid);
+  //         }
+  //       });
+  //       localStorage.setItem("userId", data?.user.uid);
+  //       localStorage.setItem("phoneNumber", data?.user.phone);
+  //       dispatch(authActions.login());
+  //       history("/dashboard");
+  //     }
+  //   } catch (error) {
+  //     console.log("Error", error);
+  //   }
+  // };
 
   return (
     <div className="container-signup">
@@ -156,7 +227,7 @@ function SignUp() {
               type="tel"
               placeholder="Phone Number (10 digits)"
               className="input-field"
-              onChange={(e) => setPhone("+91" + e.target.value)}
+              onChange={(e) => setPhone( e.target.value)}
               required
               pattern="[0-9]{10}"
               maxLength="10"
@@ -195,8 +266,8 @@ function SignUp() {
               <button
                 type="button"
                 className="btn get-otp-button"
-                onClick={sendOTP}
-                disabled={captchaVerified}
+                onClick={handleGenerateOtp}
+                // disabled={captchaVerified}
               >
                 Get OTP
               </button>
@@ -219,8 +290,10 @@ function SignUp() {
               >
                 Resend OTP {timer > 0 && `(${timer}s)`}
               </button>
+             
             </center>
           )}
+          
         </form>
       </div>
     </div>

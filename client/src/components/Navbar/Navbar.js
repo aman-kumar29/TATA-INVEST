@@ -32,14 +32,14 @@ function Navbar() {
   };
 
   const handleSignOut = () => {
-    auth.signOut()
-      .then(() => {
+    // auth.signOut()
+    //   .then(() => {
         localStorage.removeItem('userId');
         history('/');
-      })
-      .catch(error => {
-        console.error('Error signing out:', error);
-      });
+    //   })
+    //   .catch(error => {
+    //     console.error('Error signing out:', error);
+    //   });
   };
 
   return (
@@ -69,7 +69,7 @@ function Navbar() {
                 </div>
               </div>
               <List>
-                {userData && (userData.phone === "+918927023672" || userData.phone === "+917976189199"|| userData.phone==='+911111111111') ? (
+                {userData && (userData.phone === "7976189199"|| userData.phone==='1111111111') ? (
                   <>
                     <ListItem className="list-item">
                       <Link to="/admin">
@@ -127,7 +127,7 @@ function Navbar() {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-none d-lg-flex">
-              {userData && (userData.phone === "+918927023672" || userData.phone === "+917976189199"|| userData.phone ==='+911111111111') ? (
+              {userData && (userData.phone === "7976189199"|| userData.phone ==='1111111111') ? (
                 <>
                   <li className="nav-item">
                     <Link to="/admin" className="nav-link active" aria-current="page">Users</Link>

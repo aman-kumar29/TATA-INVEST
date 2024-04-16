@@ -33,7 +33,7 @@ export default function PerfectPlan() {
                     <div>
                         <h6>Grow at up to</h6>
                         <h4>1.8% returns/day*</h4>
-                        <p> <i className='fas fa-calender'></i>10 lock-in period</p>
+                        <p> <i className='fas fa-calender'></i>0 lock-in period</p>
                         <p> <i className='fas fa-money'></i>₹10,000 min. amount</p>
                     </div>
                 </div>

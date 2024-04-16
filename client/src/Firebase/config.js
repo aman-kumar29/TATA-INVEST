@@ -18,29 +18,6 @@ const firebaseConfig = {
   measurementId: "G-6DPQ2X6M6Z"
 };
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCdi7XXQy0IEbeyA8ZQfW29vWJ4P5zf7_o",
-//   authDomain: "tata-c37fc.firebaseapp.com",
-//   projectId: "tata-c37fc",
-//   storageBucket: "tata-c37fc.appspot.com",
-//   messagingSenderId: "941632957677",
-//   appId: "1:941632957677:web:466985c69fdbed5bf630e4",
-//   measurementId: "G-LWV5RRM6WE"
-// };
-
-
-
-// Demo
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCdi7XXQy0IEbeyA8ZQfW29vWJ4P5zf7_o",
-//   authDomain: "tata-c37fc.firebaseapp.com",
-//   projectId: "tata-c37fc",
-//   storageBucket: "tata-c37fc.appspot.com",
-//   messagingSenderId: "941632957677",
-//   appId: "1:941632957677:web:466985c69fdbed5bf630e4",
-//   measurementId: "G-LWV5RRM6WE"
-// };
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -73,6 +50,34 @@ export const createUserDocument = async (user, name, parentReferralCode,phone,ad
         address: address,
         investedAmount: 0,
         referralCode: user.uid,
+        parentReferralCode: parentReferralCode,
+        referralAmount: 0,
+        interestAmount: 0,
+        withdrawableAmount: 0,
+        investmentTransactions: [],
+        withdrawalTransactions: [],
+        kycDone: false,
+        referralUsers: [],
+        createdAt: new Date(),
+        documentUrl: ''
+      });
+
+    console.log("User document created successfully!");
+  } catch (error) {
+    console.log('Error in creating user', error);
+  }
+}
+export const createUserDocumentFast2SMS = async (userId, name, parentReferralCode,phone,address) => {
+  if (!userId) return;
+  try {
+    await setDoc(doc(db, "users", userId),
+      {
+        name: name,
+        email: "",
+        phone:phone,
+        address: address,
+        investedAmount: 0,
+        referralCode: userId,
         parentReferralCode: parentReferralCode,
         referralAmount: 0,
         interestAmount: 0,
@@ -142,9 +147,17 @@ export const checkUserExists = async (phone) => {
 
     // Execute the query
     const querySnapshot = await getDocs(q);
-
+    if (!querySnapshot.empty) {
+      // Get the first document (assuming phone numbers are unique)
+      const doc = querySnapshot.docs[0].data();
+      // Return the referral code if available
+      return doc.referralCode;
+    } else {
+      // If no user found, return empty string
+      return '';
+    }
     // Return true if a user with the given phone number exists, otherwise false
-    return !querySnapshot.empty;
+    // return !querySnapshot.empty;
   } catch (error) {
     console.error('Error checking user existence:', error);
     throw error;

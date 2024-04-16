@@ -16,7 +16,7 @@ export default function AdminDashboard() {
         const fetchUsersData = async () => {
             try {
                 const response = await axios.get(`/api/getAllUsers`);
-                const filtered = response.data.filter(user => (user.phone !== "+918927023672" || user.phone !== "+917976189199" || user.phone === '+911111111111'));
+                const filtered = response.data.filter(user => (user.phone !== "7976189199" || user.phone === '1111111111'));
                 const sortedUsers = filtered.sort((a, b) => {
                     const dateA = new Date(a.createdAt._seconds * 1000);
                     const dateB = new Date(b.createdAt._seconds * 1000);
@@ -63,41 +63,49 @@ export default function AdminDashboard() {
 
     return (
         <div className="container">
-            <h1 className='text-center mt-5 my-5'>USERS</h1>
-            <div className='my-5'>
-                <ul className="list-group">
-                    {usersData.map((user, index) => {
-                        const userCreatedAt = new Date(user.createdAt._seconds * 1000);
-                        const daysSinceCreation = differenceInDays(userCreatedAt, currentDate);
-                        const isNewUser = daysSinceCreation < 7;
+            <h1 className='text-center mt-5 my-5'>USERS - {usersData.length}</h1>
+            {
+                usersData.length === 0 ? (
+                    <h5>
+                        No user in data !
+                    </h5>
+                ) : (
+                    <div className='my-5'>
+                        <ul className="list-group">
+                            {usersData.map((user, index) => {
+                                const userCreatedAt = new Date(user.createdAt._seconds * 1000);
+                                const daysSinceCreation = differenceInDays(userCreatedAt, currentDate);
+                                const isNewUser = daysSinceCreation < 7;
 
-                        return (
-                            <li
-                                key={index}
-                                className="list-group-item d-flex justify-content-between align-items-center"
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <div>
-                                    <span>{index + 1} .  {user.name}</span>
-                                    <br />
-                                    <small className="text-muted">₹ {user.investedAmount} Invested</small>
-                                </div>
-                                <div>
-                                    {isNewUser && (
-                                        <span className="badge bg-success me-2">New</span>
-                                    )}
-                                    <button
-                                        className="btn btn-outline-primary btn-sm"
-                                        onClick={() => handleUserClick(user)}
+                                return (
+                                    <li
+                                        key={index}
+                                        className="list-group-item d-flex justify-content-between align-items-center"
+                                        style={{ cursor: 'pointer' }}
                                     >
-                                        Details
-                                    </button>
-                                </div>
-                            </li>
-                        );
-                    })}
-                </ul>
-            </div>
+                                        <div>
+                                            <span>{index + 1} .  {user.name}</span>
+                                            <br />
+                                            <small className="text-muted">₹ {user.investedAmount} Invested</small>
+                                        </div>
+                                        <div>
+                                            {isNewUser && (
+                                                <span className="badge bg-success me-2">New</span>
+                                            )}
+                                            <button
+                                                className="btn btn-outline-primary btn-sm"
+                                                onClick={() => handleUserClick(user)}
+                                            >
+                                                Details
+                                            </button>
+                                        </div>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                )
+            }
 
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
