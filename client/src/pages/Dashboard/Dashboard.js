@@ -38,7 +38,7 @@ function DashboardScreen() {
     };
     const handleWithdrawalSubmit = (amount) => {
         userData?.withdrawableAmount > 999 ?
-            createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, amount)
+            createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, amount,userData.accountNumber,userData.ifscCode,userData.cardholderName)
                 .then((response) => {
                     setWithdrawalApprovalRequest(true);
                 }) : alert("Minimum Withdrawal Amount is ₹1000");

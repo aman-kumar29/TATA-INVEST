@@ -119,9 +119,29 @@ export default function AdminDashboard() {
                             <p>Registration Date : {formatDate(new Date(selectedUser.createdAt._seconds * 1000))}</p>
                             <p>Name : {selectedUser.name}</p>
                             <p>KYC : {selectedUser.kycDone ? "DONE" : "NOT DONE"}</p>
-                            {selectedUser.kycDone && <p>Document : <a className='btn btn-success' href={selectedUser.documentUrl} download target="_blank">
-                                Download PDF
-                            </a></p>}
+                            {selectedUser.kycDone && 
+                            <div>
+                                <p>
+                                    Aadhar Card : <a className='btn btn-success' href={selectedUser.documentUrl} download target="_blank">
+                                        Download PDF
+                                    </a>
+                                </p>
+                                <p>
+                                    Pan Card : <a className='btn btn-success' href={selectedUser.documentUrl2} download target="_blank">
+                                        Download PDF
+                                    </a>
+                                </p>
+                                <p>
+                                    Account Number : {selectedUser.accountNumber}
+                                </p>
+                                <p>
+                                    IFSC Code : {selectedUser.ifscCode}
+                                </p>
+                                <p>
+                                    Card Holder Name : {selectedUser.cardholderName}
+                                </p>
+                            </div>
+                            }
                             <br />
                             <h5>Contact Details</h5>
                             <hr />

@@ -185,7 +185,7 @@ export const createPaymentApprovalRequest = async (userId, userName, phone, amou
   }
 }
 
-export const createWithdrawalApprovalRequest = async (userId, userName, phone, amount) => {
+export const createWithdrawalApprovalRequest = async (userId, userName, phone, amount, accountNumber, ifscCode, cardholderName) => {
   try {
     await addDoc(collection(db, "withdrawalApprovalRequests"),
       {
@@ -194,6 +194,9 @@ export const createWithdrawalApprovalRequest = async (userId, userName, phone, a
         phone: phone,
         amount: amount,
         status: 'pending',
+        accountNumber:accountNumber,
+        ifscCode:ifscCode,
+        cardholderName:cardholderName,
         createdAt: new Date()
       });
 
@@ -204,11 +207,15 @@ export const createWithdrawalApprovalRequest = async (userId, userName, phone, a
 }
 
 
-export const updateDocumentUrl = async (userId, downloadURL) => {
+export const updateDocumentUrlsAndBankDetails = async (userId, downloadURL1,documentURL2,accountNumber, ifscCode, cardholderName) => {
   try {
     const userRef = doc(db, "users", userId);
     await updateDoc(userRef, {
-      documentUrl: downloadURL,
+      documentUrl: downloadURL1,
+      documentUrl2:documentURL2,
+      accountNumber:accountNumber,
+      ifscCode:ifscCode,
+      cardholderName:cardholderName,
       kycDone: true
     });
 
