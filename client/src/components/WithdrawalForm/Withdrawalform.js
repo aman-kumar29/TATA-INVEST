@@ -3,21 +3,21 @@ import { Dialog, DialogContent, DialogTitle, TextField, Button, Box } from '@mui
 
 function WithdrawalForm({ open, onClose, onSubmit }) {
   const [amount, setAmount] = useState('');
-  const [UPI_ID, setUPI_ID] = useState('');
+  // const [UPI_ID, setUPI_ID] = useState('');
 
   const handleSubmit = () => {
     if (!amount || isNaN(amount) || amount <= 0) {
       alert('Please enter a valid amount.');
       return;
     }
-    if (!UPI_ID) {
-      alert('Please enter a valid UPI_ID');
-      return;
-    }
+    // if (!UPI_ID) {
+    //   alert('Please enter a valid UPI_ID');
+    //   return;
+    // }
 
-    onSubmit(amount, UPI_ID);
+    onSubmit(amount);
     setAmount('');
-    setUPI_ID('');
+    // setUPI_ID('');
     onClose();
   };
 
@@ -35,7 +35,7 @@ function WithdrawalForm({ open, onClose, onSubmit }) {
             variant="outlined"
             sx={{ mb: 2 }}
           />
-          <TextField
+          {/* <TextField
             label="UPI_ID"
             type="text"
             value={UPI_ID}
@@ -43,7 +43,7 @@ function WithdrawalForm({ open, onClose, onSubmit }) {
             fullWidth
             variant="outlined"
             sx={{ mb: 2 }}
-          />
+          /> */}
           <Button variant="contained" color="success" onClick={handleSubmit}>
             Submit
           </Button>
