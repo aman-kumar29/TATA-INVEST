@@ -102,6 +102,12 @@ export default function WithdrawalRequest() {
                                 <br />
                                 <small className="payment-item-amount"><i className="fas fa-rupee-sign"></i> : ₹{request.amount}</small>
                                 <br />
+                                {request.status === 'accepted' && (
+                                    <>
+                                    <small className="payment-item-amount"> <i class="fa-solid fa-money-bill-transfer"></i> :  {request.UPI_ID}</small>
+                                <br />
+                                    </>
+                                )}
                                 <small className="payment-item-amount"> <i className="fas fa-phone"></i> :  {request.phone}</small>
                                 <br />
                                 <small className="payment-item-amount">

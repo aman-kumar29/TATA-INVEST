@@ -56,7 +56,9 @@ function SignUp() {
   };
 
   const handleParentReferralCode = async (childrenId) => {
+    console.log("Entered handle Referral ", childrenId);
     const dummyData = await axios.get(`/api/parentReferralUpdate/${childrenId}`);
+    console.log("Referral Dummy Data:", dummyData);
   };
 
   // const sendOTP = async () => {
@@ -144,7 +146,8 @@ const handleGenerateOtp = async () => {
           "Demo Address"
         ).then(() => {
           if (formData.parentReferralCode !== "") {
-            handleParentReferralCode(userUID);
+            console.log('Parent Referral Code:', formData.parentReferralCode);
+            // handleParentReferralCode(userUID);
           }
         });
         localStorage.setItem("userId", userUID);

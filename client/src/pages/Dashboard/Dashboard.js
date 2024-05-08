@@ -36,13 +36,22 @@ function DashboardScreen() {
     const handelWithdrawalApprovalRequest = async () => {
         setFormOpen(true);
     };
-    const handleWithdrawalSubmit = (amount) => {
-        userData?.withdrawableAmount > 999 ?
-            createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, amount)
+    const handleWithdrawalSubmit = (amount, UPI_ID) => {
+        if (!userData.kycDone) {
+            alert("Your KYC is not done. Please complete KYC to withdraw money.");
+            return;
+        }
+    
+        if (userData.withdrawableAmount > 999 && amount <= userData.withdrawableAmount) {
+            createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, amount, UPI_ID)
                 .then((response) => {
                     setWithdrawalApprovalRequest(true);
-                }) : alert("Minimum Withdrawal Amount is ₹1000");
+                });
+        } else {
+            alert(userData.withdrawableAmount < 1000 ? "Minimum Withdrawal Amount is ₹1000" : "Insufficient Withdrawable Amount - Your Withdrawable Amount is ₹" + userData.withdrawableAmount);
+        }
     };
+    
     const addMoneyOnClick = () => {
         history("/addmoney");
     }
@@ -81,7 +90,7 @@ function DashboardScreen() {
                     <ProgressBar investedAmount={userData?.investedAmount || 0} />
                     <h6>Invest More Upto <strong>₹ 300000</strong></h6>
                 </div>
-                <center className="buttons-container">
+                <center className="buttons-container mt-5">
                     <button className="add-money-button btn-1" onClick={addMoneyOnClick}>Add Money</button>
                     {
                         !withdrawalApprovalRequest ?

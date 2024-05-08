@@ -15,7 +15,7 @@ const firebaseConfig = {
   storageBucket: "tatainvest-71bd6.appspot.com",
   messagingSenderId: "1022642675405",
   appId: "1:1022642675405:web:2eebe654aa302eb17e9384",
-  measurementId: "G-6DPQ2X6M6Z"
+  measurementId: "G-TR5BYENGCZ"
 };
 
 
@@ -89,12 +89,35 @@ export const createUserDocumentFast2SMS = async (userId, name, parentReferralCod
         createdAt: new Date(),
         documentUrl: ''
       });
+      if(parentReferralCode !== "")  {  
+        const parentRef = doc(db, 'users', parentReferralCode);
+        await updateParentReferralArray(parentRef, userId);  
+      }
 
     console.log("User document created successfully!");
   } catch (error) {
     console.log('Error in creating user', error);
   }
 }
+const updateParentReferralArray = async (parentRef, childId) => {
+  try {
+    const parentRefDoc = await getDoc(parentRef);
+    if (parentRefDoc.exists()) {
+      const parentData = parentRefDoc.data();
+      const referralUsersArray = parentData.referralUsers || [];
+      if (!referralUsersArray.includes(childId)) {
+        referralUsersArray.push(childId);
+        await updateDoc(parentRef, { referralUsers: referralUsersArray });
+        console.log("Parent referralUsers array updated successfully!");
+      }
+    } else {
+      console.log("Parent document not found");
+    }
+  } catch (error) {
+    console.error("Error updating parent referralUsers array:", error);
+  }
+}
+
 
 export const getSingleUser = async (uid) => {
   // Wait until auth.currentUser is available
@@ -185,13 +208,14 @@ export const createPaymentApprovalRequest = async (userId, userName, phone, amou
   }
 }
 
-export const createWithdrawalApprovalRequest = async (userId, userName, phone, amount) => {
+export const createWithdrawalApprovalRequest = async (userId, userName, phone, amount,UPI_ID) => {
   try {
     await addDoc(collection(db, "withdrawalApprovalRequests"),
       {
         userId: userId,
         name: userName,
         phone: phone,
+        UPI_ID: UPI_ID,
         amount: amount,
         status: 'pending',
         createdAt: new Date()
