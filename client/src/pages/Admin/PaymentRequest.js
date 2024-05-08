@@ -95,7 +95,7 @@ export default function PaymentRequest() {
                     }).map((request, index) => (
                         <li
                             key={request.userId}
-                            className="payment-item d-flex"
+                            className="payment-item d-flex justify-content-between align-items-center"
                         >
                             <div className="payment-item-details">
                                 <span className="payment-item-name">{index + 1} .  {request.name}</span>
@@ -104,9 +104,17 @@ export default function PaymentRequest() {
                                 <br />
                                 <small className="payment-item-amount"> <i className="fas fa-phone"></i> :  {request.phone}</small>
                                 <br />
+                                <small className="payment-item-amount"><strong>UTR</strong> :  {request.UTR}</small>
+                                <br />
                                 <small className="payment-item-amount">
-                                <i className="fas fa-calendar"></i> : {formatDate(new Date(request.createdAt._seconds * 1000))}
+                                    <i className="fas fa-calendar"></i> : {formatDate(new Date(request.createdAt._seconds * 1000))}
                                 </small>
+                                <p>
+                                    <strong>Proof</strong> : <a href={request.proofURL} download target="_blank">
+                                        Download PDF
+                                    </a>
+                                </p>
+
                             </div>
                             <div>
                                 {request.status === 'pending' && (
@@ -116,10 +124,10 @@ export default function PaymentRequest() {
                                     </>
                                 )}
                                 {request.status === 'accepted' && (
-                                    <span className="text-success payment-item-status-success" style={{fontWeight:'bold'}}>Accepted</span>
+                                    <span className="text-success payment-item-status-success" style={{ fontWeight: 'bold' }}>Accepted</span>
                                 )}
                                 {request.status === 'rejected' && (
-                                    <span className="text-danger payment-item-status-danger" style={{fontWeight:'bold'}} >Rejected</span>
+                                    <span className="text-danger payment-item-status-danger" style={{ fontWeight: 'bold' }} >Rejected</span>
                                 )}
                             </div>
                         </li>

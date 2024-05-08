@@ -190,7 +190,7 @@ export const checkUserExists = async (phone) => {
 
 
 
-export const createPaymentApprovalRequest = async (userId, userName, phone, amount) => {
+export const createPaymentApprovalRequest = async (userId, userName, phone, amount,utrNumber, screenshotUrl) => {
   try {
     await addDoc(collection(db, "paymentApprovalRequests"),
       {
@@ -199,7 +199,9 @@ export const createPaymentApprovalRequest = async (userId, userName, phone, amou
         phone: phone,
         amount: amount,
         status: 'pending',
-        createdAt: new Date()
+        createdAt: new Date(),
+        UTR: utrNumber, 
+        proofURL:screenshotUrl
       });
 
     console.log("Payment approval request created successfully!");
