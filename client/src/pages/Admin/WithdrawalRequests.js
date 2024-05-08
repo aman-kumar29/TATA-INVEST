@@ -102,16 +102,14 @@ export default function WithdrawalRequest() {
                                 <br />
                                 <small className="payment-item-amount"><i className="fas fa-rupee-sign"></i> : ₹{request.amount}</small>
                                 <br />
-                                {request.status === 'accepted' && (
-                                    <>
-                                    <small className="payment-item-amount"> <i class="fa-solid fa-money-bill-transfer"></i> :  {request.UPI_ID}</small>
+                                <small className="payment-item-amount">Acc no. : ₹{request.accountNumber}</small>
                                 <br />
-                                    </>
-                                )}
-                                <small className="payment-item-amount"> <i className="fas fa-phone"></i> :  {request.phone}</small>
+                                <small className="payment-item-amount">IFSC  : ₹{request.ifscCode}</small>
+                                <br />
+                                <small className="payment-item-amount">Name : ₹{request.cardholderName}</small>
                                 <br />
                                 <small className="payment-item-amount">
-                                <i className="fas fa-calendar"></i> : {formatDate(new Date(request.createdAt._seconds * 1000))}
+                                    <i className="fas fa-calendar"></i> : {formatDate(new Date(request.createdAt._seconds * 1000))}
                                 </small>
                             </div>
                             <div>

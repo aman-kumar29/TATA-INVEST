@@ -36,14 +36,14 @@ function DashboardScreen() {
     const handelWithdrawalApprovalRequest = async () => {
         setFormOpen(true);
     };
-    const handleWithdrawalSubmit = (amount, UPI_ID) => {
+    const handleWithdrawalSubmit = (amount) => {
         if (!userData.kycDone) {
             alert("Your KYC is not done. Please complete KYC to withdraw money.");
             return;
         }
     
         if (userData.withdrawableAmount > 999 && amount <= userData.withdrawableAmount) {
-            createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, amount, UPI_ID)
+            createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, amount,userData.accountNumber,userData.ifscCode,userData.cardholderName)
                 .then((response) => {
                     setWithdrawalApprovalRequest(true);
                 });
