@@ -215,7 +215,7 @@ export const createWithdrawalApprovalRequest = async (userId, userName, phone, a
         userId: userId,
         name: userName,
         phone: phone,
-        UPI_ID: UPI_ID,
+        UPI_ID: "",
         amount: amount,
         status: 'pending',
         accountNumber:accountNumber,
