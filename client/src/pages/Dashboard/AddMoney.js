@@ -5,10 +5,8 @@ import { getUser } from "../../utils/getUser.js";
 import { doc, updateDoc } from 'firebase/firestore';
 import { db, storage, createPaymentApprovalRequest } from '../../Firebase/config.js';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { Container, Typography } from '@mui/material'
-// import { create } from '@mui/material/styles/createTransitions.js';
-// import { createPaymentApprovalRequest } from '../../Firebase/config.js';
-
+import { Container, Typography } from '@mui/material';
+import './css/addmoney.css';
 
 const AddMoneyPage = () => {
   const location = useLocation();
@@ -20,6 +18,7 @@ const AddMoneyPage = () => {
   const [utrNumber, setUtrNumber] = useState('');
   const [screenshot, setScreenshot] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [paymentRequestStatus, setPaymentRequestStatus] = useState('idle'); // New state for tracking request status
 
   const handleAmountChange = (event) => {
     setAmount(event.target.value);
@@ -64,11 +63,11 @@ const AddMoneyPage = () => {
       await updateDoc(userRef, {
         investedAmount: user.investedAmount + Number(investedAmount),
         investmentTransactions: [...user.investmentTransactions,
-        {
-          transactionId: transactionId,
-          amount: Number(investedAmount),
-          date: new Date(),
-        }
+          {
+            transactionId: transactionId,
+            amount: Number(investedAmount),
+            date: new Date(),
+          }
         ]
       });
       console.log('User info updated successfully!');
@@ -77,38 +76,6 @@ const AddMoneyPage = () => {
       console.error('Error updating user name:', error);
     }
   };
-
-  function initiateRazorpayPayment(amount) {
-    // Create a new instance of Razorpay
-    var options = {
-      key: 'rzp_test_vMheAsnIBAvWHf', // Replace with your Razorpay API key
-      amount: amount * 100, // Amount in paise (100 paise = 1 rupee)
-      currency: 'INR', // Currency code
-      name: 'TATA Invest', // Name of your company or website
-      description: 'Payment for adding money', // Description of the payment
-      image: 'https://firebasestorage.googleapis.com/v0/b/tatainvest-71bd6.appspot.com/o/logo.png?alt=media&token=47531390-01cb-40a6-9ab0-bca7f18cfec0', // URL of your company logo
-      handler: function (response) {
-        handleUpdateInfo(amount, response.razorpay_payment_id);
-        console.log(response);
-        history('/dashboard');
-        // Handle successful payment
-      },
-      setTimeout: 300, // Timeout in seconds
-    };
-
-    // Create the Razorpay payment instance
-    var rzp = new window.Razorpay(options);
-    rzp.on("payment.failed", function (response) {
-      alert(response.error.code);
-    });
-    // Open the Razorpay payment modal
-    rzp.open();
-  }
-
-  // const handleProceedToPay = () => {
-  //   initiateRazorpayPayment(amount);
-  //   console.log(`Proceeding to pay ${amount}...`);
-  // };
 
   const uploadScreenshot = async (screenshotFile) => {
     try {
@@ -125,27 +92,31 @@ const AddMoneyPage = () => {
   const handelPaymentApprovalRequest = async () => {
     if (validateFields()) {
       setLoading(true);
+      setPaymentRequestStatus('processing'); // Update status
       try {
         const screenshotUrl = await uploadScreenshot(screenshot);
         await createPaymentApprovalRequest(fetchedUser, user.name, user.phone, amount, utrNumber, screenshotUrl);
         setPaymentApprovalRequest(true);
+        setPaymentRequestStatus('success'); // Update status
       } catch (error) {
         console.error('Error creating payment approval request:', error);
+        setPaymentRequestStatus('failed'); // Update status on error
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     } else {
       alert("Please fill all fields !");
     }
+  };
 
-  }
   const handleUtrChange = (event) => {
     setUtrNumber(event.target.value);
   };
 
   return (
-    <Container className="py-5">
-      <Row className="justify-content-center each-row">
-        <Col md={6} lg={4}>
+    <Container className="py-2" style={{ display: 'flex', justifyContent: 'left', textAlign: 'justify' }}>
+      <Row className="each-row">
+        <Col md={6} lg={12}>
           <Card className="bg-light shadow-sm rounded-lg p-4">
             <Typography variant="h5" className="text-center mb-4">
               Add Money
@@ -160,7 +131,21 @@ const AddMoneyPage = () => {
                   onChange={handleAmountChange}
                 />
               </Form.Group>
+              <div className="mb-3">
+                <p className="mb-1">Suggestions:</p>
+                <Button variant="outline-primary" className="me-2 mb-1" onClick={() => handleSuggestionClick('1000')}>₹ 1000</Button>
+                <Button variant="outline-primary" className="me-2 mb-1" onClick={() => handleSuggestionClick('5000')}>₹ 5000</Button>
+                <Button variant="outline-primary" className="me-2 mb-1" onClick={() => handleSuggestionClick('10000')}>₹ 10000</Button>
+                {/* Add more suggestion buttons as needed */}
+              </div>
               <Form.Group className="mb-3">
+                <h6>Step - 1</h6><br></br>
+                <img src="/assets/qr.jpeg" alt="QR Code" className="mb-2" />
+                <br></br>
+                <strong>UPI - dualinvest@ybl</strong>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <h6>Step - 2</h6> <br></br>
                 <Form.Label>Enter UTR Number</Form.Label>
                 <Form.Control
                   type="text"
@@ -170,10 +155,11 @@ const AddMoneyPage = () => {
                 />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Upload Screenshot</Form.Label>
+                <Form.Label>Upload Proof of payment</Form.Label>
                 <Form.Control
                   type="file"
                   accept="image/*"
+                  className='custom-file-input'
                   onChange={handleScreenshotChange}
                 />
                 {screenshot && (
@@ -182,32 +168,35 @@ const AddMoneyPage = () => {
                   </div>
                 )}
               </Form.Group>
-              <div className="mb-3">
-                <p className="mb-1">Suggestions:</p>
-                <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('1000')}>₹ 1000</Button>
-                <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('5000')}>₹ 5000</Button>
-                <Button variant="outline-primary" className="me-2" onClick={() => handleSuggestionClick('10000')}>₹ 10000</Button>
-                {/* Add more suggestion buttons as needed */}
+              <div className="mb-4 text-left" style={{ justifyContent: 'justify', alignContent: 'justify', alignItems: 'left' }}>
+                <h6 className="mb-1" style={{ color: 'red' }}>Important:</h6>
+                <ul className="mb-0">
+                  <li style={{ color: 'red' }}>Payment without UTR cannot be credited to our balance.</li>
+                  <li style={{ color: 'red' }}>Make sure to input the correct UTR to avoid potential issues.</li>
+                  <li style={{ color: 'red' }}>If you go back or anything, just come back and restart the process again. Keep UTR ready and then fill the form here again.</li>
+                </ul>
               </div>
-              <div style={{ margin: '5px' }}>
-                Use <strong>UPI - mahala.anand@ybl</strong> if you are facing any challenges.
-              </div>
-              {/* <a href={`upi://pay?pa=mahala.anand@ybl&pn=Tata Invest&cu=INR&am=${amount}`}>
-                <Button
-                  variant="primary"
-                  className="w-100 mt-4 mb-2"
-                >
-                  Proceed to Pay
-                </Button></a> */}
 
               {
-                !paymentApprovalRequest ?
+                paymentRequestStatus === 'idle' && !paymentApprovalRequest ? (
                   <Button className='mt-2' onClick={handelPaymentApprovalRequest}>
-                    {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : 'Request Payment Approval'}
-
+                    Request Payment Approval
                   </Button>
-                  : <div className='mt-2'><div style={{ fontWeight: "bold", color: "green" }}>Payment Approval Request Sent Successfully !</div>
-                    Please wait your requestd amount will be updated soon,<br /> Don't spam by clicking continuously...</div>
+                ) : paymentRequestStatus === 'processing' ? (
+                  <div className='mt-2'>
+                    <i className="fa-solid fa-spinner fa-spin"></i> Processing Payment Request...
+                  </div>
+                ) : paymentRequestStatus === 'success' ? (
+                  <div className='mt-2'>
+                    <div style={{ fontWeight: "bold", color: "green" }}>Payment Approval Request Sent Successfully!</div>
+                    Please wait, your requested amount will be updated soon.
+                  </div>
+                )               : paymentRequestStatus === 'failed' ? (
+                  <div className='mt-2'>
+                    <div style={{ fontWeight: "bold", color: "red" }}>Payment Approval Request Failed!</div>
+                    Please try again or contact support for assistance.
+                  </div>
+                ) : null
               }
             </Form>
           </Card>

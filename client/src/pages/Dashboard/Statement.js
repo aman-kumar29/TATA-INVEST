@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { db } from "../../Firebase/config.js";
 import { getDoc, doc } from "firebase/firestore";
 import './css/statement.css';
+import './../Admin/css/paymentRequests.css';
 
 const Statement = () => {
     const [userData, setUser] = useState(null);
     const [investedAmount, setInvestedAmount] = useState(0);
     const [referralAmount, setReferralAmount] = useState(0);
     const [selectedOption, setSelectedOption] = useState('investments');
+    const [transactionsArray, settransactionsArray] = useState([]);
+    const [withdrawalsArray, setwithdrawalsArray] = useState([]);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -36,6 +39,31 @@ const Statement = () => {
 
         fetchUserData();
     }, []);
+    useEffect(() => {
+        const fetchTransactions = async () => {
+            if (userData && userData.investmentTransactions) {
+                const transactions = await Promise.all(userData.investmentTransactions.map(async (transactionId) => {
+                    const transactionRef = doc(db, 'paymentApprovalRequests', transactionId);
+                    const transactionDoc = await getDoc(transactionRef);
+                    return transactionDoc.data();
+                }));
+                const sortedTransactions = transactions.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+                const withdrawals = await Promise.all(userData.withdrawalTransactions.map(async (withdrawalId) => {
+                    const transactionRef = doc(db, 'withdrawalApprovalRequests', withdrawalId);
+                    const transactionDoc = await getDoc(transactionRef);
+                    return transactionDoc.data();
+                }));
+                const sortedWithdrawals = withdrawals.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+                console.log('Transactions:', transactions);
+                console.log('Transactions:', withdrawals);
+                settransactionsArray(sortedTransactions);
+                setwithdrawalsArray(sortedWithdrawals);
+            }
+        };
+
+        fetchTransactions();
+    }, [userData]);
+
 
 
     const handleToggle = (option) => {
@@ -54,29 +82,29 @@ const Statement = () => {
 
     return (
         <div className="mx-2 mt-3 my-5">
-           <h1 className="text-center my-3">Account Summary</h1>
-           <div className="summary-box">
-    <div className="summary-item">
-        <p className="item-label">Invested Amount:</p>
-        <p className="item-value">₹ {investedAmount}</p>
-    </div>
-    <div className="summary-item">
-        <p className="item-label">Interest Income:</p>
-        <p className="item-value">₹ {userData?.interestAmount}</p>
-    </div>
-    <div className="summary-item">
-        <p className="item-label">Referral Income:</p>
-        <p className="item-value">₹ {referralAmount}</p>
-    </div>
-    <div className="summary-item">
-        <p className="item-label">Life Time Earning:</p>
-        <p className="item-value">₹ {referralAmount + userData?.interestAmount}</p>
-    </div>
-    <div className="summary-item">
-        <p className="item-label">Balance Withdrawable:</p>
-        <p className="item-value">₹ {userData?.withdrawableAmount}</p>
-    </div>
-</div>
+            <h1 className="text-center my-3">Account Summary</h1>
+            <div className="summary-box">
+                <div className="summary-item">
+                    <p className="item-label">Invested Amount:</p>
+                    <p className="item-value">₹ {investedAmount}</p>
+                </div>
+                <div className="summary-item">
+                    <p className="item-label">Interest Income:</p>
+                    <p className="item-value">₹ {userData?.interestAmount}</p>
+                </div>
+                <div className="summary-item">
+                    <p className="item-label">Referral Income:</p>
+                    <p className="item-value">₹ {referralAmount}</p>
+                </div>
+                <div className="summary-item">
+                    <p className="item-label">Life Time Earning:</p>
+                    <p className="item-value">₹ {referralAmount + userData?.interestAmount}</p>
+                </div>
+                <div className="summary-item">
+                    <p className="item-label">Balance Withdrawable:</p>
+                    <p className="item-value">₹ {userData?.withdrawableAmount}</p>
+                </div>
+            </div>
 
             <h1 className="mt-5 text-center my-3">Recent Transactions</h1>
             <div className="d-flex justify-content-center">
@@ -88,75 +116,77 @@ const Statement = () => {
                 </button>
             </div>
 
-            <div className="text-center my-3 box">
+            <div className="payment-container">
                 <h1 className="mx-3">{selectedOption === 'investments' ? 'Investments' : 'Withdrawals'}</h1>
-                {userData ? (
-                    selectedOption === 'investments' ? (
-                        userData.investmentTransactions && userData.investmentTransactions.length > 0 ? (
-                            <table className="table table-responsive my-3">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Sr. No.</th>
-                                        <th scope="col">Amount</th>
-                                        <th scope="col">Transaction ID</th>
-                                        <th scope="col">Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {userData.investmentTransactions.map((transaction, index) => {
-                                        const date = transaction.date.toDate();
-                                        const formattedDate = formatDate(date);
-
-                                        return (
-                                            <tr key={index} className="profile-card">
-                                                <td>{index + 1}.</td>
-                                                <td>₹ {transaction.amount}</td>
-                                                <td>{transaction.transactionId.substring(0, transaction.transactionId.length / 2) + ' ' + transaction.transactionId.substring(transaction.transactionId.length / 2)}</td>
-                                                <td>{formattedDate}</td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
+                <div>
+                    {userData ? (
+                        selectedOption === 'investments' ? (
+                            transactionsArray.length > 0 ? (
+                                <ul className="payment-list-group">
+                                    {transactionsArray.map((transaction, index) => (
+                                        <li 
+                                        key={index}
+                                        className='payment-item d-flex justify-content-between align-items-center'
+                                        style={{ border: '2px solid black' }}
+                                        >
+                                            <h6 style={{paddingRight:'10px'}}>{index + 1} .</h6>
+                                            <div className="payment-item-details">
+                                                <p className="payment-item-name"><strong>UTR No:</strong> {transaction.UTR}</p>
+                                                <p className="payment-item-name"><strong>Amount:</strong> ₹ {transaction.amount}</p>
+                                                <p className="payment-item-name"><strong>Status:</strong> {
+                                                    transaction.status === 'pending' ? <>Pending  <i class="fas fa-clock-o" aria-hidden="true"></i>
+                                                    </>
+                                                        :
+                                                        (transaction.status === 'accepted' ? <>Accepted  <i class="fas fa-check-circle-o" aria-hidden="true"></i>
+                                                        </> :
+                                                            <>Rejected  <i class="fas fa-times" aria-hidden="true"></i>
+                                                            </>
+                                                        )}
+                                                </p>
+                                                <p className="payment-item-name"><strong>Date:</strong> {formatDate(transaction.createdAt.toDate())}</p>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p className="mx-3">No investment transactions available</p>
+                            )
                         ) : (
-                            <p className="mx-3">No investment transactions available</p>
+                            userData.withdrawalTransactions && userData.withdrawalTransactions.length > 0 ? (
+                                <ul className="payment-list-group">
+                                    {withdrawalsArray.map((withdrawal, index) => (
+                                        <li 
+                                        key={index}
+                                        className='payment-item d-flex justify-content-between align-items-center'
+                                        
+                                        style={{ border: '2px solid black' }}>
+                                            <h6 style={{paddingRight:'10px'}}>{index + 1} .</h6>
+                                            <div className="payment-item-details">
+                                                <p className="payment-item-name"><strong>Amount:</strong> ₹ {withdrawal.amount}</p>
+                                                <p className="payment-item-name"><strong>Status:</strong> {
+                                                    withdrawal.status === 'pending' ? <>Pending  <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                    </>
+                                                        :
+                                                        (withdrawal.status === 'accepted' ? <>Accepted  <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                                        </> :
+                                                            <>Rejected  <i class="fa fa-times" aria-hidden="true"></i>
+                                                            </>
+                                                        )}
+                                                </p>
+                                                <p className="payment-item-name"><strong>Date:</strong> {formatDate(withdrawal.createdAt.toDate())}</p>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p className="mx-3">No investment withdrawals available</p>
+                            )
                         )
                     ) : (
-                        selectedOption === 'withdrawals' ? (
-                            userData.withdrawalTransactions && userData.withdrawalTransactions.length > 0 ? (
-                                <table className="table my-3">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Sr. No.</th>
-                                            <th scope="col">Amount</th>
-                                            <th scope="col">Transaction ID</th>
-                                            <th scope="col">Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {userData.withdrawalTransactions.map((transaction, index) => {
-                                            const date = transaction.date.toDate();
-                                            const formattedDate = formatDate(date);
-
-                                            return (
-                                                <tr key={index} className="profile-card">
-                                                    <td>{index + 1}</td>
-                                                    <td>₹ {transaction.amount}</td>
-                                                    <td>{transaction.transactionId.substring(0, transaction.transactionId.length / 2) + '-' + transaction.transactionId.substring(transaction.transactionId.length / 2)}</td>
-                                               <td>{formattedDate}</td>
-                                                </tr>
-                                            );
-                                        })}
-                                    </tbody>
-                                </table>
-                            ) : (
-                                <p className="mx-3">No withdrawal transactions available</p>
-                            )
-                        ) : null
+                        <p>No data available</p>
                     )
-                ) : (
-                    <p className="mx-3">Loading user data...</p>
-                )}
+                    }
+                </div>
             </div>
 
         </div>

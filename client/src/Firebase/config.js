@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { getAuth, setPersistence, browserSessionPersistence, deleteUser } from "firebase/auth";
-import { getFirestore, setDoc, addDoc, doc, getDoc, deleteDoc,query, where, collection, getDocs,updateDoc} from "firebase/firestore";
+import { getFirestore, setDoc, addDoc, doc, getDoc, deleteDoc,query, where, collection, getDocs,updateDoc, arrayUnion} from "firebase/firestore";
 import { getStorage  } from 'firebase/storage';
 
 // Your web app's Firebase configuration
@@ -104,10 +104,10 @@ const updateParentReferralArray = async (parentRef, childId) => {
     const parentRefDoc = await getDoc(parentRef);
     if (parentRefDoc.exists()) {
       const parentData = parentRefDoc.data();
-      const referralUsersArray = parentData.referralUsers || [];
-      if (!referralUsersArray.includes(childId)) {
-        referralUsersArray.push(childId);
-        await updateDoc(parentRef, { referralUsers: referralUsersArray });
+      const investmentTransactions = parentData.referralUsers || [];
+      if (!investmentTransactions.includes(childId)) {
+        investmentTransactions.push(childId);
+        await updateDoc(parentRef, { referralUsers: investmentTransactions });
         console.log("Parent referralUsers array updated successfully!");
       }
     } else {
@@ -161,7 +161,42 @@ export const handleDeleteAccount = async () => {
     console.warn('No user is signed in');
   }
 };
-
+export const updateInvestmentTransactionsArray = async(parentRef, investmentDetails)=>{
+  try {
+    const parentRefDoc = await getDoc(parentRef);
+    if (parentRefDoc.exists()) {
+      const parentData = parentRefDoc.data();
+      const investmentTransactions = parentData.investmentTransactions || [];
+      if (!investmentTransactions.includes(investmentDetails)) {
+        investmentTransactions.push(investmentDetails);
+        await updateDoc(parentRef, { investmentTransactions: investmentTransactions });
+        console.log("investment Transaction array updated successfully!");
+      }
+    } else {
+      console.log("Parent document not found");
+    }
+  } catch (error) {
+    console.error("Error updating investment transactions array:", error);
+  }
+}
+export const updateWithdrawalTransactionsArray = async(parentRef, withdrawalDetails)=>{
+  try {
+    const parentRefDoc = await getDoc(parentRef);
+    if (parentRefDoc.exists()) {
+      const parentData = parentRefDoc.data();
+      const withdrawalTransactions = parentData.withdrawalTransactions || [];
+      if (!withdrawalTransactions.includes(withdrawalDetails)) {
+        withdrawalTransactions.push(withdrawalDetails);
+        await updateDoc(parentRef, { withdrawalTransactions: withdrawalTransactions });
+        console.log("withdrawal Transaction array updated successfully!");
+      }
+    } else {
+      console.log("Parent document not found");
+    }
+  } catch (error) {
+    console.error("Error updating investment transactions array:", error);
+  }
+}
 export const checkUserExists = async (phone) => {
   try {
     // Create a query to check if a user with the given phone number exists
@@ -190,29 +225,33 @@ export const checkUserExists = async (phone) => {
 
 
 
-export const createPaymentApprovalRequest = async (userId, userName, phone, amount,utrNumber, screenshotUrl) => {
+export const createPaymentApprovalRequest = async (userId, userName, phone, amount, utrNumber, screenshotUrl) => {
   try {
-    await addDoc(collection(db, "paymentApprovalRequests"),
-      {
-        userId: userId,
-        name: userName,
-        phone: phone,
-        amount: amount,
-        status: 'pending',
-        createdAt: new Date(),
-        UTR: utrNumber, 
-        proofURL:screenshotUrl
-      });
+    // Add the payment approval request to the paymentApprovalRequests collection
+    const paymentApprovalRef = await addDoc(collection(db, "paymentApprovalRequests"), {
+      userId: userId,
+      name: userName,
+      phone: phone,
+      amount: amount,
+      status: 'pending',
+      createdAt: new Date(),
+      UTR: utrNumber, 
+      proofURL: screenshotUrl
+    });
 
-    console.log("Payment approval request created successfully!");
+    // Retrieve the user document
+    const userRef = doc(db, 'users',userId);
+
+    await updateInvestmentTransactionsArray(userRef, paymentApprovalRef.id)
   } catch (error) {
     console.log('Error in creating payment approval request', error);
   }
 }
 
+
 export const createWithdrawalApprovalRequest = async (userId, userName, phone, amount, accountNumber, ifscCode, cardholderName) => {
   try {
-    await addDoc(collection(db, "withdrawalApprovalRequests"),
+    const paymentWithdrawalRef = await addDoc(collection(db, "withdrawalApprovalRequests"),
       {
         userId: userId,
         name: userName,
@@ -225,7 +264,9 @@ export const createWithdrawalApprovalRequest = async (userId, userName, phone, a
         cardholderName:cardholderName,
         createdAt: new Date()
       });
+      const userRef = doc(db, 'users',userId);
 
+      await updateWithdrawalTransactionsArray(userRef, paymentWithdrawalRef.id)
     console.log("Withdrawl approval request created successfully!");
   } catch (error) {
     console.log('Error in creating Withdrawl approval request', error);
