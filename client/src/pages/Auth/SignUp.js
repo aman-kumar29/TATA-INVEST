@@ -19,12 +19,14 @@ function SignUp() {
     parentReferralCode: "",
   });
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [user, setUser] = useState(null);
   const [confirmationResult, setConfirmationResult] = useState(null);
   const [captchaVerified, setCaptchaVerified] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [timer, setTimer] = useState(60);
+  const [directRefer,setDirectrefer] = useState("");
 
   const [otp1, setOtp1] = useState('');
   const [otp2, setOtp2] = useState('');
@@ -39,6 +41,7 @@ function SignUp() {
     }
     const query = new URLSearchParams(location.search);
     const referralCode = query.get("referralCode");
+    setDirectrefer(referralCode);
     if (referralCode) {
       setFormData((prevData) => ({
         ...prevData,
@@ -143,7 +146,7 @@ const handleGenerateOtp = async () => {
           formData.user_name,
           formData.parentReferralCode,
           phone,
-          "Demo Address"
+          email,
         ).then(() => {
           if (formData.parentReferralCode !== "") {
             console.log('Parent Referral Code:', formData.parentReferralCode);
@@ -234,6 +237,18 @@ const handleGenerateOtp = async () => {
               required
               pattern="[0-9]{10}"
               maxLength="10"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email" className="required" style={{color:'white'}}>Email <span style={{ color: 'red' }}>*</span></label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Email"
+              className="input-field"
+              onChange={(e) => setEmail( e.target.value)}
+              required
             />
           </div>
           {formData.parentReferralCode === "" && (

@@ -142,7 +142,7 @@ const AddMoneyPage = () => {
                 <h6>Step - 1</h6><br></br>
                 <img src="/assets/qr.jpeg" alt="QR Code" className="mb-2" />
                 <br></br>
-                <strong>UPI - dualinvest@ybl</strong>
+                <strong>UPI - tata.invest@ybl</strong>
               </Form.Group>
               <Form.Group className="mb-3">
                 <h6>Step - 2</h6> <br></br>
