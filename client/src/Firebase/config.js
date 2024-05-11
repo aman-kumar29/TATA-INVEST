@@ -67,15 +67,15 @@ export const createUserDocument = async (user, name, parentReferralCode,phone,ad
     console.log('Error in creating user', error);
   }
 }
-export const createUserDocumentFast2SMS = async (userId, name, parentReferralCode,phone,address) => {
+export const createUserDocumentFast2SMS = async (userId, name, parentReferralCode,phone,email) => {
   if (!userId) return;
   try {
     await setDoc(doc(db, "users", userId),
       {
         name: name,
-        email: "",
+        email: email,
         phone:phone,
-        address: address,
+        address: "",
         investedAmount: 0,
         referralCode: userId,
         parentReferralCode: parentReferralCode,
