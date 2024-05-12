@@ -111,15 +111,15 @@ function Step2Form() {
   }, [otpTimer]);
 
   return (
-    <div className="step2-form-container"> {/* Main container */}
-      <h2>Step 2: Contact Details</h2>
+    <div className="step2-form-container">
+      <h5>Step 2: Contact Details</h5>
       {showToast && (
         <ToastMessage 
           message={toastMessage}
           onClose={() => setShowToast(false)} 
         />
       )}
-      <Card className="contact-card">
+      <div className="contact-card">
         <CardContent className="card-content">
           <FormControl fullWidth>
             <InputLabel id="auth-type-label" sx={{ position: 'absolute', top: -5, left: 10, backgroundColor: '#f5f5f5', padding: '5px' }}>
@@ -185,7 +185,7 @@ function Step2Form() {
             </Button>
           )}
         </CardContent>
-      </Card>
+      </div>
       <div className="buttons-container">
       <Button color='error' variant='contained' onClick={prevStep}>
           Cancel KYC
