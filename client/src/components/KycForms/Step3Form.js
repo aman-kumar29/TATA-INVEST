@@ -19,7 +19,7 @@ function Step3Form() {
   const [ifscCode, setIFSCCode] = useState('');
   const [cardholderName, setCardholderName] = useState('');
   const [formCompleted, setFormCompleted] = useState(false);
-
+  const [user, setUser]= useState(null);
   useEffect(() => {
     // Check if all fields are filled
     if (aadharCard && panCard && accountNumber && ifscCode && cardholderName) {
