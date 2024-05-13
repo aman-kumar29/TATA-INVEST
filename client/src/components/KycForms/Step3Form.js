@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { storage, updateDocumentUrlsAndBankDetails } from '../../Firebase/config.js';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import ToastMessage from '../Toast/Toast.js';
+import { getUser } from '../../utils/getUser.js';
+import axios from 'axios';
+
 
 function Step3Form() {
   const history = useNavigate();
@@ -25,6 +28,26 @@ function Step3Form() {
       setFormCompleted(false);
     }
   }, [aadharCard, panCard, accountNumber, ifscCode, cardholderName]);
+  useEffect(() => {
+    const fetchedUser = localStorage.getItem('userId');
+    if (fetchedUser) {
+      getUser(fetchedUser)
+        .then((userData) => {
+          if (userData) {
+            setUser(userData);
+          } else {
+            console.log('User not found');
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log('Error fetching user data:', error);
+          setLoading(false);
+        });
+    } else {
+      history('/login');
+    }
+  }, [history]);
 
   const prevStep = () => {
     history("/dashboard");
@@ -78,6 +101,7 @@ function Step3Form() {
       // Update document URLs and bank details in the database
       await updateDocumentUrlsAndBankDetails(currentUser, downloadURLs[0], downloadURLs[1], accountNumber, ifscCode, cardholderName);
 
+      const response = await axios.get(`/api/send-email-kyc/${user.email}`); 
       setShowToast(true);
       setLoading(false);
       setAadharCard(null);

@@ -13,6 +13,9 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { log } from 'console';
 import { CronJob } from 'cron';
+import formData from 'form-data';
+import Mailgun from 'mailgun.js';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -43,6 +46,16 @@ admin.initializeApp({
 });
 
 const firestore = admin.firestore();
+
+
+// Replace these with your Mailjet API credentials
+const mailgun = new Mailgun(formData);
+const mg = mailgun.client({
+  username: 'api', 
+  key: process.env.MAILGUN_API_KEY,
+  public_key: process.env.MAILGUN_PUBLIC_KEY
+});
+
 
 // Daily update task (using async/await)
 async function updateInterestAmounts() {
@@ -357,6 +370,49 @@ app.get('/api/sendotp/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to send OTP' }); // Send error response
   }
 });
+
+// Route to send email
+app.get('/api/send-email-kyc/:id', async (req, res) => {
+  try {
+    const userEmail  = req.params.id;
+
+    mg.messages
+    .create('sandboxfc935b50efd841c1be04226c5d3cab23.mailgun.org', {
+      from: 'relations@tatainvest.org',
+      to: userEmail,
+      subject: `KYC DONE!!!`,
+      html:  `<h3>Dear user,</h3><p>We are writing to inform you that your Know Your Customer (KYC) process has been successfully completed. As a result, you now have authorization to withdraw funds from your account. You may proceed with any necessary fund withdrawals at your convenience. For any inquiries or assistance, please contact our customer support team at relations@tatainvest.org.</p><p>Thank you for your cooperation during the KYC process. We value your trust and continued partnership.</p><p>Regards,</p><p>Tata Invest Team</p>`,
+    })
+    .then(msg => console.log(msg)) //success
+    .catch(err => console.log(err)); //fail;
+    res.status(200).json({ message: 'Email sent successfully' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({ error: 'Failed to send email' });
+  }
+});
+// Route to send email
+app.get('/api/send-email-withdrawal/:id', async (req, res) => {
+  try {
+    const userEmail  = req.params.id;
+
+    mg.messages
+    .create('sandboxfc935b50efd841c1be04226c5d3cab23.mailgun.org', {
+      from: 'relations@tatainvest.org',
+      to: userEmail,
+      subject: `KYC DONE!!!`,
+      html:  `<h3>Dear user,</h3><p>Withdrawal Request Sent!!!</p>`
+    })
+    .then(msg => console.log(msg)) //success
+    .catch(err => console.log(err)); //fail;
+    res.status(200).json({ message: 'Email sent successfully' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({ error: 'Failed to send email' });
+  }
+});
+
+
 // Serve static assets in production
 app.use(express.static(path.join(__dirname, "./client/build")));
 
