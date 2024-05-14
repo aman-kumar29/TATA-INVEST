@@ -115,7 +115,7 @@ function DashboardScreen() {
             <div className="dashboard-container">
                 <h5 style={{ fontWeight: "bold" }}>Invest and Earn</h5>
                 <div className="progress-bar-container">
-                    <ProgressBar investedAmount={userData?.investedAmount || 0} />
+                    <ProgressBar investedAmount={userData?.investedAmount + userData.withdrawableAmount} />
                     <h6>Invest More Upto <strong>₹ 300000</strong></h6>
                 </div>
                 <center className="buttons-container mt-5">
