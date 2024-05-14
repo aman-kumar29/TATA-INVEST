@@ -49,6 +49,23 @@ export default function PaymentRequest() {
                 await updateDoc(userRef, {
                     investedAmount: investedAmount,
                 });
+                fetch('/send-email-addmoney-accepted', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: userData.email,
+                        paidAmount: amount,
+                        name: userData.name,
+                        investedAmount: investedAmount,
+                    }),
+                }).then((res) => {
+                    console.log("email-sent succesfully");
+                })
+                    .catch((error) => {
+                        console.log("failed sending email", error);
+                    })
                 console.log('User info updated successfully!');
             } else {
                 console.error('User not found');
@@ -62,7 +79,7 @@ export default function PaymentRequest() {
         }
     };
 
-    const handleReject = async (request) => {
+    const handleReject = async (userId, amount, request) => {
         try {
             // Update the status to "rejected" in Firestore
             await updateDoc(doc(db, 'paymentApprovalRequests', request.id), {
@@ -72,6 +89,28 @@ export default function PaymentRequest() {
             setPaymentRequests(prevRequests => prevRequests.map(req =>
                 req.id === request.id ? { ...req, status: 'rejected' } : req
             ));
+            const userRef = doc(db, 'users', userId);
+            const userSnapshot = await getDoc(userRef);
+            if (userSnapshot.exists()) {
+                const userData = userSnapshot.data();
+                fetch('/send-email-addmoney-rejected', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: userData.email,
+                        paidAmount: amount,
+                        name: userData.name,
+                        investedAmount: userData.investedAmount,
+                    }),
+                }).then((res) => {
+                    console.log("email-sent succesfully");
+                })
+                .catch((error) => {
+                    console.log("failed sending email", error);
+                })
+            }
         } catch (error) {
             console.error('Error rejecting payment request:', error);
         }
@@ -120,7 +159,7 @@ export default function PaymentRequest() {
                                 {request.status === 'pending' && (
                                     <>
                                         <Button variant="success" className="me-2" onClick={() => handleAccept(request.userId, request.amount, request)}>Accept</Button>
-                                        <Button variant="danger" onClick={() => handleReject(request)}>Reject</Button>
+                                        <Button variant="danger" onClick={() => handleReject(request.userId, request.amount, request)}>Reject</Button>
                                     </>
                                 )}
                                 {request.status === 'accepted' && (

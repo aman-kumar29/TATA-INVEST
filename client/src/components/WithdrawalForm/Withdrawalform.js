@@ -8,16 +8,15 @@ function WithdrawalForm({ open, onClose, onSubmit }) {
   const handleSubmit = () => {
     if (!amount || isNaN(amount) || amount <= 0) {
       alert('Please enter a valid amount.');
+
+      if(amount < 1000){
+        alert("Minimum Withdrawal Amount is ₹1000");
+      }
       return;
     }
-    // if (!UPI_ID) {
-    //   alert('Please enter a valid UPI_ID');
-    //   return;
-    // }
 
     onSubmit(amount);
     setAmount('');
-    // setUPI_ID('');
     onClose();
   };
 
@@ -35,15 +34,6 @@ function WithdrawalForm({ open, onClose, onSubmit }) {
             variant="outlined"
             sx={{ mb: 2 }}
           />
-          {/* <TextField
-            label="UPI_ID"
-            type="text"
-            value={UPI_ID}
-            onChange={(e) =>setUPI_ID(e.target.value)}
-            fullWidth
-            variant="outlined"
-            sx={{ mb: 2 }}
-          /> */}
           <Button variant="contained" color="success" onClick={handleSubmit}>
             Submit
           </Button>

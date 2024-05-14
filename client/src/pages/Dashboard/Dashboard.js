@@ -8,6 +8,8 @@ import InvestorReviews from "../../components/InvestorReviews/InvestorReviews.js
 import { investmentPlansSlidesMobile } from "../../data.js";
 import { createWithdrawalApprovalRequest } from "../../Firebase/config.js";
 import WithdrawalForm from "../../components/WithdrawalForm/Withdrawalform.js";
+import axios from "axios";
+import { connectStorageEmulator } from "firebase/storage";
 
 function DashboardScreen() {
     const [userData, setUser] = useState(null);
@@ -33,32 +35,58 @@ function DashboardScreen() {
             history('/login');
         }
     }, [fetchedUser, history]);
-    const handelWithdrawalApprovalRequest = async () => {
+
+    const handelWithdrawalApprovalRequest = () => {
         setFormOpen(true);
     };
-    const handleWithdrawalSubmit = (amount) => {
+
+    const handleWithdrawalSubmit = async (amount) => {
+        console.log("withdrawal-amount", amount);
         if (!userData.kycDone) {
             alert("Your KYC is not done. Please complete KYC to withdraw money.");
             return;
+        } else if (amount < 1000) {
+            alert('Minimum withdrawable amount is ₹1000');
+            return;
+        } else if (amount > userData.withdrawableAmount) {
+            alert('Insufficient Withdrawable Amount - Your Withdrawable Amount is ₹' + userData.withdrawableAmount);
+            return;
         }
-    
-        if (userData.withdrawableAmount > 999 && amount <= userData.withdrawableAmount) {
-            createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, amount,userData.accountNumber,userData.ifscCode,userData.cardholderName)
-                .then((response) => {
-                    setWithdrawalApprovalRequest(true);
-                });
-        } else {
-            alert(userData.withdrawableAmount < 1000 ? "Minimum Withdrawal Amount is ₹1000" : "Insufficient Withdrawable Amount - Your Withdrawable Amount is ₹" + userData.withdrawableAmount);
-        }
+
+        createWithdrawalApprovalRequest(fetchedUser, userData.name, userData.phone, amount,userData.accountNumber,userData.ifscCode,userData.cardholderName)
+        .then((response) => {
+             setWithdrawalApprovalRequest(true);
+             fetch('/send-email-withdrawal', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: userData.email,
+                    withdrawalAmount: amount,
+                    accountNumber: userData.accountNumber,
+                    ifscCode: userData.ifscCode,
+                    name: userData.name,
+                }),
+            }).then((res)=>{
+                console.log("email-sent succesfully");
+            })
+            .catch((error)=>{
+                console.log("failed sending email",error);
+            })
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
     };
-    
+
     const addMoneyOnClick = () => {
         history("/addmoney");
-    }
+    };
 
     const completeKYCOnClick = () => {
         history("/kyc-step1");
-    }
+    };
 
     const handleReferralClick = () => {
         const message = `Get daily 1.2% returns on investments at Tatainvest! 💰 Invest now for hassle-free earnings. Click on this link - https://tatainvest.org/signup?referralCode=${userData.referralCode}`;
@@ -92,70 +120,53 @@ function DashboardScreen() {
                 </div>
                 <center className="buttons-container mt-5">
                     <button className="add-money-button btn-1" onClick={addMoneyOnClick}>Add Money</button>
-                    {
-                        !withdrawalApprovalRequest ?
-                            (<button className="add-money-button btn-2" onClick={handelWithdrawalApprovalRequest}>Withdraw</button>)
-                            : (<p style={{ fontWeight: "bold", color: "green" }}>Withdrawal Approval Request Sent Successfully !</p>
-                            )
-                    }
+                    <button
+                        className="add-money-button btn-2"
+                        onClick={handelWithdrawalApprovalRequest}
+                        disabled={!userData || !userData.kycDone || userData.withdrawableAmount < 1000}
+                    >
+                        Withdraw
+                    </button>
                 </center>
             </div>
             <center className="slides-container leftColumnInvestment">
-
                 <div className="controls">
                     <i class="fa-solid fa-backward" onClick={prevSlide}></i>
                 </div>
-
                 <div className="slide slide-img">
                     <img src={slides[currentIndex].url} alt="Slide" className="slide-image" onClick={() => {
                         history(`/addmoney?amount=${slidesmoney[currentIndex]}`);
                     }} />
                 </div>
                 <div className="controls">
-                    <i class="fa-solid fa-forward" onClick={nextSlide}></i>                </div>
+                    <i class="fa-solid fa-forward" onClick={nextSlide}></i>
+                </div>
             </center>
-
-            {/* <div class="info-box">
-                <i class="fas fa-info-circle"></i>
-                <div>
-                    Earn daily returns by referring friends! Get 0.3% return of the referred friend's investment. Plus, earn 0.2% when they refer someone, and 0.1% from the subsequent referrals. Start investing and referring today to maximize your earnings!
-                    <center>
+            <center>
+                <div className="card-referral" >
+                    <img src="assets/referralImg.jpg" className="card-img-top" alt="Referral Image" />
+                    <div className="card-body">
+                        <h5 className="card-title">Referral Scheme !</h5>
+                        <p className="card-text"> Earn daily returns by referring friends! Get 0.3% return of the referred friend's investment. Plus, earn 0.2% when they refer someone, and 0.1% from the subsequent referrals. Start investing and referring today to maximize your earnings!
+                        </p>
                         <button className="add-money-button btn-2 mt-3" align="left" style={{ margin: "2px" }} onClick={handleReferralClick}>
                             REFER & EARN
                         </button>
-                    </center>
+                    </div>
                 </div>
-            </div> */}
-            <center>
-            <div className="card-referral" >
-                <img src="assets/referralImg.jpg" className="card-img-top" alt="Referral Image"/>
-                <div className="card-body">
-                    <h5 className="card-title">Referral Scheme !</h5>
-                    <p className="card-text"> Earn daily returns by referring friends! Get 0.3% return of the referred friend's investment. Plus, earn 0.2% when they refer someone, and 0.1% from the subsequent referrals. Start investing and referring today to maximize your earnings!
-                    </p>
-                    <button className="add-money-button btn-2 mt-3" align="left" style={{ margin: "2px" }} onClick={handleReferralClick}>
-                        REFER & EARN
-                    </button>
-                </div>
-            </div>
             </center>
             <div>
                 <div className="info-container">
                     <div className="info-card learn-more-card">
                         <h3><i class="fa fa-line-chart" aria-hidden="true"> </i> <br />Complete Your KYC in one minute</h3>
-                        {/* <p>and start withdrawing money effortlessly</p> */}
-
-                        {userData?.kycDone ? <button className="btn btn-success shadow" disabled='true'>
-                            KYC DONE
-                        </button> : (<button className="action-button shadow" onClick={completeKYCOnClick}>
-                            ACTIVATE NOW
-                        </button>)}
+                        {userData?.kycDone ?
+                            <button className="btn btn-success shadow" disabled='true'>KYC DONE</button> :
+                            <button className="action-button shadow" onClick={completeKYCOnClick}>ACTIVATE NOW</button>}
                     </div>
                     <div className="info-card learn-more-card">
                         <h3><i class="fa fa-usd" aria-hidden="true"> </i> <br />Know Your Earnings</h3>
-                        <button className="action-button shadow" onClick={() => { history('/statement') }}>
-                            LEARN MORE
-                        </button></div>
+                        <button className="action-button shadow" onClick={() => { history('/statement') }}>LEARN MORE</button>
+                    </div>
                 </div>
                 <PoweredBy />
                 <InvestorReviews />
