@@ -191,12 +191,12 @@ export default function AdminDashboard() {
                     )}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => {
+                    {/* <Button variant="secondary" onClick={() => {
                         console.log(selectedUser);
                         history(`/edit-user/${selectedUser.referralCode}`)
                     }}>
                         Edit Details
-                    </Button>
+                    </Button> */}
                     <Button variant="secondary" onClick={handleCloseModal}>
                         Close
                     </Button>
