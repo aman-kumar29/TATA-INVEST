@@ -37,8 +37,24 @@ function DashboardScreen() {
     }, [fetchedUser, history]);
 
     const handelWithdrawalApprovalRequest = () => {
+        if (!userData) {
+            // If user data is not available, redirect to login
+            history('/login');
+            return;
+        }
+    
+        if (!userData.kycDone) {
+            // If KYC is not done, show alert message
+            alert("Your KYC is not done. Please complete KYC to withdraw money.");
+            console.log("withdraw button clicked");
+            return;
+        }
+    
+        // Open withdrawal form
         setFormOpen(true);
+        console.log("withdraw button clicked");
     };
+    
 
     const handleWithdrawalSubmit = async (amount) => {
         console.log("withdrawal-amount", amount);
@@ -115,7 +131,7 @@ function DashboardScreen() {
             <div className="dashboard-container">
                 <h5 style={{ fontWeight: "bold" }}>Invest and Earn</h5>
                 <div className="progress-bar-container">
-                    <ProgressBar investedAmount={userData?.investedAmount || 0} />
+                    <ProgressBar investedAmount={userData?.investedAmount + userData?.withdrawableAmount} />
                     <h6>Invest More Upto <strong>₹ 300000</strong></h6>
                 </div>
                 <center className="buttons-container mt-5">
@@ -123,7 +139,6 @@ function DashboardScreen() {
                     <button
                         className="add-money-button btn-2"
                         onClick={handelWithdrawalApprovalRequest}
-                        disabled={!userData || !userData.kycDone || userData.withdrawableAmount < 1000}
                     >
                         Withdraw
                     </button>
