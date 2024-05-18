@@ -30,6 +30,7 @@ function Step1Form({ formData, handleChange, nextStep, prevStep }) {
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Typography variant="h6">Necessary Documents</Typography>
       </div>
+
       <Grid container spacing={2} justifyContent="center" className="container-card"> {/* Center-aligned grid */}
         {documentsRequired.map((document, index) => (
           <Grid key={index} item xs={12} md={6} > {/* Responsive layout */}
@@ -64,10 +65,10 @@ function Step1Form({ formData, handleChange, nextStep, prevStep }) {
         />
       </div>
       <div className="buttons-container"> {/* Buttons container */}
-        <Button variant="contained" onClick={handleBack}>
+        <Button variant="contained" onClick={handleBack} style={{fontSize:'12px', padding:'8px'}}> 
           I don't have these documents
         </Button>
-        <Button variant="contained" color="primary" disabled={!isTermsAccepted} onClick={handleNext}>
+        <Button variant="contained" color="primary" disabled={!isTermsAccepted} onClick={handleNext} style={{fontSize:'12px', padding:'8px'}}>
           I have these documents. Proceed.
         </Button>
       </div>

@@ -63,11 +63,11 @@ const AddMoneyPage = () => {
       await updateDoc(userRef, {
         investedAmount: user.investedAmount + Number(investedAmount),
         investmentTransactions: [...user.investmentTransactions,
-          {
-            transactionId: transactionId,
-            amount: Number(investedAmount),
-            date: new Date(),
-          }
+        {
+          transactionId: transactionId,
+          amount: Number(investedAmount),
+          date: new Date(),
+        }
         ]
       });
       console.log('User info updated successfully!');
@@ -93,22 +93,38 @@ const AddMoneyPage = () => {
     if (validateFields()) {
       setLoading(true);
       setPaymentRequestStatus('processing'); // Update status
-      try {
-        const screenshotUrl = await uploadScreenshot(screenshot);
-        await createPaymentApprovalRequest(fetchedUser, user.name, user.phone, amount, utrNumber, screenshotUrl);
-        setPaymentApprovalRequest(true);
-        setPaymentRequestStatus('success'); // Update status
-      } catch (error) {
-        console.error('Error creating payment approval request:', error);
-        setPaymentRequestStatus('failed'); // Update status on error
-      } finally {
-        setLoading(false);
-      }
+      const screenshotUrl = await uploadScreenshot(screenshot);
+      createPaymentApprovalRequest(fetchedUser, user.name, user.phone, amount, utrNumber, screenshotUrl)
+        .then((response) => {
+          setPaymentApprovalRequest(true);
+          setPaymentRequestStatus('success'); // Update status
+  
+          fetch('/send-email-addmoney', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: user.email,
+              paidAmount: amount,
+              utrNumber: utrNumber,
+              name: user.name,
+            }),
+          }).then((res) => {
+            console.log("add money email-sent succesfully");
+          })
+          .catch((error) => {
+            console.log("failed sending email", error);
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       alert("Please fill all fields !");
     }
   };
-
+  
   const handleUtrChange = (event) => {
     setUtrNumber(event.target.value);
   };
@@ -191,7 +207,7 @@ const AddMoneyPage = () => {
                     <div style={{ fontWeight: "bold", color: "green" }}>Payment Approval Request Sent Successfully!</div>
                     Please wait, your requested amount will be updated soon.
                   </div>
-                )               : paymentRequestStatus === 'failed' ? (
+                ) : paymentRequestStatus === 'failed' ? (
                   <div className='mt-2'>
                     <div style={{ fontWeight: "bold", color: "red" }}>Payment Approval Request Failed!</div>
                     Please try again or contact support for assistance.
